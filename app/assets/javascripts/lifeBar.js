@@ -5,7 +5,7 @@ window.onload = function() {
   window.bar = new Bar();
   bar.createNode(100,100,10);
   bar.createNode(200,200,10);
-  bar.createConnection(bar.nodes[0].elem,bar.nodes[1].elem)
+  bar.createConnection(bar.nodes[0].elem, bar.nodes[1].elem);
 
 };
 
@@ -16,19 +16,26 @@ function Bar(){
   this.nodes = [];
   this.connections = [];
   this.events();
-}
+};
 
 Bar.prototype.createNode = function(x,y,r){
   this.nodes.push(new Node(x,y,r));
-}
+  $(".popup").remove();
+};
 
-Bar.prototype.createConnection = function(node1,node2){
-  this.connections.push(paper.connection(node1,node2,"blue"));
-}
+Bar.prototype.createConnection = function(node1, node2){
+  var con = paper.connection(node1, node2, "blue");
+  this.connections.push(con);
+  node1.ref.connected = true;
+  node2.ref.connected = true;
+};
 
 Bar.prototype.events = function(){
+  $(paper.canvas).click(function(e){
+    if(!$(e.target).parents('svg').length) bar.createNode(e.offsetX, e.offsetY, 10)
+  });
 
-}
+};
 
 // ----- Node Object -----
 
@@ -37,6 +44,7 @@ function Node(x, y, r){
   this.y = y;
   this.r = r;
   this.title = "hello"
+  this.connected = false;
   this.render();
   this.events();
 }; 
@@ -63,7 +71,6 @@ Node.prototype.end = function(e){
 function start(){
   this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
   this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");  
-
 };
 
 function move(dx, dy) {
@@ -140,12 +147,33 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 
 function nodeInfo(node,event){
   $(".popup").remove()
-   console.log(event);
   _.templateSettings.variable = "v";
-    var template = _.template($("script.popupTemplate").html());
-    $("#container").append(template(node))
-    $(".popup").css({"left" : event.x - 110 + "px", "top" : event.y - 110 + "px"})
+  var template = _.template($("script.popupTemplate").html());
+  $("#container").append(template(node.ref))
+  $(".popup").css({"left" : event.x - 160 + "px", "top" : event.y - 160 + "px"})
+  $("#exit").click(remove)
+  $('.action').click(function(e){
+    if (e.target.id === "complete") {
+      alert("complete");
+    } else if (e.target.id === "link") {
+      listenForNextNode(node.ref)
+    } else if (e.target.id === "sever") {
+      alert("sever");
+    };
+  })
+};
 
-}
+function remove(e){e.target.parentNode.remove()};
 
+function listenForNextNode(oNode){
+
+  $(".node")
+  
+  // paper.canvas.addEventListener('click',function(e){
+  //   console.log(e);
+  // })
+};
+
+
+ 
  

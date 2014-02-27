@@ -1,15 +1,35 @@
 #container{
   width:960px;
   margin:auto;
-  outline: thin solid red;
   height: 800px;
 }
 
+#exit{
+  float:right;
+  width: 10px;
+  padding-right: 2px;
+  padding-top: 2px;
+
+}
+
+.action{
+  height:20px;
+  width:50%;
+}
 
 .popup{
-  width:100px;
-  height:100px;
-  border:1px solid;
+  width:150px;
+  height:150px;
+  border:1px solid lightgrey;
+  border-radius: 10px;
   position:fixed;
   background-color:#fff; 
+
+}
+
+#life_bar {
+  position: absolute;
+  top: 400px;
+  background-color: #555;
+  margin-left: 40px;
 }

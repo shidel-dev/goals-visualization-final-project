@@ -5,7 +5,18 @@
 
 <script type="text/template" class='popupTemplate'>
   <div class='popup'>
+    <img src="/icons/glyphicons_207_remove_2.png" id='exit'></img>
     <p><%%= v.title%></p>
+    <div class='action' id='complete'>Complete</div>
+    <div class='action' id='link'>Link</div>
+    <%% if (v.connected){%>
+      <div class='action' id='sever'>Sever</div>
+    <%% };$(".action").css("width","33.33%")%>
   </div>
 
 </script> 
+
+  
+
+
+
