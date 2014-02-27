@@ -58,7 +58,7 @@ Node.prototype.render = function(){
 Node.prototype.events = function(){
   this.elem.drag(move,start,this.end);
   this.elem.mouseup(function(event){
-    nodeInfo(this,event)
+    nodeInfo(this,event);
   })
 };
 
@@ -166,13 +166,15 @@ function nodeInfo(node,event){
 function remove(e){e.target.parentNode.remove()};
 
 function listenForNextNode(oNode){
-
-  $(".node")
-  
-  // paper.canvas.addEventListener('click',function(e){
-  //   console.log(e);
-  // })
-};
+ $("circle").click(function(e){
+    _.each( bar.nodes,function(node){
+      if (e.target === node.elem[0]){
+        bar.createConnection(oNode.elem,node.elem);
+        $("circle").unbind("click");
+      };
+    });
+  });
+};  
 
 
  

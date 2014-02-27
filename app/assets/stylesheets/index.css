@@ -30,6 +30,6 @@
 #life_bar {
   position: absolute;
   top: 400px;
-  background-color: #555;
+  background-color: lightgrey;
   margin-left: 40px;
 }
