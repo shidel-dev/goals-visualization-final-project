@@ -23,15 +23,55 @@
   border:1px solid lightgrey;
   border-radius: 10px;
   position:fixed;
-  background-color:#fff; 
+  background-color:#fff;
 
 }
 
 #life_bar {
   position: absolute;
   top: 400px;
+  background-color: lightgrey;
   margin-left: 40px;
-  height:200px;
-  width:880px;
-  overflow: hidden;
+  height:150px;
 }
+
+#right-arrow {
+  display: none;
+  width: 5%;
+  position: absolute;
+  top: 465px;
+  left: 1150px;
+}
+
+#right-arrow:hover, #higher:hover, #lower:hover {
+  cursor: pointer;
+}
+
+#left-arrow {
+  display: none;
+  width: 5%;
+  position: absolute;
+  top: 465px;
+  left: 150px;
+}
+
+#num {
+  display: none;
+  position: absolute;
+  top: 350px;
+  left: 550px;
+}
+
+#lower {
+  position: absolute;
+  top: 600px;
+  left: 620px;
+}
+
+#higher {
+  position: absolute;
+  top: 600px;
+  left: 700px;
+}
+
+

@@ -5,6 +5,7 @@ window.onload = function() {
   window.bar = new Bar();
   window.person = new Person("27,03,1990");
   loadLifeData();
+  var timePlace
 };
 
 
@@ -21,6 +22,7 @@ function Person(birthdate){
   this.pos = this.setCurrentMarker();
   console.log(this.pos * 960)
   this.renderMarkerLine(this.pos)
+  this.currentPos = 0
 }
 
 Person.prototype.setCurrentMarker = function(){
@@ -33,12 +35,20 @@ Person.prototype.setCurrentMarker = function(){
       end[2] = end[2] + 80
       window.time = new Time(day,month,year)
       time.unit = 1;
-      return (year - this.birthdate[2]) / 80 
+      return (year - this.birthdate[2]) / 80
 }
 
 Person.prototype.renderMarkerLine = function(){
   var marker = paper.path("M" + this.pos + " 0 l 0 200")
   marker.attr({stroke: 'black', 'stroke-width': 1});
+}
+
+Person.prototype.updatePosition = function(direction, interval) {
+  if (direction === "right") {
+    this.currentPos += 880;
+  } else if (direction === "left") {
+    this.currentPos -= 880;
+  }
 }
 
 // ---- Bar Object ------
@@ -70,7 +80,7 @@ Bar.prototype.events = function(){
   cover.click(function(e){
 
     var nodeOptions = {id: that.nodeCounter, x: e.layerX, y: e.layerY};
-   
+
       bar.createNode(nodeOptions);
 
       that.nodeCounter++;
@@ -106,7 +116,7 @@ function Node(options) {
   this.connected = false;
   this.render(time.unit);
   this.events();
-}; 
+};
 
 Node.prototype.render = function(multi){
   this.elem = paper.circle(this.x *  multi, this.y, this.r);
@@ -121,7 +131,7 @@ Node.prototype.events = function(){
   })
 };
 
-Node.prototype.end = function(e){  
+Node.prototype.end = function(e){
   this.ref.x = this.attrs.cx;
   this.ref.y = this.attrs.cy;
 }
@@ -136,14 +146,20 @@ function Time(day,month,year){
 }
 
 Time.prototype.events = function(){
-  $("#year").click(function(e){
-    time.scale("year")
+  $("#lower").click(function(e){
+    time.scale("year");
+    $("#right-arrow").show();
+    $("#left-arrow").show();
+    $("#num").show();
+    timePlace = new TimeView("years");
   })
 
-  $("#life").click(function(){
+  $("#higher").click(function(){
     time.scale('life')
+    $("#right-arrow").hide();
+    $("#left-arrow").hide();
+    $("#num").hide();
   })
-
 }
 
 
@@ -163,7 +179,7 @@ Time.prototype.scale = function(unit){
 // ----- Drag functions -----
 function start(){
   this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
-  this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");  
+  this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
 };
 
 function move(dx, dy) {
@@ -281,8 +297,8 @@ function listenForNextNode(oNode){
       };
     });
   });
-};  
+};
 
 
- 
- 
+
+
