@@ -17,7 +17,8 @@ function Person(birthdate){
   this.birthdate = _.map(birthdate.split(","),function(part){
     return parseInt(part)
   })
-  this.pos = this.setCurrentMarker() * 880
+  this.pos = this.setCurrentMarker();
+  console.log(this.pos * 960)
   this.renderMarkerLine(this.pos)
 }
 
@@ -72,12 +73,12 @@ Bar.prototype.events = function(){
 // ----- Node Object -----
 
 function Node(x, y, r){
-  this.x = x;
+  this.x = x / time.unit;
   this.y = y;
   this.r = r;
   this.title = "hello"
   this.connected = false;
-  this.render(1);
+  this.render(time.unit);
   this.events();
 }; 
 
@@ -120,10 +121,15 @@ Time.prototype.events = function(){
 
 
 Time.prototype.scale = function(unit){
+
   if(unit === "year"){
     scale(70400,80);
+    this.unit = 80;
+    this.period = 12
   }else if (unit === "life"){
-    scale(880,1)
+    scale(880,1);
+    this.unit = 1;
+    this.period = 960
   }
 }
 // ----- Drag functions -----
@@ -213,7 +219,7 @@ function scale(width,multi){
   _.each(bar.nodes,function(node){
     node.render(multi);
   })
-  // paper.setViewBox(person.pos,0,0,0)
+  paper.setViewBox(person.pos/this.period,0,0,0)
   bar.events();
 }
 
