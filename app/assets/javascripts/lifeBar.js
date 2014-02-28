@@ -15,9 +15,9 @@ function Bar(){
   this.events();
 };
 
-Bar.prototype.createNode = function(x,y,r){
+Bar.prototype.createNode = function(nodeOptions){
   $("circle").unbind("click");
-  this.nodes.push(new Node(x,y,r));
+  this.nodes.push(new Node(nodeOptions));
   $(".popup").remove();
 };
 
@@ -30,18 +30,30 @@ Bar.prototype.createConnection = function(node1, node2){
 
 Bar.prototype.events = function(){
   $(paper.canvas).click(function(e){
-    if(!$(e.target).parents('svg').length) bar.createNode(e.offsetX, e.offsetY, 3)
+    var nodeOptions = {x: e.offsetX, y: e.offsetY, r: 3 };
+    if(!$(e.target).parents('svg').length) bar.createNode(nodeOptions);
   });
 
 };
 
 // ----- Node Object -----
 
-function Node(x, y, r){
-  this.x = x;
-  this.y = y;
-  this.r = r;
-  this.title = "hello"
+function Node(options) {
+  // x, y, r, id, title, completed, reflection
+  this.x = options.x;
+  this.y = options.y;
+  this.r = options.r;
+  this.title = options.title;
+  if(options.reflection) {
+    this.reflection = options.reflection;
+  } else {
+    this.reflection = "";
+  }
+  if(options.completed) {
+    this.completed = options.completed;
+  } else {
+    this.completed = false;
+  }
   this.connected = false;
   this.render();
   this.events();
