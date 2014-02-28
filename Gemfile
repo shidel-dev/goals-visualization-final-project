@@ -6,6 +6,10 @@ gem 'rails', '4.0.3'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
+# Use MongoDB and Mongoid for saving JSON data
+gem 'mongoid' github: 'mongoid/mongoid'
+gem 'bson_ext'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
