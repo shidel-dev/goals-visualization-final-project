@@ -3,9 +3,6 @@
 window.onload = function() {
   window.paper = new Raphael(document.getElementById('life_bar'), 880, 500);
   window.bar = new Bar();
-  bar.createNode(100,100,10);
-  bar.createNode(200,200,10);
-  bar.createConnection(bar.nodes[0].elem, bar.nodes[1].elem);
 
 };
 
@@ -19,6 +16,7 @@ function Bar(){
 };
 
 Bar.prototype.createNode = function(x,y,r){
+  $("circle").unbind("click");
   this.nodes.push(new Node(x,y,r));
   $(".popup").remove();
 };
@@ -168,7 +166,7 @@ function remove(e){e.target.parentNode.remove()};
 function listenForNextNode(oNode){
  $("circle").click(function(e){
     _.each( bar.nodes,function(node){
-      if (e.target === node.elem[0]){
+      if (e.target === node.elem[0] && e.target !== oNode.elem[0]){
         bar.createConnection(oNode.elem,node.elem);
         $("circle").unbind("click");
       };
