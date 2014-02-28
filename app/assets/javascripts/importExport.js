@@ -1,5 +1,11 @@
 save = function(bar) {
   var barJSON = {};
+  saveNodes(bar, barJSON);
+  saveConnections(bar, barJSON);
+  return barJSON;
+}
+
+saveNodes = function(bar, barJSON) {
   var exportedNodes = [];
   var maxId = 0;
   for(var i = 0; i < bar.nodes.length; i++) {
@@ -17,11 +23,26 @@ save = function(bar) {
   }
   barJSON.maxId = maxId;
   barJSON.nodes = exportedNodes;
-  return barJSON;
 };
+
+saveConnections = function(bar, barJSON) {
+  var exportedConnections = [];
+  for(var i = 0; i < bar.connections.length; i++) {
+    var connectionData = {};
+    connectionData.from = bar.connections[i].from.ref.id;
+    connectionData.to = bar.connections[i].to.ref.id;
+    exportedConnections.push(connectionData);
+  }
+  barJSON.connections = exportedConnections;
+}
 
 
 populate = function(bar, data) {
+  populateNodes(bar, data);
+  // populateConnections(bar, data);
+}
+
+populateNodes = function(bar, data) {
   if(data === {}) { // figure out what non-existent object from mongodb will be here
     return;
   }
@@ -30,3 +51,12 @@ populate = function(bar, data) {
     bar.createNode(data.nodes[i]);
   }
 }
+
+populateConnections = function(bar, data) {
+  for(var i = 0; i < data.connections.length; i++) {
+    var fromNode = bar.findNodeById(data.connections[i].from);
+    var toNode = bar.findNodeById(data.connections[i].to);
+    bar.createConnection(fromNode.elem, toNode.elem);
+  }
+}
+

@@ -36,10 +36,18 @@ Bar.prototype.events = function(){
   var that = this;
   $(paper.canvas).click(function(e){
     var nodeOptions = {id: that.nodeCounter, x: e.offsetX, y: e.offsetY};
-    that.nodeCounter++;
-    if(!$(e.target).parents('svg').length) bar.createNode(nodeOptions);
+    if(!$(e.target).parents('svg').length) {
+      bar.createNode(nodeOptions);
+      that.nodeCounter++;
+    };
   });
 };
+
+Bar.prototype.findNodeById = function(id) {
+  for(var i = 0; i < this.nodes.length; i++) {
+    if(this.nodes[i].id === id) return this.nodes[i];
+  }
+}
 
 // ----- Node Object -----
 
