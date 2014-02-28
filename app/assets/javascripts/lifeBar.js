@@ -1,12 +1,37 @@
 // ----- Setup-----
 
 window.onload = function() {
-  window.paper = new Raphael(document.getElementById('life_bar'), 880, 500);
+  window.paper = new Raphael(document.getElementById('life_bar'), 880, 100);
   window.bar = new Bar();
-
+  window.person = new Person("27,03,1990");
 };
 
 
+// --- Person Object -----
+function Person(birthdate){
+  this.birthdate = _.map(birthdate.split(","),function(part){
+    return parseInt(part)
+  })
+  this.renderMarkerLine(this.setCurrentMarker())
+}
+
+Person.prototype.setCurrentMarker = function(){
+
+  var date  = new Date()
+      year = date.getFullYear(),
+      month = date.getMonth(),
+      day = date.getDate(),
+      end = _.clone(this.birthdate)
+      end[2] = end[2] + 80
+      return (year - this.birthdate[2]) / 80 
+}
+
+Person.prototype.renderMarkerLine = function(lifePlace){
+  var pos = lifePlace * 880
+  var marker = paper.path("M" + pos + " 0 l 0 110" )
+  marker.attr({stroke: 'black', 'stroke-width': 1});
+
+}
 // ---- Bar Object ------
 
 function Bar(){
@@ -30,7 +55,7 @@ Bar.prototype.createConnection = function(node1, node2){
 
 Bar.prototype.events = function(){
   $(paper.canvas).click(function(e){
-    if(!$(e.target).parents('svg').length) bar.createNode(e.offsetX, e.offsetY, 10)
+    if(!$(e.target).parents('svg').length) bar.createNode(e.offsetX, e.offsetY, 4)
   });
 
 };
