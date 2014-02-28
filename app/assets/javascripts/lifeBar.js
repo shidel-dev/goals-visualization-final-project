@@ -1,9 +1,11 @@
 // ----- Setup-----
 
 window.onload = function() {
-  window.paper = new Raphael(document.getElementById('life_bar'), 880, 500);
+  window.paper = new Raphael(document.getElementById('life_bar'), 880, 100);
   window.bar = new Bar();
-
+  // $.getJSON("/data" function(data) {
+  //   populate(bar, data);
+  // })
 };
 
 
@@ -13,11 +15,13 @@ function Bar(){
   this.nodes = [];
   this.connections = [];
   this.events();
+  this.nodeCounter = 0;
+  // assign this.nodeCounter in import/populate function
 };
 
-Bar.prototype.createNode = function(x,y,r){
+Bar.prototype.createNode = function(nodeOptions){
   $("circle").unbind("click");
-  this.nodes.push(new Node(x,y,r));
+  this.nodes.push(new Node(nodeOptions));
   $(".popup").remove();
 };
 
@@ -29,19 +33,41 @@ Bar.prototype.createConnection = function(node1, node2){
 };
 
 Bar.prototype.events = function(){
+  var that = this;
   $(paper.canvas).click(function(e){
-    if(!$(e.target).parents('svg').length) bar.createNode(e.offsetX, e.offsetY, 10)
+    var nodeOptions = {id: that.nodeCounter, x: e.offsetX, y: e.offsetY};
+    if(!$(e.target).parents('svg').length) {
+      bar.createNode(nodeOptions);
+      that.nodeCounter++;
+    };
   });
-
 };
+
+Bar.prototype.findNodeById = function(id) {
+  for(var i = 0; i < this.nodes.length; i++) {
+    if(this.nodes[i].id === id) return this.nodes[i];
+  }
+}
 
 // ----- Node Object -----
 
-function Node(x, y, r){
-  this.x = x;
-  this.y = y;
-  this.r = r;
-  this.title = "hello"
+function Node(options) {
+  // x, y, r, id, title, completed, reflection
+  this.id = options.id;
+  this.x = options.x;
+  this.y = options.y;
+  this.r = 3;
+  this.title = options.title;
+  if(options.reflection) {
+    this.reflection = options.reflection;
+  } else {
+    this.reflection = "";
+  }
+  if(options.completed) {
+    this.completed = options.completed;
+  } else {
+    this.completed = false;
+  }
   this.connected = false;
   this.render();
   this.events();
@@ -64,6 +90,23 @@ Node.prototype.end = function(e){
   this.ref.x = this.attrs.cx;
   this.ref.y = this.attrs.cy;
 }
+
+
+// -----Time Object
+
+
+// function Time(){
+
+// }
+
+// Time.prototype.scale(timeFrame){
+//   if (timeFrame == "week"){
+//     paper.setViewBox(0,0,10,)
+//   } else if(timeFrame == "life"){
+//     paper.setViewBox(0,0,880,100)
+//   }
+// }
+
 
 // ----- Drag functions -----
 function start(){
