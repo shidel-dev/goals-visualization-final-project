@@ -1,11 +1,45 @@
 // ----- Setup-----
 
 window.onload = function() {
-  window.paper = new Raphael(document.getElementById('life_bar'), 880, 100);
+  setup(880)
   window.bar = new Bar();
+  window.person = new Person("27,03,1990");
   loadLifeData();
 };
 
+
+function setup(width){
+  window.paper = new Raphael(document.getElementById('life_bar'), width, 200);
+  window.cover = paper.rect(0,0,width,200).attr({fill:"lightgray",stroke:"none"})
+}
+
+// --- Person Object -----
+function Person(birthdate){
+  this.birthdate = _.map(birthdate.split(","),function(part){
+    return parseInt(part)
+  })
+  this.pos = this.setCurrentMarker();
+  console.log(this.pos * 960)
+  this.renderMarkerLine(this.pos)
+}
+
+Person.prototype.setCurrentMarker = function(){
+
+  var date  = new Date()
+      year = date.getFullYear(),
+      month = date.getMonth(),
+      day = date.getDate(),
+      end = _.clone(this.birthdate)
+      end[2] = end[2] + 80
+      window.time = new Time(day,month,year)
+      time.unit = 1;
+      return (year - this.birthdate[2]) / 80 
+}
+
+Person.prototype.renderMarkerLine = function(){
+  var marker = paper.path("M" + this.pos + " 0 l 0 200")
+  marker.attr({stroke: 'black', 'stroke-width': 1});
+}
 
 // ---- Bar Object ------
 
@@ -32,12 +66,15 @@ Bar.prototype.createConnection = function(node1, node2){
 
 Bar.prototype.events = function(){
   var that = this;
-  $(paper.canvas).click(function(e){
-    var nodeOptions = {id: that.nodeCounter, x: e.offsetX, y: e.offsetY};
-    if(!$(e.target).parents('svg').length) {
+  paper.canvas.setAttribute('preserveAspectRatio', 'none');
+  cover.click(function(e){
+
+    var nodeOptions = {id: that.nodeCounter, x: e.layerX, y: e.layerY};
+   
       bar.createNode(nodeOptions);
+
       that.nodeCounter++;
-    };
+
   });
 };
 
@@ -52,7 +89,7 @@ Bar.prototype.findNodeById = function(id) {
 function Node(options) {
   // x, y, r, id, title, completed, reflection
   this.id = options.id;
-  this.x = options.x;
+  this.x = options.x / time.unit;
   this.y = options.y;
   this.r = 3;
   this.title = options.title;
@@ -67,13 +104,13 @@ function Node(options) {
     this.completed = false;
   }
   this.connected = false;
-  this.render();
+  this.render(time.unit);
   this.events();
 }; 
 
-Node.prototype.render = function(){
-  this.elem = paper.circle(this.x, this.y, this.r);
-  this.elem.attr({fill:"green"});
+Node.prototype.render = function(multi){
+  this.elem = paper.circle(this.x *  multi, this.y, this.r);
+  this.elem.attr({fill:"green",stroke:'none'});
   this.elem.ref = this;
 };
 
@@ -89,22 +126,39 @@ Node.prototype.end = function(e){
   this.ref.y = this.attrs.cy;
 }
 
+// -----Time Controller ---
 
-// -----Time Object
+function Time(day,month,year){
+  this.day = day;
+  this.month = month;
+  this.year = year;
+  this.events()
+}
+
+Time.prototype.events = function(){
+  $("#year").click(function(e){
+    time.scale("year")
+  })
+
+  $("#life").click(function(){
+    time.scale('life')
+  })
+
+}
 
 
-// function Time(){
+Time.prototype.scale = function(unit){
 
-// }
-
-// Time.prototype.scale(timeFrame){
-//   if (timeFrame == "week"){
-//     paper.setViewBox(0,0,10,)
-//   } else if(timeFrame == "life"){
-//     paper.setViewBox(0,0,880,100)
-//   }
-// }
-
+  if(unit === "year"){
+    scale(70400,80);
+    this.unit = 80;
+    this.period = 12
+  }else if (unit === "life"){
+    scale(880,1);
+    this.unit = 1;
+    this.period = 960
+  }
+}
 
 // ----- Drag functions -----
 function start(){
@@ -184,18 +238,32 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 };
 
 
+function scale(width,multi){
+  paper.remove();
+  setup(width);
+  paper.height = "200px"
+  $("#life_bar").css("height", "200px")
+
+  _.each(bar.nodes,function(node){
+    node.render(multi);
+  })
+  paper.setViewBox(person.pos/this.period,0,0,0)
+  bar.events();
+}
+
+
 function nodeInfo(node,event){
-  $(".popup").remove()
+  $(".popup").remove();
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
   $("#container").append(template(node.ref))
   $(".popup").css({"left" : event.x - 160 + "px", "top" : event.y - 160 + "px"})
-  $("#exit").click(remove)
+  $("#exit").click(remove);
   $('.action').click(function(e){
     if (e.target.id === "complete") {
       alert("complete");
     } else if (e.target.id === "link") {
-      listenForNextNode(node.ref)
+      listenForNextNode(node.ref);
     } else if (e.target.id === "sever") {
       alert("sever");
     };
