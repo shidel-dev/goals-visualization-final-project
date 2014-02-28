@@ -39,7 +39,7 @@ saveConnections = function(bar, barJSON) {
 
 populate = function(bar, data) {
   populateNodes(bar, data);
-  // populateConnections(bar, data);
+  populateConnections(bar, data);
 }
 
 populateNodes = function(bar, data) {
