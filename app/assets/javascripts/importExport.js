@@ -63,3 +63,9 @@ populateConnections = function(bar, data) {
 savebutton = function() {
   $.post('/lives', save(bar), "json");
 }
+
+loadLifeData = function() {
+  $.post('/lives', function(data) {
+    populate(bar, data);
+  })
+}
