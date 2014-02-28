@@ -4,7 +4,7 @@ window.onload = function() {
   window.paper = new Raphael(document.getElementById('life_bar'), 880, 100);
   window.bar = new Bar();
   // $.getJSON("/data" function(data) {
-  //   bar.populate(data);
+  //   populate(bar, data);
   // })
 };
 
@@ -15,6 +15,8 @@ function Bar(){
   this.nodes = [];
   this.connections = [];
   this.events();
+  this.nodeCounter = 0;
+  // assign this.nodeCounter in import/populate function
 };
 
 Bar.prototype.createNode = function(nodeOptions){
@@ -31,40 +33,22 @@ Bar.prototype.createConnection = function(node1, node2){
 };
 
 Bar.prototype.events = function(){
+  var that = this;
   $(paper.canvas).click(function(e){
-    var nodeOptions = {x: e.offsetX, y: e.offsetY, r: 3 };
+    var nodeOptions = {id: that.nodeCounter, x: e.offsetX, y: e.offsetY};
+    that.nodeCounter++;
     if(!$(e.target).parents('svg').length) bar.createNode(nodeOptions);
   });
-};
-
-// Bar.prototype.populate = function(data) {
-
-// };
-
-Bar.prototype.export = function() {
-  barJSON = {};
-  
-  var exportedNodes = [];
-  for(var i = 0; i < this.nodes.length; i++) {
-    var nodeData = {};
-    nodeData.id = this.nodes[i].id;
-    nodeData.x = this.nodes[i].x;
-    nodeData.y = this.nodes[i].y;
-    nodeData.title = this.nodes[i].title;
-    nodeData.completed = this.nodes[i].completed;
-    nodeData.reflection = this.nodes[i].reflection;
-    exportedNodes.push(nodeData);
-  }
-  barJSON.nodes = exportedNodes;
 };
 
 // ----- Node Object -----
 
 function Node(options) {
   // x, y, r, id, title, completed, reflection
+  this.id = options.id;
   this.x = options.x;
   this.y = options.y;
-  this.r = options.r;
+  this.r = 3;
   this.title = options.title;
   if(options.reflection) {
     this.reflection = options.reflection;
