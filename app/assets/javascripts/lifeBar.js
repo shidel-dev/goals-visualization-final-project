@@ -4,6 +4,7 @@ window.onload = function() {
   setup(880)
   window.bar = new Bar();
   window.person = new Person("27,03,1990");
+  loadLifeData();
 };
 
 
@@ -31,6 +32,7 @@ Person.prototype.setCurrentMarker = function(){
       end = _.clone(this.birthdate)
       end[2] = end[2] + 80
       window.time = new Time(day,month,year)
+      time.unit = 1;
       return (year - this.birthdate[2]) / 80 
 }
 
@@ -45,11 +47,13 @@ function Bar(){
   this.nodes = [];
   this.connections = [];
   this.events();
+  this.nodeCounter = 0;
+  // assign this.nodeCounter in import/populate function
 };
 
-Bar.prototype.createNode = function(x,y,r){
+Bar.prototype.createNode = function(nodeOptions){
   $("circle").unbind("click");
-  this.nodes.push(new Node(x,y,r));
+  this.nodes.push(new Node(nodeOptions));
   $(".popup").remove();
 };
 
@@ -61,22 +65,44 @@ Bar.prototype.createConnection = function(node1, node2){
 };
 
 Bar.prototype.events = function(){
+  var that = this;
   paper.canvas.setAttribute('preserveAspectRatio', 'none');
   cover.click(function(e){
-    console.log(e);
-    // if(!$(e.target).parents('svg').length) 
-    bar.createNode(e.layerX, e.layerY, 4)
-  });
 
+    var nodeOptions = {id: that.nodeCounter, x: e.layerX, y: e.layerY};
+   
+      bar.createNode(nodeOptions);
+
+      that.nodeCounter++;
+
+  });
 };
+
+Bar.prototype.findNodeById = function(id) {
+  for(var i = 0; i < this.nodes.length; i++) {
+    if(this.nodes[i].id === id) return this.nodes[i];
+  }
+}
 
 // ----- Node Object -----
 
-function Node(x, y, r){
-  this.x = x / time.unit;
-  this.y = y;
-  this.r = r;
-  this.title = "hello"
+function Node(options) {
+  // x, y, r, id, title, completed, reflection
+  this.id = options.id;
+  this.x = options.x / time.unit;
+  this.y = options.y;
+  this.r = 3;
+  this.title = options.title;
+  if(options.reflection) {
+    this.reflection = options.reflection;
+  } else {
+    this.reflection = "";
+  }
+  if(options.completed) {
+    this.completed = options.completed;
+  } else {
+    this.completed = false;
+  }
   this.connected = false;
   this.render(time.unit);
   this.events();
@@ -117,6 +143,7 @@ Time.prototype.events = function(){
   $("#life").click(function(){
     time.scale('life')
   })
+
 }
 
 
@@ -132,6 +159,7 @@ Time.prototype.scale = function(unit){
     this.period = 960
   }
 }
+
 // ----- Drag functions -----
 function start(){
   this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
