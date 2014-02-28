@@ -1,7 +1,7 @@
 // ----- Setup-----
 
 window.onload = function() {
-  window.paper = new Raphael(document.getElementById('life_bar'), 880, 100);
+  window.paper = new Raphael(document.getElementById('life_bar'), 880, 150);
   window.bar = new Bar();
   window.person = new Person("27,03,1990");
 };
@@ -12,7 +12,8 @@ function Person(birthdate){
   this.birthdate = _.map(birthdate.split(","),function(part){
     return parseInt(part)
   })
-  this.renderMarkerLine(this.setCurrentMarker())
+  this.pos = this.setCurrentMarker() * 880
+  this.renderMarkerLine(this.pos)
 }
 
 Person.prototype.setCurrentMarker = function(){
@@ -23,15 +24,15 @@ Person.prototype.setCurrentMarker = function(){
       day = date.getDate(),
       end = _.clone(this.birthdate)
       end[2] = end[2] + 80
+      window.time = new Time(day,month,year)
       return (year - this.birthdate[2]) / 80 
 }
 
-Person.prototype.renderMarkerLine = function(lifePlace){
-  var pos = lifePlace * 880
-  var marker = paper.path("M" + pos + " 0 l 0 110" )
+Person.prototype.renderMarkerLine = function(){
+  var marker = paper.path("M" + this.pos + " 0 l 0 150")
   marker.attr({stroke: 'black', 'stroke-width': 1});
-
 }
+
 // ---- Bar Object ------
 
 function Bar(){
@@ -68,15 +69,21 @@ function Node(x, y, r){
   this.r = r;
   this.title = "hello"
   this.connected = false;
-  this.render();
+  this.renderLife();
   this.events();
 }; 
 
-Node.prototype.render = function(){
+Node.prototype.renderLife = function(){
   this.elem = paper.circle(this.x, this.y, this.r);
-  this.elem.attr({fill:"green"});
+  this.elem.attr({fill:"green",stroke:'none'});
   this.elem.ref = this;
 };
+
+Node.prototype.renderYear = function(){
+  this.elem = paper.circle(this.x, this.y/80, this.r/80);
+  this.elem.attr({fill:"green",stroke:'none'});
+  this.elem.ref = this;
+}
 
 Node.prototype.events = function(){
   this.elem.drag(move,start,this.end);
@@ -90,6 +97,33 @@ Node.prototype.end = function(e){
   this.ref.y = this.attrs.cy;
 }
 
+// -----Time Controller ---
+
+function Time(day,month,year){
+  this.day = day;
+  this.month = month;
+  this.year = year;
+  this.events()
+}
+
+Time.prototype.events = function(){
+  $("#year").click(function(e){
+    time.scale("year")
+  })
+
+  $("#life").click(function(){
+    time.scale('life')
+  })
+}
+
+
+Time.prototype.scale = function(unit){
+  if(unit === "year"){
+    scaleToYear();
+  }else if (unit === "life"){
+    scaleToLife()
+  }
+}
 // ----- Drag functions -----
 function start(){
   this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
@@ -166,6 +200,36 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
     };
   }
 };
+
+
+function scaleToYear(){
+  paper.remove();
+  window.paper = new Raphael(document.getElementById('life_bar'), 880, 150);
+  paper.height = "200px"
+  $("#life_bar").css("height", "200px")
+
+  _.each(bar.nodes,function(node){
+    node.renderYear();
+  }
+  )
+
+  paper.setViewBox(person.pos,0,11,1.875)
+}
+
+function scaleToLife(){
+  paper.remove();
+  window.paper = new Raphael(document.getElementById('life_bar'), 880, 150);
+  paper.height = "150px"
+  $("#life_bar").css("height", "150px")
+
+  _.each(bar.nodes,function(node){
+    node.renderLife();
+  }
+  )
+
+  paper.setViewBox(0,0,880,150)
+  person.renderMarkerLine()
+}
 
 
 function nodeInfo(node,event){
