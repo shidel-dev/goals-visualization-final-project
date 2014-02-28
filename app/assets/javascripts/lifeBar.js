@@ -1,7 +1,7 @@
 // ----- Setup-----
 
 window.onload = function() {
-  window.paper = new Raphael(document.getElementById('life_bar'), 880, 500);
+  window.paper = new Raphael(document.getElementById('life_bar'), 880, 100);
   window.bar = new Bar();
 
 };
@@ -30,7 +30,7 @@ Bar.prototype.createConnection = function(node1, node2){
 
 Bar.prototype.events = function(){
   $(paper.canvas).click(function(e){
-    if(!$(e.target).parents('svg').length) bar.createNode(e.offsetX, e.offsetY, 10)
+    if(!$(e.target).parents('svg').length) bar.createNode(e.offsetX, e.offsetY, 3)
   });
 
 };
@@ -64,6 +64,23 @@ Node.prototype.end = function(e){
   this.ref.x = this.attrs.cx;
   this.ref.y = this.attrs.cy;
 }
+
+
+// -----Time Object
+
+
+// function Time(){
+
+// }
+
+// Time.prototype.scale(timeFrame){
+//   if (timeFrame == "week"){
+//     paper.setViewBox(0,0,10,)
+//   } else if(timeFrame == "life"){
+//     paper.setViewBox(0,0,880,100)
+//   }
+// }
+
 
 // ----- Drag functions -----
 function start(){
