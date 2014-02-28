@@ -8,6 +8,8 @@ Goals::Application.routes.draw do
   get 'lives' => 'life#load'
   post 'lives' => 'life#save'
 
+  resources :users
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
