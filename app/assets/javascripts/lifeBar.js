@@ -3,7 +3,9 @@
 window.onload = function() {
   window.paper = new Raphael(document.getElementById('life_bar'), 880, 100);
   window.bar = new Bar();
-
+  // $.getJSON("/data" function(data) {
+  //   bar.populate(data);
+  // })
 };
 
 
@@ -33,7 +35,27 @@ Bar.prototype.events = function(){
     var nodeOptions = {x: e.offsetX, y: e.offsetY, r: 3 };
     if(!$(e.target).parents('svg').length) bar.createNode(nodeOptions);
   });
+};
 
+// Bar.prototype.populate = function(data) {
+
+// };
+
+Bar.prototype.export = function() {
+  barJSON = {};
+  
+  var exportedNodes = [];
+  for(var i = 0; i < this.nodes.length; i++) {
+    var nodeData = {};
+    nodeData.id = this.nodes[i].id;
+    nodeData.x = this.nodes[i].x;
+    nodeData.y = this.nodes[i].y;
+    nodeData.title = this.nodes[i].title;
+    nodeData.completed = this.nodes[i].completed;
+    nodeData.reflection = this.nodes[i].reflection;
+    exportedNodes.push(nodeData);
+  }
+  barJSON.nodes = exportedNodes;
 };
 
 // ----- Node Object -----
