@@ -2,7 +2,7 @@ save = function(bar) {
   var barJSON = {};
   saveNodes(bar, barJSON);
   saveConnections(bar, barJSON);
-  return barJSON;
+  return {person: barJSON};
 }
 
 saveNodes = function(bar, barJSON) {
@@ -60,3 +60,6 @@ populateConnections = function(bar, data) {
   }
 }
 
+savebutton = function() {
+  $.post('/lives', save(bar), "json");
+}

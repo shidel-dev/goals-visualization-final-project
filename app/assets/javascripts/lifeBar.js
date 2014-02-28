@@ -3,7 +3,7 @@
 window.onload = function() {
   window.paper = new Raphael(document.getElementById('life_bar'), 880, 100);
   window.bar = new Bar();
-  // $.getJSON("/data" function(data) {
+  // $.getJSON("/load" function(data) {
   //   populate(bar, data);
   // })
 };
