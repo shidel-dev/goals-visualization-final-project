@@ -7,7 +7,7 @@ gem 'rails', '4.0.3'
 gem 'sqlite3'
 
 # Use MongoDB and Mongoid for saving JSON data
-gem 'mongoid' github: 'mongoid/mongoid'
+gem 'mongoid', github: 'mongoid/mongoid'
 gem 'bson_ext'
 
 # Use SCSS for stylesheets
