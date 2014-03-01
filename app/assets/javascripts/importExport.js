@@ -61,11 +61,23 @@ populateConnections = function(bar, data) {
 }
 
 savebutton = function() {
-  $.post('/lives', save(bar), "json");
+  $.post('/save', save(bar), "json");
 }
 
 loadLifeData = function() {
-  $.post('/lives', function(data) {
-    populate(bar, data);
+  console.log('in loadlifedata');
+  $.ajax({
+    type: "POST",
+    url: '/load',
+    dataType: "json",
+    error: function(){
+      alert("error");
+    },
+    success: function(data) {
+      console.log(data);
+      console.log(bar);
+      // console.log(JSON.stringify(data));
+      populate(window.bar, data);
+    }
   })
 }
