@@ -173,10 +173,9 @@ function start(){
 function move(dx, dy) {
   var att = this.type == "rect" ? {x: this.ox + dx, y: this.oy + dy} : {cx: this.ox + dx, cy: this.oy + dy};
   this.attr(att);
-
   for (var i = bar.connections.length; i--;) {
     // $(bar.connections[i].line.node).remove()
-    // paper.connection(bar.connections[i].from.ref.elem, bar.connections[i].to.ref.elem, "blue");
+    // paper.connection({from:bar.connections[i].from.ref.elem, to:bar.connections[i].to.ref.elem});
     paper.connection(bar.connections[i]);
   }
   paper.safari();
@@ -188,9 +187,11 @@ function move(dx, dy) {
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
   if (obj1.line && obj1.from && obj1.to) {
     line = obj1;
-    obj1 = line.from;
-    obj2 = line.to;
+    obj1 = line.from.ref.elem;
+    obj2 = line.to.ref.elem;
   }
+  console.log(obj1)
+  console.log(obj2)
   var bb1 = obj1.getBBox(),
       bb2 = obj2.getBBox(),
       p = [{x: bb1.x + bb1.width / 2, y: bb1.y - 1},
@@ -253,9 +254,16 @@ function scaleBar(width,multi){
   _.each(bar.nodes,function(node){
     node.render(multi);
   })
-  _.each(bar.connections,function(conn){
-    paper.connection(conn.from.ref.elem, conn.to.ref.elem, "blue");
+  var barClone = _.clone(bar)
+  bar.connections = []
+  console.log(barClone)
+  console.log(bar)
+  _.each(barClone.connections, function(conn){
+    bar.createConnection(conn.to.ref.elem, conn.from.ref.elem)
   })
+  // _.each(bar.connections,function(conn){
+  //   paper.connection(conn.from.ref.elem, conn.to.ref.elem, "blue");
+  // })
   bar.events();
 };
 
