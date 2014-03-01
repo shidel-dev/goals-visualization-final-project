@@ -16,11 +16,11 @@ function setup(width){
 // --- Person Object -----
 function Person(birthdate){
   this.birthdate = _.map(birthdate.split(","),function(part){
-    return parseInt(part)
+    return parseInt(part);
   })
   this.pos = this.setCurrentMarker();
   console.log(this.pos * 960)
-  this.renderMarkerLine(this.pos)
+  this.renderMarkerLine(this.pos * 960)
 }
 
 Person.prototype.setCurrentMarker = function(){
@@ -33,11 +33,12 @@ Person.prototype.setCurrentMarker = function(){
       end[2] = end[2] + 80
       window.time = new Time(day,month,year)
       time.unit = 1;
+      time.period = 960;
       return (year - this.birthdate[2]) / 80 
 }
 
-Person.prototype.renderMarkerLine = function(){
-  var marker = paper.path("M" + this.pos + " 0 l 0 200")
+Person.prototype.renderMarkerLine = function(position){
+  var marker = paper.path("M" + position + " 0 l 0 200")
   marker.attr({stroke: 'black', 'stroke-width': 1});
 }
 
@@ -91,7 +92,7 @@ function Node(options) {
   this.id = options.id;
   this.x = options.x / time.unit;
   this.y = options.y;
-  this.r = 3;
+  this.r = 4;
   this.title = options.title;
   if(options.reflection) {
     this.reflection = options.reflection;
@@ -141,7 +142,7 @@ Time.prototype.events = function(){
   })
 
   $("#life").click(function(){
-    time.scale('life')
+    time.scale("life")
   })
 
 }
@@ -150,13 +151,16 @@ Time.prototype.events = function(){
 Time.prototype.scale = function(unit){
 
   if(unit === "year"){
-    scale(70400,80);
+    scaleBar(70400,80);
     this.unit = 80;
     this.period = 12
+    $(paper.canvas).css("left","-23280px")
   }else if (unit === "life"){
-    scale(880,1);
+    scaleBar(880,1);
     this.unit = 1;
     this.period = 960
+
+    person.renderMarkerLine(person.pos * this.period)
   }
 }
 
@@ -238,7 +242,7 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 };
 
 
-function scale(width,multi){
+function scaleBar(width,multi){
   paper.remove();
   setup(width);
   paper.height = "200px"
@@ -247,9 +251,8 @@ function scale(width,multi){
   _.each(bar.nodes,function(node){
     node.render(multi);
   })
-  paper.setViewBox(person.pos/this.period,0,0,0)
   bar.events();
-}
+};
 
 
 function nodeInfo(node,event){
@@ -281,8 +284,4 @@ function listenForNextNode(oNode){
       };
     });
   });
-};  
-
-
- 
- 
+};
