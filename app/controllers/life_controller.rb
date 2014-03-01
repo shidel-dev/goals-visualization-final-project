@@ -1,10 +1,11 @@
 class LifeController < ApplicationController
 
   def save
+
     @user = User.find(session[:user_id])
     @life = Life.find(@user.life_id)
     # debugger
-    @life = params["person"]
+    @life.update(params["person"])
     @life.save!
   end
 
@@ -15,5 +16,9 @@ class LifeController < ApplicationController
     respond_to do |format|
       format.json { render json: @life.to_json }
     end
+  end
+
+  def permit_params
+    params["person"].require(:life).permit(:maxId, :nodes, :connections)
   end
 end
