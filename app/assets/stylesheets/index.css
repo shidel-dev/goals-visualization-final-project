@@ -30,48 +30,47 @@
 #life_bar {
   position: absolute;
   top: 400px;
-  background-color: lightgrey;
   margin-left: 40px;
-  height:150px;
+  height:200px;
+  width:880px;
+  overflow: hidden;
 }
 
 #right-arrow {
   display: none;
   width: 5%;
   position: absolute;
-  top: 465px;
-  left: 1150px;
-}
-
-#right-arrow:hover, #higher:hover, #lower:hover {
-  cursor: pointer;
+  top: 450px;
+  left: 1470px;
 }
 
 #left-arrow {
   display: none;
   width: 5%;
   position: absolute;
-  top: 465px;
-  left: 150px;
+  top: 450px;
+  left: 455px;
+}
+
+#right-arrow:hover, #higher:hover, #lower:hover {
+  cursor: pointer;
 }
 
 #num {
   display: none;
   position: absolute;
   top: 350px;
-  left: 550px;
+  left: 910px;
 }
 
 #lower {
   position: absolute;
   top: 600px;
-  left: 620px;
+  left: 940px;
 }
 
 #higher {
   position: absolute;
   top: 600px;
-  left: 700px;
+  left: 1060px;
 }
-
-
