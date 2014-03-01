@@ -66,8 +66,6 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 function scaleBar(width,multi){
   paper.remove();
   setup(width);
-  paper.height = "200px"
-  $("#life_bar").css("height", "200px")
   $("#life_bar")
     .animate({"width": "0px", "margin-left":"+=440px"}, 500)
     .animate({"width": "880px","margin-left":"-=440px"}, 500,function(){
@@ -80,7 +78,7 @@ function scaleBar(width,multi){
         bar.createConnection(conn.to.ref.elem, conn.from.ref.elem)
       })
       bar.events();
- })
+  })
 };
 
 function nodeInfo(node,event){

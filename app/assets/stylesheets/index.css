@@ -36,20 +36,18 @@
   overflow: hidden;
 }
 
-#right-arrow {
-  display: none;
-  width: 5%;
-  position: absolute;
-  top: 450px;
-  left: 1470px;
+#arrow_right {
+width: 40px;
+position: relative;
+top: 175px;
+left: 880px;
 }
 
-#left-arrow {
-  display: none;
-  width: 5%;
-  position: absolute;
-  top: 450px;
-  left: 455px;
+#arrow_left {
+position: relative;
+width: 40px;
+top: 174px;
+left: -3px;
 }
 
 #right-arrow:hover, #higher:hover, #lower:hover {
