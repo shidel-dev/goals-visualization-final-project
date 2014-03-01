@@ -2,7 +2,7 @@ save = function(bar) {
   var barJSON = {};
   saveNodes(bar, barJSON);
   saveConnections(bar, barJSON);
-  return {person: barJSON};
+  return barJSON;
 }
 
 saveNodes = function(bar, barJSON) {
@@ -61,7 +61,15 @@ populateConnections = function(bar, data) {
 }
 
 savebutton = function() {
-  $.post('/save', save(bar), "json");
+  data = {person: save(bar)};
+  console.log(data);
+  $.ajax({
+    type: "POST",
+    url: '/save',
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify(data),
+    dataType: "json"
+  });
 }
 
 loadLifeData = function() {
