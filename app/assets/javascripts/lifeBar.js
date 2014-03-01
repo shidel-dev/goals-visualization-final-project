@@ -251,6 +251,9 @@ function scaleBar(width,multi){
   _.each(bar.nodes,function(node){
     node.render(multi);
   })
+  _.each(bar.connections,function(conn){
+    paper.connection(conn.from.ref.elem, conn.to.ref.elem, "blue");
+  })
   bar.events();
 };
 
