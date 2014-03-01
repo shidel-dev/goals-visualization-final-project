@@ -4,7 +4,7 @@ window.onload = function() {
   setup(880)
   window.bar = new Bar();
   window.person = new Person("27,03,1990");
-  loadLifeData();
+  // loadLifeData();
 };
 
 
@@ -16,11 +16,11 @@ function setup(width){
 // --- Person Object -----
 function Person(birthdate){
   this.birthdate = _.map(birthdate.split(","),function(part){
-    return parseInt(part)
+    return parseInt(part);
   })
   this.pos = this.setCurrentMarker();
   console.log(this.pos * 960)
-  this.renderMarkerLine(this.pos)
+  this.renderMarkerLine(this.pos * 960)
 }
 
 Person.prototype.setCurrentMarker = function(){
@@ -33,11 +33,12 @@ Person.prototype.setCurrentMarker = function(){
       end[2] = end[2] + 80
       window.time = new Time(day,month,year)
       time.unit = 1;
+      time.period = 960;
       return (year - this.birthdate[2]) / 80 
 }
 
-Person.prototype.renderMarkerLine = function(){
-  var marker = paper.path("M" + this.pos + " 0 l 0 200")
+Person.prototype.renderMarkerLine = function(position){
+  var marker = paper.path("M" + position + " 0 l 0 200")
   marker.attr({stroke: 'black', 'stroke-width': 1});
 }
 
@@ -91,7 +92,7 @@ function Node(options) {
   this.id = options.id;
   this.x = options.x / time.unit;
   this.y = options.y;
-  this.r = 3;
+  this.r = 4;
   this.title = options.title;
   if(options.reflection) {
     this.reflection = options.reflection;
@@ -105,13 +106,13 @@ function Node(options) {
   }
   this.connected = false;
   this.render(time.unit);
-  this.events();
 }; 
 
 Node.prototype.render = function(multi){
   this.elem = paper.circle(this.x *  multi, this.y, this.r);
   this.elem.attr({fill:"green",stroke:'none'});
   this.elem.ref = this;
+  this.events();
 };
 
 Node.prototype.events = function(){
@@ -141,7 +142,7 @@ Time.prototype.events = function(){
   })
 
   $("#life").click(function(){
-    time.scale('life')
+    time.scale("life")
   })
 
 }
@@ -150,13 +151,16 @@ Time.prototype.events = function(){
 Time.prototype.scale = function(unit){
 
   if(unit === "year"){
-    scale(70400,80);
+    scaleBar(70400,80);
     this.unit = 80;
     this.period = 12
+    $(paper.canvas).css("left","-23280px")
   }else if (unit === "life"){
-    scale(880,1);
+    scaleBar(880,1);
     this.unit = 1;
     this.period = 960
+
+    person.renderMarkerLine(person.pos * this.period)
   }
 }
 
@@ -171,6 +175,8 @@ function move(dx, dy) {
   this.attr(att);
 
   for (var i = bar.connections.length; i--;) {
+    // $(bar.connections[i].line.node).remove()
+    // paper.connection(bar.connections[i].from.ref.elem, bar.connections[i].to.ref.elem, "blue");
     paper.connection(bar.connections[i]);
   }
   paper.safari();
@@ -238,7 +244,7 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 };
 
 
-function scale(width,multi){
+function scaleBar(width,multi){
   paper.remove();
   setup(width);
   paper.height = "200px"
@@ -247,17 +253,20 @@ function scale(width,multi){
   _.each(bar.nodes,function(node){
     node.render(multi);
   })
-  paper.setViewBox(person.pos/this.period,0,0,0)
+  _.each(bar.connections,function(conn){
+    paper.connection(conn.from.ref.elem, conn.to.ref.elem, "blue");
+  })
   bar.events();
-}
+};
 
 
 function nodeInfo(node,event){
+  console.log(event)
   $(".popup").remove();
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
   $("#container").append(template(node.ref))
-  $(".popup").css({"left" : event.x - 160 + "px", "top" : event.y - 160 + "px"})
+  $(".popup").css({"left" : event.pageX - 160 + "px", "top" : event.pageY - 160 + "px"})
   $("#exit").click(remove);
   $('.action').click(function(e){
     if (e.target.id === "complete") {
@@ -281,8 +290,4 @@ function listenForNextNode(oNode){
       };
     });
   });
-};  
-
-
- 
- 
+};
