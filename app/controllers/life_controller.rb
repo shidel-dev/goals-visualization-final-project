@@ -1,11 +1,11 @@
 class LifeController < ApplicationController
 
   def save
-    debugger
+
     @user = User.find(session[:user_id])
     @life = Life.find(@user.life_id)
     # debugger
-    @life.update(params["person]"])
+    @life.update(params["person"])
     @life.save!
   end
 
