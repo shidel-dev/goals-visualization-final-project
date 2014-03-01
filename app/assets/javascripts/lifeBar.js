@@ -259,11 +259,12 @@ function scaleBar(width,multi){
 
 
 function nodeInfo(node,event){
+  console.log(event)
   $(".popup").remove();
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
   $("#container").append(template(node.ref))
-  $(".popup").css({"left" : event.x - 160 + "px", "top" : event.y - 160 + "px"})
+  $(".popup").css({"left" : event.pageX - 160 + "px", "top" : event.pageY - 160 + "px"})
   $("#exit").click(remove);
   $('.action').click(function(e){
     if (e.target.id === "complete") {
