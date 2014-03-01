@@ -166,7 +166,7 @@ Time.prototype.scale = function(unit){
 
   if(unit === "month"){
     scaleBar(844800,960);
-    this.unit = 1040;
+    this.unit = 960;
     this.period = 1;
     var shift = Math.round(844800 * person.pos * -1) + "px"
     $(paper.canvas).css("left",shift)
