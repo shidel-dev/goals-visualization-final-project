@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Goals</title>
+  <link data-turbolinks-track="true" href="/assets/application.css?body=1" media="all" rel="stylesheet" />
+<link data-turbolinks-track="true" href="/assets/index.css?body=1" media="all" rel="stylesheet" />
+  <script data-turbolinks-track="true" src="/assets/raphael-min.js?body=1"></script>
+<script data-turbolinks-track="true" src="/assets/underscore.js?body=1"></script>
+<script data-turbolinks-track="true" src="/assets/jquery.js?body=1"></script>
+<script data-turbolinks-track="true" src="/assets/jquery_ujs.js?body=1"></script>
+<script data-turbolinks-track="true" src="/assets/turbolinks.js?body=1"></script>
+<script data-turbolinks-track="true" src="/assets/lifeBar.js?body=1"></script>
+<script data-turbolinks-track="true" src="/assets/toggles.js?body=1"></script>
+<script data-turbolinks-track="true" src="/assets/application.js?body=1"></script>
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="RIiRVpAgdYqRN1jKKAXPDQ2wX2pKifgxpFOL0jZwtvA=" name="csrf-token" />
+</head>
+<body>
+  <div id='container'>
+  <div id='life_bar'>
+  </div>
+  <button id="year">change to year</button><button id='life'>change to life</button>
+  <div>
+    <img id="right-arrow" src="/icons/right-grey-arrow.png">
+    <img id="left-arrow" src="/icons/left-grey-arrow.png">
+  </div>
+</div>
+
+<script type="text/template" class='popupTemplate'>
+  <div class='popup'>
+    <img src="/icons/glyphicons_207_remove_2.png" id='exit'></img>
+    <p><%= v.title%></p>
+    <div class='action' id='complete'>Complete</div>
+    <div class='action' id='link'>Link</div>
+    <% if (v.connected){%>
+      <div class='action' id='sever'>Sever</div>
+    <% };$(".action").css("width","33.33%")%>
+  </div>
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

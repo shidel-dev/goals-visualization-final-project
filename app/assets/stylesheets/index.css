@@ -23,7 +23,7 @@
   border:1px solid lightgrey;
   border-radius: 10px;
   position:fixed;
-  background-color:#fff; 
+  background-color:#fff;
 
 }
 
@@ -34,4 +34,43 @@
   height:200px;
   width:880px;
   overflow: hidden;
+}
+
+#right-arrow {
+  display: none;
+  width: 5%;
+  position: absolute;
+  top: 450px;
+  left: 1470px;
+}
+
+#left-arrow {
+  display: none;
+  width: 5%;
+  position: absolute;
+  top: 450px;
+  left: 455px;
+}
+
+#right-arrow:hover, #higher:hover, #lower:hover {
+  cursor: pointer;
+}
+
+#num {
+  display: none;
+  position: absolute;
+  top: 350px;
+  left: 910px;
+}
+
+#lower {
+  position: absolute;
+  top: 600px;
+  left: 940px;
+}
+
+#higher {
+  position: absolute;
+  top: 600px;
+  left: 1060px;
 }
