@@ -22,7 +22,6 @@ function Person(birthdate){
   this.pos = this.setCurrentMarker();
   console.log(this.pos * 960)
   this.renderMarkerLine(this.pos)
-  this.currentPos = 0
 }
 
 Person.prototype.setCurrentMarker = function(){
@@ -41,14 +40,6 @@ Person.prototype.setCurrentMarker = function(){
 Person.prototype.renderMarkerLine = function(){
   var marker = paper.path("M" + this.pos + " 0 l 0 200")
   marker.attr({stroke: 'black', 'stroke-width': 1});
-}
-
-Person.prototype.updatePosition = function(direction, interval) {
-  if (direction === "right") {
-    this.currentPos += 880;
-  } else if (direction === "left") {
-    this.currentPos -= 880;
-  }
 }
 
 // ---- Bar Object ------
@@ -298,7 +289,3 @@ function listenForNextNode(oNode){
     });
   });
 };
-
-
-
-
