@@ -19,7 +19,6 @@ function Person(birthdate){
     return parseInt(part);
   })
   this.pos = this.setCurrentMarker();
-  console.log(this.pos * 960)
   this.renderMarkerLine(this.pos * 960)
 }
 
@@ -123,7 +122,7 @@ Node.prototype.events = function(){
 };
 
 Node.prototype.end = function(e){  
-  this.ref.x = this.attrs.cx;
+  this.ref.x = this.attrs.cx/time.unit;
   this.ref.y = this.attrs.cy;
 }
 
@@ -190,8 +189,6 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
     obj1 = line.from.ref.elem;
     obj2 = line.to.ref.elem;
   }
-  console.log(obj1)
-  console.log(obj2)
   var bb1 = obj1.getBBox(),
       bb2 = obj2.getBBox(),
       p = [{x: bb1.x + bb1.width / 2, y: bb1.y - 1},
@@ -256,8 +253,6 @@ function scaleBar(width,multi){
   })
   var barClone = _.clone(bar)
   bar.connections = []
-  console.log(barClone)
-  console.log(bar)
   _.each(barClone.connections, function(conn){
     bar.createConnection(conn.to.ref.elem, conn.from.ref.elem)
   })
@@ -269,7 +264,6 @@ function scaleBar(width,multi){
 
 
 function nodeInfo(node,event){
-  console.log(event)
   $(".popup").remove();
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
