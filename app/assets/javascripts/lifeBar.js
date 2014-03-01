@@ -3,32 +3,34 @@
 window.onload = function() {
   setup(880)
   window.bar = new Bar();
-  window.person = new Person("27,03,1990");
+  window.person = new Person("26-2-1990");
   // loadLifeData();
 };
 
 // --- PERSON Object -----
 
 function Person(birthdate){
-  this.birthdate = _.map(birthdate.split(","),function(part){
+  this.birthdate = _.map(birthdate.split("-"),function(part){
     return parseInt(part);
   })
+  this.birthdateObj = new Date(this.birthdate[2],this.birthdate[1], this.birthdate[0]);
   this.pos = this.setCurrentMarker();
-  this.renderMarkerLine(this.pos * 960)
+  this.renderMarkerLine(this.pos * 880)
 }
 
 Person.prototype.setCurrentMarker = function(){
 
-  var date  = new Date()
+  var date  = new Date(),
       year = date.getFullYear(),
       month = date.getMonth(),
       day = date.getDate(),
-      end = _.clone(this.birthdate)
+      end = _.clone(this.birthdate);
+
       end[2] = end[2] + 80
       window.time = new Time(day,month,year)
       time.unit = 1;
       time.period = 960;
-      return (year - this.birthdate[2]) / 80 
+      return days_between(date, this.birthdateObj) / 29200 
 }
 
 Person.prototype.renderMarkerLine = function(position){
@@ -143,27 +145,53 @@ function Time(day,month,year){
 }
 
 Time.prototype.events = function(){
+  $("#month").click(function(e){
+    time.scale("month")
+  })
   $("#year").click(function(e){
     time.scale("year")
   })
-
+  $("#5year").click(function(e){
+    time.scale("5year")
+  })
+  $("#10year").click(function(e){
+    time.scale("10year")
+  })
   $("#life").click(function(){
     time.scale("life")
   })
-}
+};
 
 Time.prototype.scale = function(unit){
 
-  if(unit === "year"){
+  if(unit === "month"){
+    scaleBar(844800,960);
+    this.unit = 1040;
+    this.period = 1;
+    var shift = Math.round(844800 * person.pos * -1) + "px"
+    $(paper.canvas).css("left",shift)
+  }else if(unit === "year"){
     scaleBar(70400,80);
     this.unit = 80;
-    this.period = 12
-    $(paper.canvas).css("left","-23280px")
+    this.period = 12;
+    var shift = Math.round(70400 * person.pos * -1) + "px"
+    $(paper.canvas).css("left",shift)
+  }else if(unit === "5year"){
+    scaleBar(14080,16)
+    this.unit = 16;
+    this.period = 60;
+    var shift = Math.round(14080 * person.pos * -1) + "px"
+    $(paper.canvas).css("left",shift)
+  }else if(unit === "10year"){
+    scaleBar(7040,8)
+    this.unit = 8;
+    this.period = 120;
+    var shift = Math.round(7040 * person.pos * -1) + "px"
+    $(paper.canvas).css("left",shift)
   }else if (unit === "life"){
     scaleBar(880,1);
     this.unit = 1;
-    this.period = 960
-
-    person.renderMarkerLine(person.pos * this.period)
+    this.period = 960;
+    person.renderMarkerLine(person.pos * 880);
   }
 }
