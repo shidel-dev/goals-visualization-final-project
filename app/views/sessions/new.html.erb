@@ -1,0 +1,23 @@
+<div class="container">
+  <%= form_for(:session,
+                url: sessions_path,
+                :html => {:class => "new_session"} ) do |f| %>
+
+    <h2>Sign in</h2>
+    <p>
+      <%= f.label(:email, "Email:") %>
+      <%= f.text_field(:email) %><br><br>
+
+      <%= f.label(:password, "Password:") %>
+      <%= f.password_field(:password) %><br><br>
+    </p>
+    <%= f.submit("Sign in") %>
+  <% end %>
+
+    <p>New user? <%= link_to "Sign up now!", new_user_path %></p>
+
+  <% if flash[:signin_error] %>
+      <div class="error"><%= flash[:signin_error] %></div>
+  <% end %>
+
+</div>

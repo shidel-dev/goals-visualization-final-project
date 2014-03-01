@@ -17,9 +17,9 @@ ActiveRecord::Schema.define(version: 20140228163400) do
   enable_extension "plpgsql"
 
   create_table "users", force: true do |t|
-    t.string  "email"
-    t.string  "password_digest"
-    t.integer "life_id"
+    t.string "email"
+    t.string "password_digest"
+    t.string "life_id"
   end
 
 end
