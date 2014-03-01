@@ -76,7 +76,7 @@ loadLifeData = function() {
     success: function(data) {
       console.log(data);
       console.log(bar);
-      // console.log(JSON.stringify(data));
+      console.log(JSON.stringify(data));
       populate(window.bar, data);
     }
   })
