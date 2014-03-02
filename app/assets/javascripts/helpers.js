@@ -66,19 +66,29 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 function scaleBar(width,multi){
   paper.remove();
   setup(width);
-  paper.height = "200px"
-  $("#life_bar").css("height", "200px")
-
-  _.each(bar.nodes,function(node){
-    node.render(multi);
+  $("#life_bar")
+    .animate({"width": "0px", "margin-left":"+=440px"}, 500)
+    .animate({"width": "880px","margin-left":"-=440px"}, 500,function(){
+      _.each(bar.nodes,function(node){
+        node.render(multi);
+      })
+      var barClone = _.clone(bar)
+      bar.connections = []
+      _.each(barClone.connections, function(conn){
+        bar.createConnection(conn.to.ref.elem, conn.from.ref.elem)
+      })
+      bar.events();
   })
-  var barClone = _.clone(bar)
-  bar.connections = []
-  _.each(barClone.connections, function(conn){
-    bar.createConnection(conn.to.ref.elem, conn.from.ref.elem)
-  })
-  bar.events();
 };
+
+function shiftTime(multi){
+  $("svg").animate({"margin-left":"+=" + multi * 880 + "px"}, {
+                    duration: 1000,
+                    easing: 'swing'
+                })
+}
+
+
 
 function nodeInfo(node,event){
   $(".popup").remove();
