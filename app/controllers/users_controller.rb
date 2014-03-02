@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def index
+    landing_page
     redirect_to root_path # ??
   end
 
