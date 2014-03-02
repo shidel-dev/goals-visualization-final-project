@@ -173,10 +173,10 @@ Time.prototype.events = function(){
     time.scale("life")
   })
   $("#arrow_left").click(function(){
-    shiftTime(1)
+    if(!$("svg").is(':animated') ) {shiftTime(1)}
   })
   $("#arrow_right").click(function(){
-    shiftTime(-1)
+    if(!$("svg").is(':animated') ) {shiftTime(-1)}
   })
 };
 

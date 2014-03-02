@@ -82,15 +82,21 @@ function scaleBar(width,multi){
 };
 
 function shiftTime(multi){
-  if ($("svg").cssNumber("left") > (time.unit + 1) * (-880) && $("svg").cssNumber("left") <= 880){
-    $("svg").animate({"left":"+=" + multi * 880 + "px"})
-  }
+  $(".arrow").show();
+  $("svg").animate({"left":"+=" + multi * 880 + "px"}, function(){
+    cssNum = $("svg").cssNumber("left")
+    if (cssNum > 0 ){
+      $("#arrow_left").hide();
+    } else if (cssNum - 800 <= time.unit * -880){
+      $("#arrow_right").hide();
+    }; 
+  });
 }
 
 jQuery.fn.cssNumber = function(prop){
-    var v = parseInt(this.css(prop),10);
-    return isNaN(v) ? 0 : v;
-};
+  var v = parseInt(this.css(prop),10);
+  return isNaN(v) ? 0 : v;
+}
 
 
 
@@ -108,7 +114,6 @@ function nodeInfo(node,event){
       listenForNextNode(node.ref,"link");
     } else if (e.target.id === "sever") {
       listenForNextNode(node.ref,"sever");
-      // $(bar.connections[0].line)[0].remove()
     };
   })
 };
