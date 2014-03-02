@@ -82,9 +82,21 @@ function scaleBar(width,multi){
 };
 
 function shiftTime(multi){
-  // if ($("svg").css("margin-left") >= 0 || $("svg").css("margin-left") <= time.period * 880){
-    $("svg").animate({"margin-left":"+=" + multi * 880 + "px"})
-  // }
+  $(".arrow").show();
+  $("svg").animate({"left":"+=" + multi * 880 + "px"}, function(){
+    cssNum = $("svg").cssNumber("left")
+    if (cssNum > 0 ){
+      $("#arrow_left").hide();
+    } else if (cssNum - 800 <= time.unit * -880){
+      $("#arrow_right").hide();
+    }; 
+  });
+}
+
+jQuery.fn.cssNumber = function(prop){
+  var v = parseInt(this.css(prop),10);
+  // console.log("this.css(prop) = " + this.css(prop) + " v = " + v + " prop= " + prop );
+  return isNaN(v) ? 0 : v;
 }
 
 
