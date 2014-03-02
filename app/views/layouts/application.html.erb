@@ -8,5 +8,8 @@
 </head>
 <body>
   <%= yield %>
+  <% if @current_user %>
+  <%= render partial: "loadlifedata" %>
+  <% end %>
 </body>
 </html>

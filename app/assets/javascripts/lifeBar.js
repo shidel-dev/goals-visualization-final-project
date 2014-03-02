@@ -4,7 +4,9 @@ window.onload = function() {
   setup(880)
   window.bar = new Bar();
   window.person = new Person("26-2-1990");
-  // loadLifeData();
+  if($("#login")){
+  loadLifeData();
+  }
 };
 
 // --- PERSON Object -----
@@ -30,7 +32,7 @@ Person.prototype.setCurrentMarker = function(){
       window.time = new Time(day,month,year)
       time.unit = 1;
       time.period = 960;
-      return days_between(date, this.birthdateObj) / 29200 
+      return days_between(date, this.birthdateObj) / 29200
 }
 
 Person.prototype.renderMarkerLine = function(position){
@@ -98,7 +100,7 @@ function Node(options) {
   }
   this.connected = false;
   this.render(time.unit);
-}; 
+};
 
 Node.prototype.render = function(multi){
   this.elem = paper.circle(this.x *  multi, this.y, this.r);
@@ -114,7 +116,7 @@ Node.prototype.events = function(){
   })
 };
 
-Node.prototype.end = function(e){  
+Node.prototype.end = function(e){
   this.ref.x = this.attrs.cx/time.unit;
   this.ref.y = this.attrs.cy;
 }
@@ -123,7 +125,7 @@ Node.prototype.end = function(e){
 
 function start(){
   this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
-  this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");  
+  this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
 };
 
 function move(dx, dy) {
