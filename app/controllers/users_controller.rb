@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    landing_page
   end
 
   def create
@@ -19,6 +20,10 @@ class UsersController < ApplicationController
 
   def show
     redirect_to root_path
+  end
+
+  def landing_page
+    @disable_nav = true
   end
 
   private
