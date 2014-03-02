@@ -82,7 +82,6 @@ function scaleBar(width,multi){
 };
 
 function shiftTime(multi){
-<<<<<<< HEAD
   $(".arrow").show();
   $("svg").animate({"left":"+=" + multi * 880 + "px"}, function(){
     cssNum = $("svg").cssNumber("left")
@@ -98,11 +97,6 @@ jQuery.fn.cssNumber = function(prop){
   var v = parseInt(this.css(prop),10);
   return isNaN(v) ? 0 : v;
 }
-
-jQuery.fn.cssNumber = function(prop){
-    var v = parseInt(this.css(prop),10);
-    return isNaN(v) ? 0 : v;
-};
 
 
 
