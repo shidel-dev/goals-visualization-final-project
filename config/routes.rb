@@ -10,11 +10,11 @@ Goals::Application.routes.draw do
 
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
-  match '/signout', to: 'sessions#destroy',     via: 'delete'
+  match '/signout', to: 'sessions#destroy',     via: 'get'
 
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions, only: [:new, :create]
   resources :users
-  
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
