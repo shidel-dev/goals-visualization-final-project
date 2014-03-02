@@ -160,6 +160,12 @@ Time.prototype.events = function(){
   $("#life").click(function(){
     time.scale("life")
   })
+  $("#arrow_left").click(function(){
+    shiftTime(1)
+  })
+  $("#arrow_right").click(function(){
+    shiftTime(-1)
+  })
 };
 
 Time.prototype.scale = function(unit){
