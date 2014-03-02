@@ -82,10 +82,15 @@ function scaleBar(width,multi){
 };
 
 function shiftTime(multi){
-  // if ($("svg").css("margin-left") >= 0 || $("svg").css("margin-left") <= time.period * 880){
-    $("svg").animate({"margin-left":"+=" + multi * 880 + "px"})
-  // }
+  if ($("svg").cssNumber("left") > (time.unit + 1) * (-880) && $("svg").cssNumber("left") <= 880){
+    $("svg").animate({"left":"+=" + multi * 880 + "px"})
+  }
 }
+
+jQuery.fn.cssNumber = function(prop){
+    var v = parseInt(this.css(prop),10);
+    return isNaN(v) ? 0 : v;
+};
 
 
 
@@ -100,20 +105,25 @@ function nodeInfo(node,event){
     if (e.target.id === "complete") {
       alert("complete");
     } else if (e.target.id === "link") {
-      listenForNextNode(node.ref);
+      listenForNextNode(node.ref,"link");
     } else if (e.target.id === "sever") {
-      alert("sever");
+      listenForNextNode(node.ref,"sever");
+      // $(bar.connections[0].line)[0].remove()
     };
   })
 };
 
 function remove(e){e.target.parentNode.remove()};
 
-function listenForNextNode(oNode){
+function listenForNextNode(oNode,action){
  $("circle").click(function(e){
     _.each( bar.nodes,function(node){
       if (e.target === node.elem[0] && e.target !== oNode.elem[0]){
-        bar.createConnection(oNode.elem,node.elem);
+        if(action === "link"){
+          bar.createConnection(oNode.elem,node.elem);
+        }else if(action === "sever"){
+          bar.removeConnection(oNode,node)
+        }
         $("circle").unbind("click");
       };
     });
