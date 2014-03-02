@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(create_params)
+    @user.create_birthday(params[:birthday])
     if @user.save
       session[:user_id] = @user.id
       redirect_to root_path
@@ -28,6 +29,6 @@ class UsersController < ApplicationController
 
   private
   def create_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:email, :password, :password_confirmation, :birthday)
   end
 end
