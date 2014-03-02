@@ -169,35 +169,39 @@ Time.prototype.events = function(){
 };
 
 Time.prototype.scale = function(unit){
-
   if(unit === "month"){
     scaleBar(844800,960);
     this.unit = 960;
     this.period = 1;
+    $(".arrow").show();
     var shift = Math.round(844800 * person.pos * -1) + "px"
     $(paper.canvas).css("left",shift)
   }else if(unit === "year"){
     scaleBar(70400,80);
     this.unit = 80;
     this.period = 12;
+    $(".arrow").show();
     var shift = Math.round(70400 * person.pos * -1) + "px"
     $(paper.canvas).css("left",shift)
   }else if(unit === "5year"){
     scaleBar(14080,16)
     this.unit = 16;
     this.period = 60;
+    $(".arrow").show();
     var shift = Math.round(14080 * person.pos * -1) + "px"
     $(paper.canvas).css("left",shift)
   }else if(unit === "10year"){
     scaleBar(7040,8)
     this.unit = 8;
     this.period = 120;
+    $(".arrow").show();
     var shift = Math.round(7040 * person.pos * -1) + "px"
     $(paper.canvas).css("left",shift)
   }else if (unit === "life"){
     scaleBar(880,1);
     this.unit = 1;
     this.period = 960;
+    $(".arrow").hide();
     person.renderMarkerLine(person.pos * 880);
   }
 }
