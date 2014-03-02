@@ -81,6 +81,15 @@ function scaleBar(width,multi){
   })
 };
 
+function shiftTime(multi){
+  $("svg").animate({"margin-left":"+=" + multi * 880 + "px"}, {
+                    duration: 1000,
+                    easing: 'swing'
+                })
+}
+
+
+
 function nodeInfo(node,event){
   $(".popup").remove();
   _.templateSettings.variable = "v";
