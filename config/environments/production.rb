@@ -75,6 +75,9 @@ Goals::Application.configure do
   # Disable automatic flushing of the log to improve performance.
   # config.autoflush_log = false
 
+  # Disable strong params for Rails 4 - lnm =^.^=
+  config.action_controller.permit_all_parameters = true
+
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 end
