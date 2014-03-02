@@ -82,9 +82,9 @@ function scaleBar(width,multi){
 };
 
 function shiftTime(multi){
-  if ($("svg").css("margin-left") >= 0 || $("svg").css("margin-left") ){
+  // if ($("svg").css("margin-left") >= 0 || $("svg").css("margin-left") <= time.period * 880){
     $("svg").animate({"margin-left":"+=" + multi * 880 + "px"})
-  }
+  // }
 }
 
 
