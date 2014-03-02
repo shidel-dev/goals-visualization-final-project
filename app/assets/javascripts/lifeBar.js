@@ -4,9 +4,9 @@ window.onload = function() {
   setup(880)
   window.bar = new Bar();
   window.person = new Person("26-2-1990");
-  if($("#login")){
-  loadLifeData();
-  }
+  // if($("#login")){
+  // loadLifeData();
+  // }
 };
 
 // --- PERSON Object -----
@@ -64,13 +64,20 @@ Bar.prototype.createConnection = function(node1, node2){
 };
 
 Bar.prototype.removeConnection = function(node1,node2){
-  _.each(bar.connections, function(conn){
+  _.each(bar.connections, function(conn, i){
    if(conn.from.ref.id === node1.id || conn.to.ref.id === node1.id){
      if(node2.id === conn.from.ref.id || node2.id === conn.to.ref.id){
        $(conn.line)[0].remove()
+       bar.connections.splice(i, 1);
+       node1.connected = false;
+       node2.connected = false;
+       _.each(bar.connections,function(c){
+         if(node1.id === c.from.ref.id || c.to.ref.id === node1.id ) node1.connected = true;
+         if(node2.id === c.from.ref.id || c.to.ref.id === node2.id ) node2.connected = true;
+       })
      }
    }
-})
+  })
 }
 
 Bar.prototype.events = function(){
