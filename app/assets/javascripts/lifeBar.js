@@ -63,6 +63,16 @@ Bar.prototype.createConnection = function(node1, node2){
   node2.ref.connected = true;
 };
 
+Bar.prototype.removeConnection = function(node1,node2){
+  _.each(bar.connections, function(conn){
+   if(conn.from.ref.id === node1.id || conn.to.ref.id === node1.id){
+     if(node2.id === conn.from.ref.id || node2.id === conn.to.ref.id){
+       $(conn.line)[0].remove()
+     }
+   }
+})
+}
+
 Bar.prototype.events = function(){
   var that = this;
   paper.canvas.setAttribute('preserveAspectRatio', 'none');

@@ -82,6 +82,7 @@ function scaleBar(width,multi){
 };
 
 function shiftTime(multi){
+<<<<<<< HEAD
   $(".arrow").show();
   $("svg").animate({"left":"+=" + multi * 880 + "px"}, function(){
     cssNum = $("svg").cssNumber("left")
@@ -95,9 +96,13 @@ function shiftTime(multi){
 
 jQuery.fn.cssNumber = function(prop){
   var v = parseInt(this.css(prop),10);
-  // console.log("this.css(prop) = " + this.css(prop) + " v = " + v + " prop= " + prop );
   return isNaN(v) ? 0 : v;
 }
+
+jQuery.fn.cssNumber = function(prop){
+    var v = parseInt(this.css(prop),10);
+    return isNaN(v) ? 0 : v;
+};
 
 
 
@@ -112,20 +117,24 @@ function nodeInfo(node,event){
     if (e.target.id === "complete") {
       alert("complete");
     } else if (e.target.id === "link") {
-      listenForNextNode(node.ref);
+      listenForNextNode(node.ref,"link");
     } else if (e.target.id === "sever") {
-      alert("sever");
+      listenForNextNode(node.ref,"sever");
     };
   })
 };
 
 function remove(e){e.target.parentNode.remove()};
 
-function listenForNextNode(oNode){
+function listenForNextNode(oNode,action){
  $("circle").click(function(e){
     _.each( bar.nodes,function(node){
       if (e.target === node.elem[0] && e.target !== oNode.elem[0]){
-        bar.createConnection(oNode.elem,node.elem);
+        if(action === "link"){
+          bar.createConnection(oNode.elem,node.elem);
+        }else if(action === "sever"){
+          bar.removeConnection(oNode,node)
+        }
         $("circle").unbind("click");
       };
     });
