@@ -82,10 +82,9 @@ function scaleBar(width,multi){
 };
 
 function shiftTime(multi){
-  $("svg").animate({"margin-left":"+=" + multi * 880 + "px"}, {
-                    duration: 1000,
-                    easing: 'swing'
-                })
+  if ($("svg").css("margin-left") >= 0 || $("svg").css("margin-left") ){
+    $("svg").animate({"margin-left":"+=" + multi * 880 + "px"})
+  }
 }
 
 

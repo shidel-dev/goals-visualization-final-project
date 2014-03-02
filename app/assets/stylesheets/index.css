@@ -50,6 +50,8 @@ top: 174px;
 left: -3px;
 }
 
+.arrow{display: none;}
+
 #right-arrow:hover, #higher:hover, #lower:hover {
   cursor: pointer;
 }
