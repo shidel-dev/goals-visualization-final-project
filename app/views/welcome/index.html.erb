@@ -18,15 +18,22 @@
   <div class='popup'>
     <img src="/icons/glyphicons_207_remove_2.png" id='exit'></img>
     <p><%%= v.title%></p>
+    <div id='foot'>
     <img class='action' id='link' src="/icons/glyphicons_422_git_branch.png"></img>
-    <img class='action' id='complete' src="/icons/glyphicons_206_ok_2.png"></img>
+    
     
     <img class='action' id='delete' src="/icons/glyphicons_016_bin.png"></img>
-    <img class='action' id='reflection' src="/icons/glyphicons_087_log_book.png"></img>
+    
 
     <%% if (v.connected){%>
       <img class='action' id='sever' src="/icons/glyphicons_288_scissors.png"></img>
     <%% };$(".action").css("width","33.33%")%>
+    <%% if (v.completed){%>
+      <img class='action' id='reflection' src="/icons/glyphicons_087_log_book.png"></img>
+     <%%}else{%>
+      <img class='action' id='complete' src="/icons/glyphicons_206_ok_2.png"></img>
+     <%%}%> 
+    <div>
   </div>
 
 </script>
