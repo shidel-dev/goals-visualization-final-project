@@ -1,9 +1,9 @@
 // ------Helpers --------
 
-function setup(width){
+function setup(width) {
   window.paper = new Raphael(document.getElementById('life_bar'), width, 200);
-  window.cover = paper.rect(0,0,width,200).attr({fill:"#C7BA94",stroke:"none"})
-}
+  window.cover = paper.rect(0, 0, width, 200).attr({fill: "#C7BA94",stroke: "none"});
+};
 
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
   if (obj1.line && obj1.from && obj1.to) {
@@ -122,7 +122,7 @@ function nodeInfo(node,event){
     } else if (e.target.id === "sever") {
       listenForNextNode(node.ref,"sever");
     } else if (e.target.id === "delete"){
-      bar.findNodeById($(".popup").data("id")).delete()
+      bar.findNodeById($(".popup").data("id")).deleteNode()
     };
   })
 };

@@ -156,7 +156,7 @@ Node.prototype.saveText = function(text){
   this.title = text;
 };
 
-Node.prototype.delete = function(){
+Node.prototype.deleteNode = function(){
   _.each(_.clone(this.connections), function(connection){
     bar.removeConnection(connection.to.ref, connection.from.ref);
   });
