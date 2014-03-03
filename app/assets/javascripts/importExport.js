@@ -60,7 +60,7 @@ populateConnections = function(bar, data) {
   }
 }
 
-savebutton = function() {
+saveLifeData = function() {
   data = {person: save(bar)};
   console.log(data);
   $.ajax({
