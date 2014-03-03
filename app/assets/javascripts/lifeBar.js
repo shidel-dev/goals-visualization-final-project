@@ -57,48 +57,35 @@ Bar.prototype.createNode = function(nodeOptions){
 };
 
 Bar.prototype.createConnection = function(node1, node2){
-  var con = paper.connection(node1, node2, "blue");
-  this.connections.push(con);
-  node1.ref.connected = true;
-  node2.ref.connected = true;
+  var connection = paper.connection(node1, node2, "blue");
+  this.connections.push(connection);
+  node1.ref.connections.push(connection);
+  node2.ref.connections.push(connection);
 };
 
 Bar.prototype.removeConnection = function(node1,node2){
-  spliceIndices = []
   _.each(bar.connections, function(conn, i){
    if(conn.from.ref.id === node1.id || conn.to.ref.id === node1.id){
      if(node2.id === conn.from.ref.id || node2.id === conn.to.ref.id){
-       $(conn.line)[0].remove()
-       node1.connected = false;
-       node2.connected = false;
-       _.each(bar.connections,function(c){
-         if(node1.id === c.from.ref.id || c.to.ref.id === node1.id ) node1.connected = true;
-         if(node2.id === c.from.ref.id || c.to.ref.id === node2.id ) node2.connected = true;
-       })
-       bar.connections[i] = undefined
+        // node2.removeConnectionReference(node1.id);
+        // node1.removeConnectionReference(node2.id);
+        $(conn.line)[0].remove();
+        bar.connections.splice(i,1);
      }
    }
   })
-  bar.connections = _.filter(bar.connections, function(conn){
-    conn === undefined
+
+}
+Bar.prototype.deleteNode = function(nodeToBeDeleted){
+  _.each(this.nodes,function(node,i){
+    if(node.id === nodeToBeDeleted.id){
+
+      nodeToBeDeleted.elem.remove();
+      bar.nodes.splice(i,1);
+    }
   })
 }
 
-Bar.prototype.deleteNode = function(node){
-  
-  console.log(node)
-  _.each(bar.connections, function(conn){
-    if(conn.from.ref.id === node.ref.id) {
-      bar.removeConnection(node.ref,conn.to.ref)
-    }
-    if(conn.to.ref.id === node.ref.id){
-      bar.removeConnection(node.ref,conn.from.ref)
-    }
-  })
-  bar.nodes.splice(_.indexOf(bar.nodes,node),1)
-  node.remove()
-  $(".popup").remove()
-}
 
 Bar.prototype.events = function(){
   var that = this;
@@ -124,6 +111,7 @@ function Node(options) {
   this.x = options.x / time.unit;
   this.y = options.y;
   this.r = 8;
+  this.connections = [];
   this.title = options.title;
   if(options.reflection) {
     this.reflection = options.reflection;
@@ -166,6 +154,23 @@ Node.prototype.complete = function(e){
 Node.prototype.saveText = function(text){
   this.title = text
 }
+
+Node.prototype.delete = function(){
+  _.each(this.connections, function(connection){
+    bar.removeConnection(connection.to.ref, connection.from.ref);
+  })
+  bar.deleteNode(this);
+}
+
+// Node.prototype.removeConnectionReference = function(id){
+//   var that = this
+//   _.each(this.connections,function(connection,i){
+//     if(connection.to.ref.id === id || connection.from.ref.id === id){
+//       that.connections.splice(i,1)
+//     }
+//   })
+// }
+
 
 // ----- NODE Drag helpers -----
 
