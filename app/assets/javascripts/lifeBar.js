@@ -92,10 +92,13 @@ Bar.prototype.events = function(){
   var that = this;
   paper.canvas.setAttribute('preserveAspectRatio', 'none');
   cover.click(function(e){
-
-    var nodeOptions = {id: that.nodeCounter, x: e.layerX, y: e.layerY};
+    if($(".popup").length){
+      remove()
+    } else {
+      var nodeOptions = {id: that.nodeCounter, x: e.layerX, y: e.layerY};
       bar.createNode(nodeOptions);
       that.nodeCounter++;
+      }
   });
 };
 

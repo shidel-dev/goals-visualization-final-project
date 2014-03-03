@@ -2,7 +2,7 @@
 
 function setup(width) {
   window.paper = new Raphael(document.getElementById('life_bar'), width, 200);
-  window.cover = paper.rect(0, 0, width, 200).attr({fill: "#C7BA94",stroke: "none"});
+  window.cover = paper.rect(0, 0, width, 200).attr({fill: "#F1EBD9",stroke: "none"});
 }
 
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
