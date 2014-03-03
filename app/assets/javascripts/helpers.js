@@ -114,20 +114,34 @@ function nodeInfo(node,event){
     $(".action").css("margin-left", "34px");
   }
   $("#exit").click(remove);
-  $('.action').click(function(e){
+  $('.action').click(handleActions);
+  function handleActions(e){
     if (e.target.id === "complete") {
       node.ref.complete();
       $("#complete").remove()
       $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
-        $("#reflection").css("margin-left", "34px")
+        $("#reflection").css("margin-left", "34px").click(handleActions)
     } else if (e.target.id === "link") {
       listenForNextNode(node.ref,"link");
     } else if (e.target.id === "sever") {
       listenForNextNode(node.ref,"sever");
     } else if (e.target.id === "delete"){
       bar.findNodeById($(".popup").data("id")).deleteNode();
-    }
-  });
+    } else if (e.target.id === "reflection"){
+      nodeReflectionDisplay(bar.findNodeById($(".popup").data("id")));
+    } 
+  }
+}
+
+
+function nodeReflectionDisplay(node) {
+  _.templateSettings.variable = "v";
+  var template = _.template($("script.reflectionTemplate").html());
+  $("#container").append(template(node));
+  $(".closeReflection").click(function(){
+    node.saveReflection($("#reflectionText").val())
+    $('#modal').remove()
+  })
 }
 
 function remove(){
