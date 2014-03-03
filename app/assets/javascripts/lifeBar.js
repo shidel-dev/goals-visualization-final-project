@@ -200,18 +200,23 @@ function Time(day,month,year){
 Time.prototype.events = function(){
   $("#month").click(function(e){
     time.scale("month")
+    highlightText(e.target);
   })
   $("#year").click(function(e){
     time.scale("year")
+    highlightText(e.target);
   })
   $("#5year").click(function(e){
     time.scale("5year")
+    highlightText(e.target);
   })
   $("#10year").click(function(e){
     time.scale("10year")
+    highlightText(e.target);
   })
-  $("#life").click(function(){
+  $("#life").click(function(e){
     time.scale("life")
+    highlightText(e.target);
   })
   $("#arrow_left").click(function(){
     if(!$("svg").is(':animated') ) {shiftTime(1)}

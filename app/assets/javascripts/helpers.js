@@ -163,3 +163,8 @@ function days_between(date1, date2) {
     return Math.round(difference_ms/ONE_DAY)
 
 }
+
+function highlightText(time_target) {
+  $('#time_intervals p').removeClass('selected')
+  $(time_target).addClass('selected')
+}
