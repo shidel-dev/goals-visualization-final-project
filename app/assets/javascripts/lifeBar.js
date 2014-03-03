@@ -84,6 +84,7 @@ Bar.prototype.deleteNode = function(nodeToBeDeleted){
       bar.nodes.splice(i,1);
     }
   })
+  $(".popup").remove()
 }
 
 
