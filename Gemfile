@@ -51,6 +51,13 @@ gem 'rails_12factor', group: :production
 # gem 'capistrano', group: :development
 
 # Use debugger
-gem 'debugger', group: [:development, :test]
+# gem 'debugger', group: [:development, :test]
 
-gem 'pry', group: [:development, :test]
+# gem 'pry', group: [:development, :test]
+
+# Gems for testing and development
+group :test, :development do
+  gem 'jasmine-rails'
+  gem 'pry'
+  gem 'debugger'
+end
