@@ -60,4 +60,5 @@ group :test, :development do
   gem 'jasmine-rails'
   gem 'pry'
   gem 'debugger'
+  gem 'jasmine-jquery-rails'
 end
