@@ -138,6 +138,10 @@ function nodeReflectionDisplay(node) {
   _.templateSettings.variable = "v";
   var template = _.template($("script.reflectionTemplate").html());
   $("#container").append(template(node));
+  $(".closeReflection").click(function(){
+    node.saveReflection($("#reflectionText").val())
+    $('#modal').remove()
+  })
 }
 
 function remove(){
