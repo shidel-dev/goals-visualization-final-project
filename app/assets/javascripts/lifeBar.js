@@ -64,20 +64,40 @@ Bar.prototype.createConnection = function(node1, node2){
 };
 
 Bar.prototype.removeConnection = function(node1,node2){
+  spliceIndices = []
   _.each(bar.connections, function(conn, i){
    if(conn.from.ref.id === node1.id || conn.to.ref.id === node1.id){
      if(node2.id === conn.from.ref.id || node2.id === conn.to.ref.id){
        $(conn.line)[0].remove()
-       bar.connections.splice(i, 1);
        node1.connected = false;
        node2.connected = false;
        _.each(bar.connections,function(c){
          if(node1.id === c.from.ref.id || c.to.ref.id === node1.id ) node1.connected = true;
          if(node2.id === c.from.ref.id || c.to.ref.id === node2.id ) node2.connected = true;
        })
+       bar.connections[i] = undefined
      }
    }
   })
+  bar.connections = _.filter(bar.connections, function(conn){
+    conn === undefined
+  })
+}
+
+Bar.prototype.deleteNode = function(node){
+  
+  console.log(node)
+  _.each(bar.connections, function(conn){
+    if(conn.from.ref.id === node.ref.id) {
+      bar.removeConnection(node.ref,conn.to.ref)
+    }
+    if(conn.to.ref.id === node.ref.id){
+      bar.removeConnection(node.ref,conn.from.ref)
+    }
+  })
+  bar.nodes.splice(_.indexOf(bar.nodes,node),1)
+  node.remove()
+  $(".popup").remove()
 }
 
 Bar.prototype.events = function(){
@@ -103,7 +123,7 @@ function Node(options) {
   this.id = options.id;
   this.x = options.x / time.unit;
   this.y = options.y;
-  this.r = 4;
+  this.r = 8;
   this.title = options.title;
   if(options.reflection) {
     this.reflection = options.reflection;
@@ -121,7 +141,7 @@ function Node(options) {
 
 Node.prototype.render = function(multi){
   this.elem = paper.circle(this.x *  multi, this.y, this.r);
-  this.elem.attr({fill:"green",stroke:'none'});
+  this.elem.attr({fill:"#424791",stroke:'none'});
   this.elem.ref = this;
   this.events();
 };
@@ -136,6 +156,11 @@ Node.prototype.events = function(){
 Node.prototype.end = function(e){
   this.ref.x = this.attrs.cx/time.unit;
   this.ref.y = this.attrs.cy;
+}
+
+Node.prototype.complete = function(e){
+  this.completed = true;
+  this.elem.attr({fill:"#3F6D61"})
 }
 
 // ----- NODE Drag helpers -----
