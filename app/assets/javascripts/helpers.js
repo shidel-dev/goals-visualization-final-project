@@ -1,8 +1,8 @@
 // ------Helpers --------
 
-function setup(width){
+function setup(width) {
   window.paper = new Raphael(document.getElementById('life_bar'), width, 200);
-  window.cover = paper.rect(0,0,width,200).attr({fill:"#C7BA94",stroke:"none"})
+  window.cover = paper.rect(0, 0, width, 200).attr({fill: "#C7BA94",stroke: "none"});
 }
 
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
@@ -27,13 +27,13 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
     for (var j = 4; j < 8; j++) {
       var dx = Math.abs(p[i].x - p[j].x),
         dy = Math.abs(p[i].y - p[j].y);
-      if ((i == j - 4) || (((i != 3 && j != 6) || p[i].x < p[j].x) && ((i != 2 && j != 7) || p[i].x > p[j].x) && ((i != 0 && j != 5) || p[i].y > p[j].y) && ((i != 1 && j != 4) || p[i].y < p[j].y))) {
+      if ((i == j - 4) || (((i != 3 && j != 6) || p[i].x < p[j].x) && ((i != 2 && j != 7) || p[i].x > p[j].x) && ((i !== 0 && j != 5) || p[i].y > p[j].y) && ((i != 1 && j != 4) || p[i].y < p[j].y))) {
         dis.push(dx + dy);
         d[dis[dis.length - 1]] = [i, j];
       }
     }
   }
-  if (dis.length == 0) {
+  if (dis.length === 0) {
     var res = [0, 4];
   } else {
     res = d[Math.min.apply(Math, dis)];
@@ -71,66 +71,69 @@ function scaleBar(width,multi){
     .animate({"width": "880px","margin-left":"-=440px"}, 500,function(){
       _.each(bar.nodes,function(node){
         node.render(multi);
-      })
-      var barClone = _.clone(bar)
-      bar.connections = []
+      });
+      var barClone = _.clone(bar);
+      bar.connections = [];
       _.each(barClone.connections, function(conn){
-        bar.createConnection(conn.to.ref.elem, conn.from.ref.elem)
-      })
+        bar.createConnection(conn.to.ref.elem, conn.from.ref.elem);
+      });
       bar.events();
-  })
-};
+  });
+}
 
 function shiftTime(multi){
   $(".arrow").show();
   $("svg").animate({"left":"+=" + multi * 880 + "px"}, function(){
-    cssNum = $("svg").cssNumber("left")
+    cssNum = $("svg").cssNumber("left");
     if (cssNum > 0 ){
       $("#arrow_left").hide();
     } else if (cssNum - 800 <= time.unit * -880){
       $("#arrow_right").hide();
-    }; 
+    } 
   });
 }
 
 jQuery.fn.cssNumber = function(prop){
   var v = parseInt(this.css(prop),10);
   return isNaN(v) ? 0 : v;
-}
+};
 
 
 
 function nodeInfo(node,event){
-  // if ($(".popup").length){
-  //   bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
-  //   $(".popup").remove();
-  // }
+  if ($(".popup").length){
+    bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+    $(".popup").remove();
+  }
    $(".popup").remove();
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
   $("#container").append(template(node.ref));
-  $(".popup").css({"left" : event.pageX - 210 + "px", "top" : event.pageY - 195 + "px"})
+  $(".popup").css({"left" : event.pageX - 210 + "px", "top" : event.pageY - 195 + "px"});
   if ($(".action").length === 3){
-    $(".action").css("margin-left", "34px")
+    $(".action").css("margin-left", "34px");
   }
   $("#exit").click(remove);
   $('.action').click(function(e){
     if (e.target.id === "complete") {
       node.ref.complete();
+      $("#complete").remove()
+      $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
+        $("#reflection").css("margin-left", "34px")
     } else if (e.target.id === "link") {
       listenForNextNode(node.ref,"link");
     } else if (e.target.id === "sever") {
       listenForNextNode(node.ref,"sever");
     } else if (e.target.id === "delete"){
-      bar.findNodeById($(".popup").data("id")).delete()
-    };
-  })
-};
+      bar.findNodeById($(".popup").data("id")).deleteNode();
+    }
+  });
+}
 
-function remove(e){
-  // bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html())
-  $(".popup").remove()
-};
+function remove(){
+  bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+  $(".popup").remove();
+}
 
 function listenForNextNode(oNode,action){
  $("circle").click(function(e){
@@ -139,32 +142,32 @@ function listenForNextNode(oNode,action){
         if(action === "link"){
           bar.createConnection(oNode.elem,node.elem);
         }else if(action === "sever"){
-          bar.removeConnection(oNode,node)
+          bar.removeConnection(oNode,node);
         }
         $("circle").unbind("click");
-      };
+      }
     });
   });
-};
+}
 
 function days_between(date1, date2) {
 
     // The number of milliseconds in one day
-    var ONE_DAY = 1000 * 60 * 60 * 24
+    var ONE_DAY = 1000 * 60 * 60 * 24;
 
     // Convert both dates to milliseconds
-    var date1_ms = date1.getTime()
-    var date2_ms = date2.getTime()
+    var date1_ms = date1.getTime();
+    var date2_ms = date2.getTime();
 
     // Calculate the difference in milliseconds
-    var difference_ms = Math.abs(date1_ms - date2_ms)
+    var difference_ms = Math.abs(date1_ms - date2_ms);
 
     // Convert back to days and return
-    return Math.round(difference_ms/ONE_DAY)
+    return Math.round(difference_ms/ONE_DAY);
 
 }
 
 function highlightText(time_target) {
-  $('#time_intervals p').removeClass('selected')
-  $(time_target).addClass('selected')
+  $('#time_intervals p').removeClass('selected');
+  $(time_target).addClass('selected');
 }

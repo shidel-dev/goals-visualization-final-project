@@ -14,10 +14,10 @@ window.onload = function() {
 function Person(birthdate){
   this.birthdate = _.map(birthdate.split("-"),function(part){
     return parseInt(part);
-  })
+  });
   this.birthdateObj = new Date(this.birthdate[2],this.birthdate[1], this.birthdate[0]);
   this.pos = this.setCurrentMarker();
-  this.renderMarkerLine(this.pos * 880)
+  this.renderMarkerLine(this.pos * 880);
 }
 
 Person.prototype.setCurrentMarker = function(){
@@ -28,17 +28,17 @@ Person.prototype.setCurrentMarker = function(){
       day = date.getDate(),
       end = _.clone(this.birthdate);
 
-      end[2] = end[2] + 80
-      window.time = new Time(day,month,year)
+      end[2] = end[2] + 80;
+      window.time = new Time(day,month,year);
       time.unit = 1;
       time.period = 960;
-      return days_between(date, this.birthdateObj) / 29200
-}
+      return days_between(date, this.birthdateObj) / 29200;
+};
 
 Person.prototype.renderMarkerLine = function(position){
-  var marker = paper.path("M" + position + " 0 l 0 200")
+  var marker = paper.path("M" + position + " 0 l 0 200");
   marker.attr({stroke: 'black', 'stroke-width': 1});
-}
+};
 
 // ---- BAR Object ------
 
@@ -48,7 +48,7 @@ function Bar(){
   this.events();
   this.nodeCounter = 0;
   // assign this.nodeCounter in import/populate function
-};
+}
 
 Bar.prototype.createNode = function(nodeOptions){
   $("circle").unbind("click");
@@ -73,9 +73,9 @@ Bar.prototype.removeConnection = function(node1,node2){
         bar.connections.splice(i,1);
      }
    }
-  })
+  });
 
-}
+};
 Bar.prototype.deleteNode = function(nodeToBeDeleted){
   _.each(this.nodes,function(node,i){
     if(node.id === nodeToBeDeleted.id){
@@ -83,8 +83,9 @@ Bar.prototype.deleteNode = function(nodeToBeDeleted){
       nodeToBeDeleted.elem.remove();
       bar.nodes.splice(i,1);
     }
-  })
-}
+  });
+  $(".popup").remove();
+};
 
 
 Bar.prototype.events = function(){
@@ -102,7 +103,7 @@ Bar.prototype.findNodeById = function(id) {
   for(var i = 0; i < this.nodes.length; i++) {
     if(this.nodes[i].id === id) return this.nodes[i];
   }
-}
+};
 
 // ----- NODE Object -----
 
@@ -125,7 +126,7 @@ function Node(options) {
   }
   this.connected = false;
   this.render(time.unit);
-};
+}
 
 Node.prototype.render = function(multi){
   this.elem = paper.circle(this.x *  multi, this.y, this.r);
@@ -138,38 +139,38 @@ Node.prototype.events = function(){
   this.elem.drag(move,start,this.end);
   this.elem.mouseup(function(event){
     nodeInfo(this,event);
-  })
+  });
 };
 
-Node.prototype.end = function(e){
+Node.prototype.end = function(){
   this.ref.x = this.attrs.cx/time.unit;
   this.ref.y = this.attrs.cy;
-}
+};
 
-Node.prototype.complete = function(e){
+Node.prototype.complete = function(){
   this.completed = true;
-  this.elem.attr({fill:"#3F6D61"})
-}
+  this.elem.attr({fill:"#3F6D61"});
+};
 
 Node.prototype.saveText = function(text){
-  this.title = text
-}
+  this.title = text;
+};
 
-Node.prototype.delete = function(){
+Node.prototype.deleteNode = function(){
   _.each(_.clone(this.connections), function(connection){
     bar.removeConnection(connection.to.ref, connection.from.ref);
-  })
+  });
   bar.deleteNode(this);
-}
+};
 
 Node.prototype.removeConnectionReference = function(id){
-  var that = this
+  var that = this;
   _.each(this.connections,function(connection,i){
     if(connection.to.ref.id === id || connection.from.ref.id === id){
-      that.connections.splice(i,1)
+      that.connections.splice(i,1);
     }
-  })
-}
+  });
+};
 
 
 // ----- NODE Drag helpers -----
@@ -177,7 +178,7 @@ Node.prototype.removeConnectionReference = function(id){
 function start(){
   this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
   this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
-};
+}
 
 function move(dx, dy) {
   var att = this.type == "rect" ? {x: this.ox + dx, y: this.oy + dy} : {cx: this.ox + dx, cy: this.oy + dy};
@@ -186,7 +187,7 @@ function move(dx, dy) {
     paper.connection(bar.connections[i]);
   }
   paper.safari();
-};
+}
 
 // -----TIME Controller ---
 
@@ -194,36 +195,36 @@ function Time(day,month,year){
   this.day = day;
   this.month = month;
   this.year = year;
-  this.events()
+  this.events();
 }
 
 Time.prototype.events = function(){
   $("#month").click(function(e){
-    time.scale("month")
+    time.scale("month");
     highlightText(e.target);
-  })
+  });
   $("#year").click(function(e){
-    time.scale("year")
+    time.scale("year");
     highlightText(e.target);
-  })
+  });
   $("#5year").click(function(e){
-    time.scale("5year")
+    time.scale("5year");
     highlightText(e.target);
-  })
+  });
   $("#10year").click(function(e){
-    time.scale("10year")
+    time.scale("10year");
     highlightText(e.target);
-  })
+  });
   $("#life").click(function(e){
-    time.scale("life")
+    time.scale("life");
     highlightText(e.target);
-  })
+  });
   $("#arrow_left").click(function(){
-    if(!$("svg").is(':animated') ) {shiftTime(1)}
-  })
+    if(!$("svg").is(':animated')){shiftTime(1);}
+  });
   $("#arrow_right").click(function(){
-    if(!$("svg").is(':animated') ) {shiftTime(-1)}
-  })
+    if(!$("svg").is(':animated') ) {shiftTime(-1);}
+  });
 };
 
 Time.prototype.scale = function(unit){
@@ -232,29 +233,29 @@ Time.prototype.scale = function(unit){
     this.unit = 960;
     this.period = 1;
     $(".arrow").show();
-    this.shift = Math.round(844800 * person.pos * -1) + "px"
-    $(paper.canvas).css("left",this.shift)
+    this.shift = Math.round(844800 * person.pos * -1) + "px";
+    $(paper.canvas).css("left",this.shift);
   }else if(unit === "year"){
     scaleBar(70400,80);
     this.unit = 80;
     this.period = 12;
     $(".arrow").show();
-    this.shift = Math.round(70400 * person.pos * -1) + "px"
-    $(paper.canvas).css("left",this.shift)
+    this.shift = Math.round(70400 * person.pos * -1) + "px";
+    $(paper.canvas).css("left",this.shift);
   }else if(unit === "5year"){
-    scaleBar(14080,16)
+    scaleBar(14080,16);
     this.unit = 16;
     this.period = 60;
     $(".arrow").show();
-    this.shift = Math.round(14080 * person.pos * -1) + "px"
-    $(paper.canvas).css("left",this.shift)
+    this.shift = Math.round(14080 * person.pos * -1) + "px";
+    $(paper.canvas).css("left",this.shift);
   }else if(unit === "10year"){
-    scaleBar(7040,8)
+    scaleBar(7040,8);
     this.unit = 8;
     this.period = 120;
     $(".arrow").show();
-    this.shift = Math.round(7040 * person.pos * -1) + "px"
-    $(paper.canvas).css("left",this.shift)
+    this.shift = Math.round(7040 * person.pos * -1) + "px";
+    $(paper.canvas).css("left",this.shift);
   }else if (unit === "life"){
     scaleBar(880,1);
     this.unit = 1;
@@ -262,4 +263,4 @@ Time.prototype.scale = function(unit){
     $(".arrow").hide();
     person.renderMarkerLine(person.pos * 880);
   }
-}
+};

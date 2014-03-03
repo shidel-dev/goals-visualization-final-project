@@ -28,6 +28,10 @@ body{
 
 }
 
+#content{
+  margin-top: 12px;
+}
+
 .content{
   margin-top:15px;
   min-height:20px;
