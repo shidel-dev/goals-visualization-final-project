@@ -67,8 +67,8 @@ Bar.prototype.removeConnection = function(node1,node2){
   _.each(bar.connections, function(conn, i){
    if(conn.from.ref.id === node1.id || conn.to.ref.id === node1.id){
      if(node2.id === conn.from.ref.id || node2.id === conn.to.ref.id){
-        // node2.removeConnectionReference(node1.id);
-        // node1.removeConnectionReference(node2.id);
+        node2.removeConnectionReference(node1.id);
+        node1.removeConnectionReference(node2.id);
         $(conn.line)[0].remove();
         bar.connections.splice(i,1);
      }
@@ -156,20 +156,20 @@ Node.prototype.saveText = function(text){
 }
 
 Node.prototype.delete = function(){
-  _.each(this.connections, function(connection){
+  _.each(_.clone(this.connections), function(connection){
     bar.removeConnection(connection.to.ref, connection.from.ref);
   })
   bar.deleteNode(this);
 }
 
-// Node.prototype.removeConnectionReference = function(id){
-//   var that = this
-//   _.each(this.connections,function(connection,i){
-//     if(connection.to.ref.id === id || connection.from.ref.id === id){
-//       that.connections.splice(i,1)
-//     }
-//   })
-// }
+Node.prototype.removeConnectionReference = function(id){
+  var that = this
+  _.each(this.connections,function(connection,i){
+    if(connection.to.ref.id === id || connection.from.ref.id === id){
+      that.connections.splice(i,1)
+    }
+  })
+}
 
 
 // ----- NODE Drag helpers -----

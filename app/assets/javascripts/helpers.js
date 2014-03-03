@@ -122,7 +122,7 @@ function nodeInfo(node,event){
     } else if (e.target.id === "sever") {
       listenForNextNode(node.ref,"sever");
     } else if (e.target.id === "delete"){
-      bar.deleteNode(node);
+      bar.findNodeById($(".popup").data("id")).delete()
     };
   })
 };
