@@ -73,9 +73,6 @@ saveLifeData = function() {
 }
 
 loadLifeData = function() {
-  console.log('in loadlifedata');
-  console.log(bar);
-  var that = bar;
   $.ajax({
     type: "POST",
     url: '/load',
@@ -84,9 +81,6 @@ loadLifeData = function() {
       alert("error");
     },
     success: function(data) {
-      console.log(data);
-      console.log(that);
-      console.log(JSON.stringify(data));
       populate(window.bar, data);
     }
   })
