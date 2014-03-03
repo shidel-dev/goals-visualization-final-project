@@ -1,3 +1,7 @@
+body{
+  background-color: #535E68;
+}
+
 #container{
   width:960px;
   margin:auto;
@@ -17,12 +21,12 @@
 }
 
 .popup{
-  width:150px;
-  height:150px;
-  border:1px solid lightgrey;
+  width: 200px;
+  height: 185px;
+  border: 1px solid lightgrey;
   border-radius: 10px;
-  position:fixed;
-  background-color:#fff;
+  position: fixed;
+  background-color: #fff;
 
 }
 
@@ -58,6 +62,16 @@ margin-top: 175px;
   position: absolute;
   top: 350px;
   left: 910px;
+}
+
+#foot {
+margin-top: 149px;
+border-top: 1px solid #000;
+}
+
+#foot > img {
+margin-left: 21px;
+margin-top: 2px;
 }
 
 #lower {
