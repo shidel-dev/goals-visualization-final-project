@@ -101,10 +101,10 @@ jQuery.fn.cssNumber = function(prop){
 
 
 function nodeInfo(node,event){
-  // if ($(".popup").length){
-  //   bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
-  //   $(".popup").remove();
-  // }
+  if ($(".popup").length){
+    bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+    $(".popup").remove();
+  }
    $(".popup").remove();
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
@@ -128,7 +128,7 @@ function nodeInfo(node,event){
 };
 
 function remove(e){
-  // bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html())
+  bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html())
   $(".popup").remove()
 };
 
