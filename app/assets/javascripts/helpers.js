@@ -2,7 +2,7 @@
 
 function setup(width){
   window.paper = new Raphael(document.getElementById('life_bar'), width, 200);
-  window.cover = paper.rect(0,0,width,200).attr({fill:"lightgray",stroke:"none"})
+  window.cover = paper.rect(0,0,width,200).attr({fill:"#C7BA94",stroke:"none"})
 }
 
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
@@ -105,15 +105,20 @@ function nodeInfo(node,event){
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
   $("#container").append(template(node.ref))
-  $(".popup").css({"left" : event.pageX - 160 + "px", "top" : event.pageY - 160 + "px"})
+  $(".popup").css({"left" : event.pageX - 210 + "px", "top" : event.pageY - 195 + "px"})
+  if ($(".action").length === 3){
+    $(".action").css("margin-left", "34px")
+  }
   $("#exit").click(remove);
   $('.action').click(function(e){
     if (e.target.id === "complete") {
-      alert("complete");
+      node.ref.complete();
     } else if (e.target.id === "link") {
       listenForNextNode(node.ref,"link");
     } else if (e.target.id === "sever") {
       listenForNextNode(node.ref,"sever");
+    } else if (e.target.id === "delete"){
+      bar.deleteNode(node)
     };
   })
 };
