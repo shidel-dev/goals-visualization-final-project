@@ -38,6 +38,8 @@ Person.prototype.setCurrentMarker = function(){
 Person.prototype.renderMarkerLine = function(position){
   var marker = paper.path("M" + position + " 0 l 0 200")
   marker.attr({stroke: 'black', 'stroke-width': 1});
+  var currentLine = $('#current_label')
+  currentLine.css("margin-left", this.pos * 870)
 }
 
 // ---- BAR Object ------
@@ -201,28 +203,48 @@ Time.prototype.events = function(){
   $("#month").click(function(e){
     time.scale("month")
     highlightText(e.target);
+    $(".time").show();
+    $("#current_label").hide();
+    window.timeKeeper = new labelTime("months")
   })
   $("#year").click(function(e){
     time.scale("year")
     highlightText(e.target);
+    $(".time").show();
+    $("#current_label").hide();
+    window.timeKeeper = new labelTime("years")
   })
   $("#5year").click(function(e){
     time.scale("5year")
     highlightText(e.target);
+    $(".time").show();
+    $("#current_label").hide();
+    window.timeKeeper = new labelTime("5")
   })
   $("#10year").click(function(e){
     time.scale("10year")
     highlightText(e.target);
+    $(".time").show();
+    $("#current_label").hide();
+    window.timeKeeper = new labelTime("decades")
   })
   $("#life").click(function(e){
     time.scale("life")
     highlightText(e.target);
+    $(".time").hide();
+    $("#current_label").show();
   })
   $("#arrow_left").click(function(){
-    if(!$("svg").is(':animated') ) {shiftTime(1)}
+    if(!$("svg").is(':animated') ) {
+      timeKeeper.updateCount("left");
+      shiftTime(1);
+    };
   })
   $("#arrow_right").click(function(){
-    if(!$("svg").is(':animated') ) {shiftTime(-1)}
+    if(!$("svg").is(':animated') ) {
+      timeKeeper.updateCount("right");
+      shiftTime(-1);
+    };
   })
 };
 
