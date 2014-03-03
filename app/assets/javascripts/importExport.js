@@ -62,7 +62,6 @@ populateConnections = function(bar, data) {
 
 saveLifeData = function() {
   data = {person: save(bar)};
-  console.log(data);
   $.ajax({
     type: "POST",
     url: '/save',
