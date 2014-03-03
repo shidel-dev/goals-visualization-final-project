@@ -2,27 +2,41 @@
 <div id='container'>
   <div id='life_bar'>
   </div>
-  <div>
-    <h2><span id="num">current year from today</span></p>
+
+  <img class='arrow' id="arrow_left" src="arrow_left.png">
+  <img class='arrow' id="arrow_right" src="arrow_right.png">
+  <div id='timeHolder'>
     <p id="month">month</p>
     <p id="year">year</p>
     <p id="5year">5-year</p>
     <p id="10year">10-year</p>
     <p id="life">life</p>
   </div>
-  <img class='arrow' id="arrow_left" src="arrow_left.png">
-  <img class='arrow' id="arrow_right" src="arrow_right.png">
 </div>
 
 <script type="text/template" class='popupTemplate'>
-  <div class='popup'>
+  <div data-id="<%%=v.id%>" class='popup'>
+
     <img src="/icons/glyphicons_207_remove_2.png" id='exit'></img>
-    <p><%%= v.title%></p>
-    <div class='action' id='complete'>Complete</div>
-    <div class='action' id='link'>Link</div>
-    <%% if (v.connected){%>
-      <div class='action' id='sever'>Sever</div>
+    <div contenteditable="true" id='content'><%%= v.title%>
+    </div>
+    <p></p>
+    <div id='foot'>
+    <img class='action' id='link' src="/icons/glyphicons_422_git_branch.png"></img>
+    
+    
+    <img class='action' id='delete' src="/icons/glyphicons_016_bin.png"></img>
+    
+
+    <%% if (v.connections.length){%>
+      <img class='action' id='sever' src="/icons/glyphicons_288_scissors.png"></img>
     <%% };$(".action").css("width","33.33%")%>
+    <%% if (v.completed){%>
+      <img class='action' id='reflection' src="/icons/glyphicons_087_log_book.png"></img>
+     <%%}else{%>
+      <img class='action' id='complete' src="/icons/glyphicons_206_ok_2.png"></img>
+     <%%}%> 
+    <div>
   </div>
 
 </script>
