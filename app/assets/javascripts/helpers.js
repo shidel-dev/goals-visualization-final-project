@@ -101,10 +101,12 @@ jQuery.fn.cssNumber = function(prop){
 
 
 function nodeInfo(node,event){
-  $(".popup").remove();
+  if ($(".popup").length){
+    bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+  }
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
-  $("#container").append(template(node.ref))
+  $("#container").append(template(node.ref));
   $(".popup").css({"left" : event.pageX - 210 + "px", "top" : event.pageY - 195 + "px"})
   if ($(".action").length === 3){
     $(".action").css("margin-left", "34px")
@@ -118,12 +120,15 @@ function nodeInfo(node,event){
     } else if (e.target.id === "sever") {
       listenForNextNode(node.ref,"sever");
     } else if (e.target.id === "delete"){
-      bar.deleteNode(node)
+      bar.deleteNode(node);
     };
   })
 };
 
-function remove(e){e.target.parentNode.remove()};
+function remove(e){
+  bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html())
+  $(".popup").remove()
+};
 
 function listenForNextNode(oNode,action){
  $("circle").click(function(e){

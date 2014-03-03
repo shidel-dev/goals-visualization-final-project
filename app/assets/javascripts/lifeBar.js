@@ -163,6 +163,10 @@ Node.prototype.complete = function(e){
   this.elem.attr({fill:"#3F6D61"})
 }
 
+Node.prototype.saveText = function(text){
+  this.title = text
+}
+
 // ----- NODE Drag helpers -----
 
 function start(){
