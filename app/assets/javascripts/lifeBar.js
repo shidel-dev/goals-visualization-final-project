@@ -156,6 +156,10 @@ Node.prototype.saveText = function(text){
   this.title = text;
 };
 
+Node.prototype.saveReflection = function(text){
+  this.reflection = text;
+}
+
 Node.prototype.deleteNode = function(){
   _.each(_.clone(this.connections), function(connection){
     bar.removeConnection(connection.to.ref, connection.from.ref);
