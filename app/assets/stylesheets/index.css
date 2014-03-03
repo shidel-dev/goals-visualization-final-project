@@ -22,12 +22,16 @@ body{
 
 .popup{
   width: 200px;
-  height: 185px;
   border: 1px solid lightgrey;
   border-radius: 10px;
   position: fixed;
   background-color: #fff;
 
+}
+
+.content{
+  margin-top:15px;
+  min-height:20px;
 }
 
 #life_bar {
@@ -65,7 +69,6 @@ margin-top: 175px;
 }
 
 #foot {
-margin-top: 149px;
 border-top: 1px solid #000;
 }
 
