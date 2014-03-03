@@ -117,6 +117,9 @@ function nodeInfo(node,event){
   $('.action').click(function(e){
     if (e.target.id === "complete") {
       node.ref.complete();
+      $("#complete").remove()
+      $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
+        $("#reflection").css("margin-left", "34px")
     } else if (e.target.id === "link") {
       listenForNextNode(node.ref,"link");
     } else if (e.target.id === "sever") {
