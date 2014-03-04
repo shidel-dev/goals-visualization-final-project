@@ -19,7 +19,7 @@
       <%= f.label(:password_confirmation, "Confirm password:") %>
       <%= f.password_field(:password_confirmation, placeholder: "6 to 20 characters") %><br><br><br>
 
-      <%= date_select("birthday", use_month_numbers: true) %>
+     <%= f.date_field :birthday %>
 
     <%= f.submit("Sign up") %>
   <% end %>
