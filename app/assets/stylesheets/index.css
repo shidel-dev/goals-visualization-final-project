@@ -185,7 +185,7 @@ div.reflectionHolder > img {
   margin: 0;
   top: 180px;
   text-align: center;
-  color: #C7BA94;
+  color: #F0EBDF;
 }
 
 #lower {
@@ -199,8 +199,8 @@ div.reflectionHolder > img {
 #current_label{
   position: absolute;
   margin-left: 1px;
-  color: #C7BA94;
-  top: 210px;
+  color: #F0EBDF;
+  top: 195px;
 }
 
 /* --------- nav bar ------------------ */
