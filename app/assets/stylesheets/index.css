@@ -162,40 +162,41 @@ div.reflectionHolder > img {
 
 /* ----- TIME LABELS ----- */
 #past {
-  position: fixed;
+  position: absolute;
   margin-left: 31px;
-  top: 237px;
+  top: 210px;
 }
 
 #future {
-  position: fixed;
+  position: absolute;
   margin-left: 910px;
-  top: 237px;
+  top: 210px;
 }
 
-#current_label{
-  position: fixed;
-  margin-left: 1px;
-  color: #C7BA94;
-  top: 200px;
-}
-#lower {
-  position: fixed;
-  color: #C7BA94;
-  left: -430px;
-  top: 200px;
-}
-
-#higher {
-  position: fixed;
-  color: #C7BA94;
-  left: 440px;
-  top: 200px;
+.time { 
+  position: relative;
 }
 
 .time > p {
-  margin: 0;
+  position: absolute;
   width: 100%;
+  margin: 0;
+  top: 180px;
   text-align: center;
+  color: #C7BA94;
 }
 
+#lower {
+  left: -430px;
+}
+
+#higher {
+  left: 440px;
+}
+
+#current_label{
+  position: absolute;
+  margin-left: 1px;
+  color: #C7BA94;
+  top: 210px;
+}
