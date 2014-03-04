@@ -15,10 +15,6 @@ body{
   padding-top: 2px;
 }
 
-.action{
-
-}
-
 .popup{
   width: 200px;
   border: 1px solid lightgrey;
@@ -65,13 +61,6 @@ float: left;
   cursor: pointer;
 }
 
-#num {
-  display: none;
-  position: absolute;
-  top: 350px;
-  left: 910px;
-}
-
 #foot {
 border-top: 1px solid #000;
 }
@@ -81,17 +70,7 @@ margin-left: 21px;
 margin-top: 2px;
 }
 
-#lower {
-  position: absolute;
-  top: 600px;
-  left: 940px;
-}
 
-#higher {
-  position: absolute;
-  top: 600px;
-  left: 1060px;
-}
 
 /*--reflection modal -----*/
 .mask {
@@ -131,6 +110,10 @@ div.reflectionHolder > img {
 
 /* --- TIME INTERVAL SELECTION --- */
 
+.time {
+  display: none;
+}
+
 #time_intervals {
   margin-top: 27%;
   text-align: center;
@@ -147,9 +130,32 @@ div.reflectionHolder > img {
 .selected {
   color: #424791;
   font-size: 2em;
-  text-shadow: 0 0 40px blue;
+  text-shadow: 0 0 60px white;
 }
 
+#past {
+  position: absolute;
+  margin-top: 14%;
+  margin-left: 2%;
+}
 
+#future {
+  position: absolute;
+  margin-top: 14%;
+  margin-left: 59%;
+}
 
+#lower, #current_label {
+  position: absolute;
+  margin-top: 12%;
+  margin-left: -1%;
+  color: #C7BA94;
+}
+
+#higher {
+  position: absolute;
+  margin-top: 12%;
+  margin-left: 56%;
+  color: #C7BA94;
+}
 
