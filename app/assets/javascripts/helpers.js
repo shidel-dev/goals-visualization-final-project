@@ -121,12 +121,17 @@ function nodeInfo(node,event){
   }
   $("#exit").click(remove);
   $('.action').click(handleActions);
+
   function handleActions(e){
     if (e.target.id === "complete") {
       node.ref.complete();
       $("#complete").remove()
       $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
+      if ($(".action").length === 3){
         $("#reflection").css("margin-left", "34px").click(handleActions)
+      }else{
+        $("#reflection").css("margin-left", "21px").click(handleActions)
+      }
     } else if (e.target.id === "link") {
       listenForNextNode(node.ref,"link");
     } else if (e.target.id === "sever") {
@@ -137,6 +142,7 @@ function nodeInfo(node,event){
       nodeReflectionDisplay(bar.findNodeById($(".popup").data("id")));
     }
   }
+
 }
 
 
