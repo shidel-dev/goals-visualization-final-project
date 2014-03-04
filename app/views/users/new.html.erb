@@ -10,14 +10,14 @@
   <%= form_for(@user) do |f| %>
     <h2>Sign up</h2>
 
-      <%= f.label(:email, "Email:") %>
-      <%= f.text_field(:email, placeholder: 'me@lifegoals.edu') %><br><br>
+    <%= f.label(:email, "Email:") %>
+    <%= f.text_field(:email, placeholder: 'me@lifegoals.edu') %><br><br>
 
-      <%= f.label(:password, "Password:") %>
-      <%= f.password_field(:password, placeholder: "6 to 20 characters") %><br><br>
+    <%= f.label(:password, "Password:") %>
+    <%= f.password_field(:password, placeholder: "6 to 20 characters") %><br><br>
 
-      <%= f.label(:password_confirmation, "Confirm password:") %>
-      <%= f.password_field(:password_confirmation, placeholder: "6 to 20 characters") %><br><br><br>
+    <%= f.label(:password_confirmation, "Confirm password:") %>
+    <%= f.password_field(:password_confirmation, placeholder: "6 to 20 characters") %><br><br><br>
 
      <%= f.date_field :birthday %>
 

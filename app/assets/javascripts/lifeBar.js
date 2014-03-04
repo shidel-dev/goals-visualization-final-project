@@ -20,12 +20,18 @@ function Person(birthdate){
     return parseInt(part);
   });
   this.birthdateObj = new Date(this.birthdate[2],this.birthdate[1], this.birthdate[0]);
+
+  // Below probably belongs in a 'life bar' view model
   this.pos = this.setCurrentMarker();
   this.renderMarkerLine(this.pos * 880);
 }
 
+Person.prototype.endDate = function(){
+}
+
 Person.prototype.setCurrentMarker = function(){
 
+  // rename to today
   var date  = new Date(),
       year = date.getFullYear(),
       month = date.getMonth(),
@@ -33,12 +39,14 @@ Person.prototype.setCurrentMarker = function(){
       end = _.clone(this.birthdate);
 
       end[2] = end[2] + 80;
+      // Could window.time be it's own object? Maybe TimeSpan? TimeUnit?
       window.time = new Time(day,month,year);
       time.unit = 1;
       time.period = 960;
       return days_between(date, this.birthdateObj) / 29200;
 };
 
+// move to TimeSpanView/Bar? (name...?)
 Person.prototype.renderMarkerLine = function(position){
   var marker = paper.path("M" + position + " 0 l 0 200");
   marker.attr({stroke: 'black', 'stroke-width': 1});
@@ -58,22 +66,24 @@ function Bar(){
 }
 
 Bar.prototype.createNode = function(nodeOptions){
+  // why the unbind?
   $("circle").unbind("click");
   this.nodes.push(new Node(nodeOptions));
+  // delete?
   $(".popup").remove();
-
 };
 
 Bar.prototype.createConnection = function(node1, node2){
   var connection = paper.connection(node1, node2, "#00756F");
   this.connections.push(connection);
-  node1.ref.connections.push(connection);
-  node2.ref.connections.push(connection);
+  node1.model.connections.push(connection);
+  node2.model.connections.push(connection);
 };
 
 Bar.prototype.removeConnection = function(node1,node2){
-  _.each(bar.connections, function(conn, i){
-   if(conn.from.ref.id === node1.id || conn.to.ref.id === node1.id){
+  _.each(this.connections, function(conn, i){
+   // if(conn.connected_to(node1)) && conn.conected_to(node2)) {
+   if(conn.from.model.id === node1.id || conn.to.model.id === node1.id){
      if(node2.id === conn.from.ref.id || node2.id === conn.to.ref.id){
         node2.removeConnectionReference(node1.id);
         node1.removeConnectionReference(node2.id);
@@ -99,6 +109,7 @@ Bar.prototype.deleteNode = function(nodeToBeDeleted){
 Bar.prototype.events = function(){
   var that = this;
   paper.canvas.setAttribute('preserveAspectRatio', 'none');
+  // a global...stinky
   cover.click(function(e){
     if($(".popup").length){
       remove()
@@ -112,6 +123,7 @@ Bar.prototype.events = function(){
 };
 
 Bar.prototype.findNodeById = function(id) {
+  // use underscore
   for(var i = 0; i < this.nodes.length; i++) {
     if(this.nodes[i].id === id) return this.nodes[i];
   }
@@ -121,21 +133,18 @@ Bar.prototype.findNodeById = function(id) {
 
 function Node(options) {
   this.id = options.id;
+  // find a way to not need a 'time' global, pass it in or maybe this is a mis-mash
+  // of node data and presentation data
+  //
+  // store only options.x here, calculate the 'x' pixel position given the currrent
+  // timeframe/lifebar window
   this.x = options.x / time.unit;
   this.y = options.y;
   this.r = 8;
   this.connections = [];
   this.title = options.title;
-  if(options.reflection) {
-    this.reflection = options.reflection;
-  } else {
-    this.reflection = "";
-  }
-  if(options.completed) {
-    this.completed = options.completed;
-  } else {
-    this.completed = false;
-  }
+  this.reflection = options.reflection || "";
+  this.completed = options.completed || false;
   this.connected = false;
   this.render(time.unit);
 }
@@ -149,15 +158,16 @@ Node.prototype.render = function(multi){
 };
 
 Node.prototype.events = function(){
-  this.elem.drag(move,start,this.end);
+  this.elem.drag(move,start, this.end.bind(this));
   this.elem.mouseup(function(event){
+    // global, eww
     nodeInfo(this,event);
   });
 };
 
-Node.prototype.end = function(){
-  this.ref.x = this.attrs.cx/time.unit;
-  this.ref.y = this.attrs.cy;
+Node.prototype.end = function(event){
+  this.x = this.elem.cx/time.unit;
+  this.y = this.elem.cy;
   autoSave();
 };
 
@@ -213,49 +223,30 @@ function move(dx, dy) {
 
 // -----TIME Controller ---
 
-function Time(day,month,year){
+function TimeNavView(el, day,month,year){
+  this.$el = el;
   this.day = day;
   this.month = month;
   this.year = year;
   this.events();
 }
 
-Time.prototype.events = function(){
-  $("#month").click(function(e){
-    time.scale("month");
-    highlightText(e.target);
-    $(".time").show();
-    $("#current_label").hide();
-    window.timeKeeper = new labelTime("months")
-  });
+Time.prototype.MONTH = "month";
+Time.prototype.YEAR = "month";
 
-  $("#year").click(function(e){
-    time.scale("year");
-    highlightText(e.target);
-    $(".time").show();
-    $("#current_label").hide();
-    window.timeKeeper = new labelTime("years")
-  });
-  $("#5year").click(function(e){
-    time.scale("5year");
-    highlightText(e.target);
-    $(".time").show();
-    $("#current_label").hide();
-    window.timeKeeper = new labelTime("5")
-  });
-  $("#10year").click(function(e){
-    time.scale("10year");
-    highlightText(e.target);
-    $(".time").show();
-    $("#current_label").hide();
-    window.timeKeeper = new labelTime("decades")
-  });
-  $("#life").click(function(e){
-    time.scale("life");
-    highlightText(e.target);
-    $(".time").hide();
-    $("#current_label").show();
-  })
+Time.prototype.bindEvents = function(){
+  this.$el.find("#month").click(changeScale(this.MONTH));
+  this.$el.find("#year").click(changeScale(this.YEAR));
+}
+
+Time.prototype.changeScale(scale) {
+  time.scale(scale)
+  highlightText(this.$el.find("." + scale));
+  $(".time").show();
+  $("#current_label").hide();
+  window.timeKeeper = new labelTime(scale);
+}
+
   $("#arrow_left").click(function(){
     if(!$("svg").is(':animated') ) {
       timeKeeper.updateCount("left");
@@ -278,7 +269,8 @@ Time.prototype.events = function(){
 
 Time.prototype.scale = function(unit){
   if(unit === "month"){
-    scaleBar(844800,960);
+    // all magic numbers should be constants like this.MONTH
+    scaleBar(this.PIXELS_IN_MONTH,960);
     this.unit = 960;
     this.period = 1;
     $(".arrow").show();
@@ -313,3 +305,17 @@ Time.prototype.scale = function(unit){
     person.renderMarkerLine(person.pos * 880);
   }
 };
+
+
+model.set('complete', true);
+
+function GoalsView(model) {
+  this.model = model;
+  this.events {
+    'model:change', 'render'
+  }
+}
+
+GoalsView.prototype.render = function() {
+
+}

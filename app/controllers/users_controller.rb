@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+
+  # remove this if not in use (also, drop from config/routes.rb)
   def index
     landing_page
     redirect_to root_path # ??
@@ -6,6 +8,8 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    # duplicated method from sessions_controller and this view related, can you remove it
+    # from the controller?
     landing_page
   end
 
@@ -19,15 +23,23 @@ class UsersController < ApplicationController
     end
   end
 
+  # used? delete if not
   def show
     redirect_to root_path
   end
 
+  # Create a GoalsController, this is the index
+  # action (requiring a current_user for it to work)
   def find_goals
+    # all this is very presentation related
+    # create a helper or presenter for this kind
+    # of work
     @life_goals = current_user.reflection_words
     @all_words = @life_goals.join(" ").split(" ")
     @all_titles = current_user.goal_words
     @all_titles_arr = @all_titles.join(" ").lstrip
+    # @goals = GoalsPresenter.new(current_user)
+
     render "goals"
   end
 

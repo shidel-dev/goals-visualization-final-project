@@ -106,6 +106,11 @@ jQuery.fn.cssNumber = function(prop){
 
 
 function nodeInfo(node,event){
+  this.$el = el;
+  this.$el.find(".delete").click(this.deleteNode);
+  this.$el.find(".link").click(this.linking);
+  this.$el.find(".sever").click(this.linking);
+
   if ($(".popup").length){
     bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
     $(".popup").remove();
@@ -124,7 +129,7 @@ function nodeInfo(node,event){
 
   function handleActions(e){
     if (e.target.id === "complete") {
-      node.ref.complete();
+      node.model.complete();
       $("#complete").remove()
       $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
       if ($(".action").length === 3){

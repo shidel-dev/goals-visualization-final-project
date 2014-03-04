@@ -8,10 +8,10 @@
         <a href="/about">About</a>
       </li>
       <li id="login">
-        <% if @current_user.nil? %>
-        <%= link_to "Sign In", signin_path %>
-        <% elsif @current_user %>
-        <%= link_to "Sign Out", signout_path %>
+        <% if current_user %>
+          <%= link_to "Sign Out", signout_path %>
+        <% else %>
+          <%= link_to "Sign In", signin_path %>
         <% end %>
       </li>
     </ul>

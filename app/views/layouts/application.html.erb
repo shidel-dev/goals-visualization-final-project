@@ -6,12 +6,18 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript">
+    // what do you need to know client side?
+    var currentUser = "<%=current_user.to_json%>";
+  </script>
 </head>
 <body>
-  <%= render partial: "layouts/navbar" unless @disable_nav %>
+  <%= render partial: "layouts/navbar" if current_user %>
   <%= yield %>
-  <% if @current_user %>
-  <%= render partial: "loadlifedata" %>
+
+  <% if current_user %>
+    <%= render partial: "loadlifedata" %>
   <% end %>
 </body>
 </html>
