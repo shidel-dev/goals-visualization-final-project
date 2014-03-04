@@ -54,3 +54,5 @@ gem 'rails_12factor', group: :production
 gem 'debugger', group: [:development, :test]
 
 gem 'pry', group: [:development, :test]
+
+gem 'd3_rails'
