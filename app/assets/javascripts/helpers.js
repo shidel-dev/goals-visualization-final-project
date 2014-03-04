@@ -2,7 +2,7 @@
 
 function setup(width) {
   window.paper = new Raphael(document.getElementById('life_bar'), width, 200);
-  window.cover = paper.rect(0, 0, width, 200).attr({fill: "#F1EBD9",stroke: "none"});
+  window.cover = paper.rect(0, 0, width, 200).attr({fill: "#f1f1f1",stroke: "#CCCCCC"});
 }
 
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
@@ -94,7 +94,7 @@ function shiftTime(multi){
       $("#arrow_right").hide();
       $("#future").hide();
       $("#higher").hide();
-    }; 
+    };
   });
 }
 
@@ -114,7 +114,8 @@ function nodeInfo(node,event){
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
   $("#container").append(template(node.ref));
-  $(".popup").css({"left" : event.pageX - 210 + "px", "top" : event.pageY - 195 + "px"});
+  $(".popup").css({"left" : event.pageX - 210 + "px", "top" : event.pageY - 195 + "px"})
+    .drags({handle:"#head"});
   if ($(".action").length === 3){
     $(".action").css("margin-left", "34px");
   }
@@ -134,7 +135,7 @@ function nodeInfo(node,event){
       bar.findNodeById($(".popup").data("id")).deleteNode();
     } else if (e.target.id === "reflection"){
       nodeReflectionDisplay(bar.findNodeById($(".popup").data("id")));
-    } 
+    }
   }
 }
 
