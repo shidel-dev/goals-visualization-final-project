@@ -1,5 +1,6 @@
 body{
   background-image:url('/stardust.png');
+  font-family: 'Roboto', sans-serif;
 }
 
 #container{
@@ -47,14 +48,17 @@ body{
   display: none;
   width: 40px;
   margin-top: 11%;
+  cursor: pointer;
 }
 
 #arrow_right {
 float: right;
+margin-right: -5px;
 }
 
 #arrow_left {
 float: left;
+margin-left: -5px;
 }
 
 #right-arrow:hover, #higher:hover, #lower:hover {
@@ -69,6 +73,12 @@ border-top: 1px solid #000;
 margin-left: 21px;
 margin-top: 2px;
 }
+
+.action{
+  cursor: pointer;
+}
+
+
 
 
 
@@ -105,13 +115,16 @@ div.reflectionHolder > h2 {
 div.reflectionHolder > img {
   float: right;
   margin-right: 10px;
-  margin-top: 10px;
+  margin-top: 2px;
+  cursor: pointer;
 }
 
 /* --- TIME INTERVAL SELECTION --- */
 
 .time {
   display: none;
+  color: #C7BA94;
+
 }
 
 #time_intervals {
@@ -121,6 +134,10 @@ div.reflectionHolder > img {
   color: #C7BA94;
 }
 
+#time_intervals > p{
+  cursor: pointer;
+}
+
 #time_intervals p{
   display: inline;
   margin-left: 60px;
@@ -128,9 +145,8 @@ div.reflectionHolder > img {
 }
 
 .selected {
-  color: #424791;
-  font-size: 2em;
-  text-shadow: 0 0 60px white;
+  text-shadow: 0 0 26px #FFF;
+  color: #FFF;
 }
 
 #past {
@@ -142,7 +158,7 @@ div.reflectionHolder > img {
 #future {
   position: absolute;
   margin-top: 14%;
-  margin-left: 59%;
+  margin-left: 910px;
 }
 
 #lower, #current_label {
@@ -157,5 +173,29 @@ div.reflectionHolder > img {
   margin-top: 12%;
   margin-left: 56%;
   color: #C7BA94;
+}
+
+/**/
+#lowerTime {
+  display: block;
+  width: 300px;
+  position: relative;
+  top: 144px;
+  left: -110px;
+}
+
+#higerTime {
+  display: block;
+  position: relative;
+  top: 63px;
+  width: 300px;
+  left: 600px;
+  top: 144px;
+}
+
+.time > p {
+  margin: 0;
+  width: 100%;
+  text-align: center;
 }
 
