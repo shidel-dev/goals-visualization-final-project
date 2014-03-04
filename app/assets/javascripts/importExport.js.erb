@@ -63,6 +63,7 @@ populateConnections = function(bar, data) {
 window.autoSave = _.debounce(saveLifeData,1000)
 
 function saveLifeData (){
+  console.log("autosave")
   data = {person: save(bar)};
   $.ajax({
     async:false,
@@ -73,6 +74,7 @@ function saveLifeData (){
     dataType: "json"
   });
 }
+
 
 loadLifeData = function() {
   $.ajax({

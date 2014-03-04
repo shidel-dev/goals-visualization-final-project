@@ -155,6 +155,7 @@ function listenForNextNode(oNode,action){
       if (e.target === node.elem[0] && e.target !== oNode.elem[0]){
         if(action === "link"){
           bar.createConnection(oNode.elem,node.elem);
+          autoSave();
         }else if(action === "sever"){
           bar.removeConnection(oNode,node);
         }
