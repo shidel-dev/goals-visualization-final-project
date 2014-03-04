@@ -80,9 +80,6 @@ loadLifeData = function() {
     type: "POST",
     url: '/load',
     dataType: "json",
-    error: function(){
-      alert("error");
-    },
     success: function(data) {
       console.log(data);
       console.log(that);
