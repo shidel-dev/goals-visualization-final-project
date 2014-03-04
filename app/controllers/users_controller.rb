@@ -11,7 +11,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(create_params)
-    debugger
     if @user.save
       session[:user_id] = @user.id
       redirect_to root_path
