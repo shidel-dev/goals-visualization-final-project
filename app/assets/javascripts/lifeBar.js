@@ -103,7 +103,7 @@ Bar.prototype.events = function(){
     if($(".popup").length){
       remove()
     } else {
-      var nodeOptions = {id: that.nodeCounter, x: e.layerX, y: e.layerY};
+      var nodeOptions = {id: that.nodeCounter, x: e.offsetX, y: e.offsetY};
       bar.createNode(nodeOptions);
       that.nodeCounter++;
     }

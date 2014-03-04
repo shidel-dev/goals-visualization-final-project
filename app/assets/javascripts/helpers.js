@@ -110,11 +110,11 @@ function nodeInfo(node,event){
     bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
     $(".popup").remove();
   }
-   $(".popup").remove();
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
   $("#container").append(template(node.ref));
-  $(".popup").css({"left" : event.pageX - 210 + "px", "top" : event.pageY - 195 + "px"})
+  var popup = $(".popup")
+  popup.css({"left" : event.pageX - 220 + "px", "top" : event.pageY - (popup.cssNumber("height") + 10) + "px"})
     .drags({handle:"#head"});
   if ($(".action").length === 3){
     $(".action").css("margin-left", "34px");
