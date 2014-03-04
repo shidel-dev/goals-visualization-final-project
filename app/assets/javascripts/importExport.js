@@ -76,9 +76,6 @@ loadLifeData = function() {
     type: "POST",
     url: '/load',
     dataType: "json",
-    error: function(){
-      alert("error");
-    },
     success: function(data) {
       populate(window.bar, data);
     }
