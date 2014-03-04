@@ -136,7 +136,8 @@ function Node(options) {
 
 Node.prototype.render = function(multi){
   this.elem = paper.circle(this.x *  multi, this.y, this.r);
-  this.elem.attr({fill:"#424791",stroke:'none'});
+  var fill = this.completed ? "#3F6D61" : "#424791";
+  this.elem.attr({fill: fill,stroke:'none'});
   this.elem.ref = this;
   this.events();
 };
