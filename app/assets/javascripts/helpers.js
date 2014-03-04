@@ -83,13 +83,18 @@ function scaleBar(width,multi){
 
 function shiftTime(multi){
   $(".arrow").show();
+  $(".time").show();
   $("svg").animate({"left":"+=" + multi * 880 + "px"}, function(){
     cssNum = $("svg").cssNumber("left");
     if (cssNum > 0 ){
       $("#arrow_left").hide();
+      $("#past").hide();
+      $("#lower").hide();
     } else if (cssNum - 800 <= time.unit * -880){
       $("#arrow_right").hide();
-    } 
+      $("#future").hide();
+      $("#higher").hide();
+    }; 
   });
 }
 
