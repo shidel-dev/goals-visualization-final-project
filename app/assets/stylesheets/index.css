@@ -9,11 +9,12 @@ body{
   height: 800px;
 }
 
-#exit{
-  float:right;
+#exit {
+  float: right;
   width: 10px;
-  padding-right: 2px;
-  padding-top: 2px;
+  padding-right: 4px;
+  margin-top: -11px;
+  cursor:pointer;
 }
 
 .popup{
@@ -23,6 +24,16 @@ body{
   position: fixed;
   background-color: #fff;
 
+}
+
+#head {
+height: 15px;
+background-color: #BFBFBF;
+border-top-right-radius: 10px;
+border-top-left-radius: 10px;
+margin-top: -1px;
+width: 202px;
+margin-left: -1px;
 }
 
 #content{
