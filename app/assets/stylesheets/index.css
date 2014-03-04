@@ -1,5 +1,5 @@
 body{
-  background-image:url('/stardust.png');
+  background-image:url('/assets/binding_dark.png');
   font-family: 'Roboto', sans-serif;
 }
 
@@ -116,7 +116,7 @@ margin-top: 2px;
 }
 
 #reflectionText {
- margin-left: 11px; 
+ margin-left: 11px;
 }
 
 div.reflectionHolder > h2 {

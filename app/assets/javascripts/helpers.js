@@ -2,7 +2,7 @@
 
 function setup(width) {
   window.paper = new Raphael(document.getElementById('life_bar'), width, 200);
-  window.cover = paper.rect(0, 0, width, 200).attr({fill: "#F1EBD9",stroke: "none"});
+  window.cover = paper.rect(0, 0, width, 200).attr({fill: "#474646",stroke: "#CCCCCC"});
 }
 
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
@@ -94,7 +94,7 @@ function shiftTime(multi){
       $("#arrow_right").hide();
       $("#future").hide();
       $("#higher").hide();
-    }; 
+    };
   });
 }
 
@@ -134,7 +134,7 @@ function nodeInfo(node,event){
       bar.findNodeById($(".popup").data("id")).deleteNode();
     } else if (e.target.id === "reflection"){
       nodeReflectionDisplay(bar.findNodeById($(".popup").data("id")));
-    } 
+    }
   }
 }
 
