@@ -112,6 +112,7 @@ div.reflectionHolder > img {
 
 .time {
   display: none;
+  color: #C7BA94;
 }
 
 #time_intervals {
@@ -142,7 +143,7 @@ div.reflectionHolder > img {
 #future {
   position: absolute;
   margin-top: 14%;
-  margin-left: 59%;
+  margin-left: 910px;
 }
 
 #lower, #current_label {
@@ -157,5 +158,29 @@ div.reflectionHolder > img {
   margin-top: 12%;
   margin-left: 56%;
   color: #C7BA94;
+}
+
+/**/
+#lowerTime {
+  display: block;
+  width: 300px;
+  position: relative;
+  top: 144px;
+  left: -110px;
+}
+
+#higerTime {
+  display: block;
+  position: relative;
+  top: 63px;
+  width: 300px;
+  left: 600px;
+  top: 144px;
+}
+
+.time > p {
+  margin: 0;
+  width: 100%;
+  text-align: center;
 }
 
