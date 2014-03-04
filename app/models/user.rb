@@ -12,8 +12,4 @@ class User < ActiveRecord::Base
     @life = Life.create
     self.life_id = @life.id.to_s
   end
-
-  def create_birthday(birthdayhash)
-    self.update(birthday: birthdayhash.map{|k,v| v}.join("-").to_date)
-  end
 end
