@@ -48,6 +48,7 @@ body{
   display: none;
   width: 40px;
   margin-top: 11%;
+  cursor: pointer;
 }
 
 #arrow_right {
@@ -70,6 +71,12 @@ border-top: 1px solid #000;
 margin-left: 21px;
 margin-top: 2px;
 }
+
+.action{
+  cursor: pointer;
+}
+
+
 
 
 
@@ -106,7 +113,8 @@ div.reflectionHolder > h2 {
 div.reflectionHolder > img {
   float: right;
   margin-right: 10px;
-  margin-top: 10px;
+  margin-top: 2px;
+  cursor: pointer;
 }
 
 /* --- TIME INTERVAL SELECTION --- */
@@ -114,6 +122,7 @@ div.reflectionHolder > img {
 .time {
   display: none;
   color: #C7BA94;
+
 }
 
 #time_intervals {
@@ -121,6 +130,10 @@ div.reflectionHolder > img {
   text-align: center;
   bottom: 100px;
   color: #C7BA94;
+}
+
+#time_intervals > p{
+  cursor: pointer;
 }
 
 #time_intervals p{
