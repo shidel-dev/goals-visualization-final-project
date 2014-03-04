@@ -114,7 +114,8 @@ function nodeInfo(node,event){
   _.templateSettings.variable = "v";
   var template = _.template($("script.popupTemplate").html());
   $("#container").append(template(node.ref));
-  $(".popup").css({"left" : event.pageX - 210 + "px", "top" : event.pageY - 195 + "px"});
+  $(".popup").css({"left" : event.pageX - 210 + "px", "top" : event.pageY - 195 + "px"})
+    .drags({handle:"#head"});
   if ($(".action").length === 3){
     $(".action").css("margin-left", "34px");
   }
