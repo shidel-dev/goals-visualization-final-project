@@ -65,7 +65,7 @@ Bar.prototype.createNode = function(nodeOptions){
 };
 
 Bar.prototype.createConnection = function(node1, node2){
-  var connection = paper.connection(node1, node2, "blue");
+  var connection = paper.connection(node1, node2, "#00756F");
   this.connections.push(connection);
   node1.ref.connections.push(connection);
   node2.ref.connections.push(connection);
@@ -142,7 +142,7 @@ function Node(options) {
 
 Node.prototype.render = function(multi){
   this.elem = paper.circle(this.x *  multi, this.y, this.r);
-  var fill = this.completed ? "#00DB00" : "#0000FF";
+  var fill = this.completed ? "#048204" : "#0000FF";
   this.elem.attr({fill: fill,stroke:'none'});
   this.elem.ref = this;
   this.events();
@@ -163,7 +163,7 @@ Node.prototype.end = function(){
 
 Node.prototype.complete = function(){
   this.completed = true;
-  this.elem.attr({fill:"#00DB00"});
+  this.elem.attr({fill:"#048204"});
   autoSave();
 };
 
