@@ -23,6 +23,14 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
+  def find_goals
+    @life_goals = current_user.reflection_words
+    @all_words = @life_goals.join(" ").split(" ")
+    @all_titles = current_user.goal_words
+    @all_titles_arr = @all_titles.join(" ").lstrip
+    render "goals"
+  end
+
   def landing_page
     @disable_nav = true
   end
