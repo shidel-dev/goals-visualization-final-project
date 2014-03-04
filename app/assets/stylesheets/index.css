@@ -47,7 +47,7 @@ body{
 .arrow{
   display: none;
   width: 40px;
-  margin-top: 11%;
+  margin-top: 100px;
   cursor: pointer;
 }
 
@@ -150,15 +150,15 @@ div.reflectionHolder > img {
 }
 
 #past {
-  position: absolute;
-  margin-top: 14%;
-  margin-left: 2%;
+  position: relative;
+  margin-left: 31px;
+  top: 237px;
 }
 
 #future {
   position: absolute;
-  margin-top: 14%;
   margin-left: 910px;
+  top: 267px;
 }
 
 #lower, #current_label {
