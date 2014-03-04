@@ -1,12 +1,16 @@
 // ----- Setup-----
+// $(window).unload(function(){
+//     saveLifeData();
+// });
 
 window.onload = function() {
   setup(880)
   window.bar = new Bar();
   window.person = new Person("26-2-1990");
-  // if($("#login")){
-  // loadLifeData();
-  // }
+  if($("#login")){
+    loadLifeData();
+    console.log("loading after login");
+  }
 };
 
 // --- PERSON Object -----
@@ -57,6 +61,7 @@ Bar.prototype.createNode = function(nodeOptions){
   $("circle").unbind("click");
   this.nodes.push(new Node(nodeOptions));
   $(".popup").remove();
+
 };
 
 Bar.prototype.createConnection = function(node1, node2){
@@ -77,7 +82,7 @@ Bar.prototype.removeConnection = function(node1,node2){
      }
    }
   });
-
+  autoSave();
 };
 Bar.prototype.deleteNode = function(nodeToBeDeleted){
   _.each(this.nodes,function(node,i){
@@ -101,7 +106,8 @@ Bar.prototype.events = function(){
       var nodeOptions = {id: that.nodeCounter, x: e.layerX, y: e.layerY};
       bar.createNode(nodeOptions);
       that.nodeCounter++;
-      }
+    }
+    autoSave();
   });
 };
 
@@ -151,19 +157,23 @@ Node.prototype.events = function(){
 Node.prototype.end = function(){
   this.ref.x = this.attrs.cx/time.unit;
   this.ref.y = this.attrs.cy;
+  autoSave();
 };
 
 Node.prototype.complete = function(){
   this.completed = true;
   this.elem.attr({fill:"#3F6D61"});
+  autoSave();
 };
 
 Node.prototype.saveText = function(text){
   this.title = text;
+  autoSave();
 };
 
 Node.prototype.saveReflection = function(text){
   this.reflection = text;
+  autoSave();
 }
 
 Node.prototype.deleteNode = function(){
@@ -171,6 +181,7 @@ Node.prototype.deleteNode = function(){
     bar.removeConnection(connection.to.ref, connection.from.ref);
   });
   bar.deleteNode(this);
+  autoSave();
 };
 
 Node.prototype.removeConnectionReference = function(id){
