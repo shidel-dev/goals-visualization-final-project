@@ -1,5 +1,12 @@
+<div id="title-nav">
+  <span id="logo">
+    Site name
+  </span>
+  <span id="login">
 <% if @current_user.nil? %>
 <%= link_to "Sign In", signin_path %>
 <% elsif @current_user %>
 <%= link_to "Sign Out", signout_path %>
 <% end %>
+</span>
+</div>

@@ -211,3 +211,19 @@ div.reflectionHolder > img {
   text-align: center;
 }
 
+/* --------- nav bar ------------------ */
+
+#title-nav{
+  background-color: green;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+}
+
+
+
+
+
+
+
+
