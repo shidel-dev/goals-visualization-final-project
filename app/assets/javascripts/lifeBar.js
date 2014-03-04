@@ -142,7 +142,7 @@ function Node(options) {
 
 Node.prototype.render = function(multi){
   this.elem = paper.circle(this.x *  multi, this.y, this.r);
-  var fill = this.completed ? "#3F6D61" : "#424791";
+  var fill = this.completed ? "#00DB00" : "#0000FF";
   this.elem.attr({fill: fill,stroke:'none'});
   this.elem.ref = this;
   this.events();
@@ -163,7 +163,7 @@ Node.prototype.end = function(){
 
 Node.prototype.complete = function(){
   this.completed = true;
-  this.elem.attr({fill:"#3F6D61"});
+  this.elem.attr({fill:"#00DB00"});
   autoSave();
 };
 
