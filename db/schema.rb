@@ -17,10 +17,10 @@ ActiveRecord::Schema.define(version: 20140302153200) do
   enable_extension "plpgsql"
 
   create_table "users", force: true do |t|
-    t.string "email"
-    t.string "password_digest"
-    t.string "life_id"
-    t.date   "birthday"
+    t.string  "email"
+    t.string  "password_digest"
+    t.integer "life_id"
+    t.date    "birthday"
   end
 
 end
