@@ -1,8 +1,9 @@
 body{
-  background-color: #545454 ;
-  /*background-image:url('/assets/binding_dark.png');*/
+  /*background-color: #545454 ;*/
+  background-image:url('/otis_redding.png');
   font-family: 'Roboto', sans-serif;
 }
+
 
 #container{
   width:960px;
@@ -188,7 +189,7 @@ div.reflectionHolder > img {
 }
 
 #lower {
-  left: -430px;
+  left: -440px;
 }
 
 #higher {
@@ -201,3 +202,54 @@ div.reflectionHolder > img {
   color: #C7BA94;
   top: 210px;
 }
+
+/* --------- nav bar ------------------ */
+
+#title-nav{
+  background-color: #343434;
+  color: #F0EBDF;
+  width: 100%;
+  height: 40px;
+  position: absolute;
+}
+
+#title-nav a{
+  color: #F0EBDF;
+  text-decoration: none;
+}
+
+#title-nav a:hover{
+  color: gray;
+}
+
+#nav-left {
+  margin-left: 10px;
+  margin-top: 10px;
+  display: inline;
+  float: left; 
+}
+
+#nav-right {
+  margin-top:10px;
+
+  display: inline;
+  float:right;
+  margin-right: 25px;
+}
+
+#title-nav ul{
+  margin-top: 0px;
+  list-style: none;
+}
+
+#title-nav li {
+  margin: 0 20px 0 20px;
+  display: inline;
+}
+
+
+
+
+
+
+

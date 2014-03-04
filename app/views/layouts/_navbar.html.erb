@@ -1,5 +1,19 @@
-<% if @current_user.nil? %>
-<%= link_to "Sign In", signin_path %>
-<% elsif @current_user %>
-<%= link_to "Sign Out", signout_path %>
-<% end %>
+<div id="title-nav">
+  <div id="nav-left">
+    Actualizr 3000
+  </div>
+  <div id="nav-right">
+    <ul>
+      <li id="about">
+        <a href="/about">About</a>
+      </li>
+      <li id="login">
+        <% if @current_user.nil? %>
+        <%= link_to "Sign In", signin_path %>
+        <% elsif @current_user %>
+        <%= link_to "Sign Out", signout_path %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>
