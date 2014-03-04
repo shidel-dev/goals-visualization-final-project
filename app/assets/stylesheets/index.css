@@ -53,10 +53,12 @@ body{
 
 #arrow_right {
 float: right;
+margin-right: -5px;
 }
 
 #arrow_left {
 float: left;
+margin-left: -5px;
 }
 
 #right-arrow:hover, #higher:hover, #lower:hover {
@@ -143,9 +145,8 @@ div.reflectionHolder > img {
 }
 
 .selected {
-  color: #424791;
-  font-size: 2em;
-  text-shadow: 0 0 60px white;
+  text-shadow: 0 0 26px #FFF;
+  color: #FFF;
 }
 
 #past {
