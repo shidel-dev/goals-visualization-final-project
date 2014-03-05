@@ -1,17 +1,17 @@
 <div id="title-nav">
   <div id="nav-left">
-    Actualizr 3000
+    LifeBar
   </div>
   <div id="nav-right">
     <ul>
       <li id="about">
         <a href="/about">About</a>
       </li>
-      <li id="login">
-        <% if @current_user.nil? %>
+      <li id="signin">
+        <% if current_user %>
+        <%= link_to "Sign Out", signout_path, method: :delete %>
+        <% else %>
         <%= link_to "Sign In", signin_path %>
-        <% elsif @current_user %>
-        <%= link_to "Sign Out", signout_path %>
         <% end %>
       </li>
     </ul>

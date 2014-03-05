@@ -10,8 +10,5 @@
 <body>
   <%= render partial: "layouts/navbar" unless @disable_nav %>
   <%= yield %>
-  <% if @current_user %>
-  <%= render partial: "loadlifedata" %>
-  <% end %>
 </body>
 </html>

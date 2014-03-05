@@ -1,6 +1,8 @@
 
 <div id='container'>
-
+  <% if current_user %>
+  <%= render partial: "loadlifedata" %>
+  <% end %>
   <div class="time">
     <p id="lower" class="time"></p>
     <img class="time" id="past" src="icons/glyphicons_212_down_arrow.png">
