@@ -11,16 +11,51 @@
     margin-left: 150px;
     color: #F0EBDF;
   }
+  #empty {
+    color: #343434;
+    position: absolute;
+    margin-left: 270px;
+    top: 250px
+  }
+  #inspire {
+    color: #08FF8D;
+  }
+  #g {
+    float: right;
+  }
 </style>
 
 <p id="titles"><%= @title_string %></p>
+
 <div id="themes"><br><h1>LifeBar Themes </h1 style="text-align: left"></div>
+
 <div id="words"></div>
+
+<div id="empty"><h3>Hmmmm ... looks like you have not created any goals. Why don't you start?
+  <br><br><br>
+  <blockquote><span id="inspire">"Glory lies in the attempt to reach one's goal and not in reaching it."</span></blockquote>
+  <span id="g">- Mahatma Gandhi</span></h3></div>
+
 <script src= "//cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 
+
 $("#titles").hide();
+$("#empty").hide();
+
+// Create word array from goal words
+
 var allWords = $("#titles").text().trim().split(" ");
+
+// Hide words div if no goals have been set yet
+
+if (allWords.join("") === "Youhavenogoals" ) {
+  $("#words").hide();
+  $("#empty").show();
+}
+
+// Word Cloud Algorithm
 
 (function(exports) {
   function cloud() {
@@ -368,7 +403,6 @@ var allWords = $("#titles").text().trim().split(" ");
     };
   }
 
-  // TODO reuse arrays?
   function zeroArray(n) {
     var a = [],
         i = -1;
@@ -406,6 +440,8 @@ var allWords = $("#titles").text().trim().split(" ");
   exports.cloud = cloud;
 })(typeof exports === "undefined" ? d3.layout || (d3.layout = {}) : exports);
 
+// Customize word cloud
+
  var fill = d3.scale.category20();
  var fillColor = d3.scale.ordinal().range(['#FF530D', '#08FF8D', '#110CE8']);
 
@@ -439,4 +475,5 @@ var allWords = $("#titles").text().trim().split(" ");
         .text(function(d) { return d.text; });
   }
 </script>
+
 </div>
