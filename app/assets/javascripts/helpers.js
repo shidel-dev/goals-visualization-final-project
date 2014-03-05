@@ -28,7 +28,7 @@ var helpers = {
   shiftTime: function(multi){
     $(".arrow").show();
     $(".time").show();
-    $("svg").animate({"left":"+=" + multi * 880 + "px"}, function(){
+    $("svg").animate({"left":"+=" + multi * 880 + "px"},700,'easeOutExpo', function(){
       cssNum = $("svg").cssNumber("left");
       if (cssNum > 0 ){
         $("#arrow_left").hide();
@@ -279,5 +279,13 @@ IntroController.prototype.render = function(){
 
     }
 })(jQuery);
+
+
+jQuery.extend(jQuery.easing, {
+  easeOutExpo: function (x, t, b, c, d) {
+    return (t == d) ? b + c : c * (-Math.pow(2, -10 * t / d) + 1) + b;
+  },
+
+});
 
 
