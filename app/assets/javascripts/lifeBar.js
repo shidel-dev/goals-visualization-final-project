@@ -26,17 +26,17 @@ function Person(birthdate){
 
 Person.prototype.setCurrentMarker = function(){
 
-  var date  = new Date(),
-      year = date.getFullYear(),
-      month = date.getMonth(),
-      day = date.getDate(),
+  var today  = new Date(),
+      year = today.getFullYear(),
+      month = today.getMonth(),
+      day = today.getDate(),
       end = _.clone(this.birthdate);
 
       end[2] = end[2] + 80;
       window.time = new Time(day,month,year);
       time.unit = 1;
       time.period = 960;
-      return helpers.days_between(date, this.birthdateObj) / 29200;
+      return helpers.days_between(today, this.birthdateObj) / 29200;
 };
 
 Person.prototype.renderMarkerLine = function(position){
@@ -50,33 +50,33 @@ Person.prototype.renderMarkerLine = function(position){
 // ---- BAR Object ------
 
 function LifeBar(){
-  this.nodes = [];
+  this.goals = [];
   this.connections = [];
   this.events();
-  this.nodeCounter = 0;
-  // assign this.nodeCounter in import/populate function
+  this.goalCounter = 0;
+  // assign this.goalCounter in import/populate function
 }
 
-LifeBar.prototype.createNode = function(nodeOptions){
+LifeBar.prototype.createGoal = function(goalOptions){
   $("circle").unbind("click");
-  this.nodes.push(new Node(nodeOptions));
+  this.goals.push(new Goal(goalOptions));
   $(".popup").remove();
 
 };
 
-LifeBar.prototype.createConnection = function(node1, node2){
-  var connection = paper.connection(node1, node2, "#00756F");
+LifeBar.prototype.createConnection = function(goal1, goal2){
+  var connection = paper.connection(goal1, goal2, "#00756F");
   this.connections.push(connection);
-  node1.ref.connections.push(connection);
-  node2.ref.connections.push(connection);
+  goal1.ref.connections.push(connection);
+  goal2.ref.connections.push(connection);
 };
 
-LifeBar.prototype.removeConnection = function(node1,node2){
+LifeBar.prototype.removeConnection = function(goal1,goal2){
   _.each(lifeBar.connections, function(conn, i){
-   if(conn.from.ref.id === node1.id || conn.to.ref.id === node1.id){
-     if(node2.id === conn.from.ref.id || node2.id === conn.to.ref.id){
-        node2.removeConnectionReference(node1.id);
-        node1.removeConnectionReference(node2.id);
+   if(conn.from.ref.id === goal1.id || conn.to.ref.id === goal1.id){
+     if(goal2.id === conn.from.ref.id || goal2.id === conn.to.ref.id){
+        goal2.removeConnectionReference(goal1.id);
+        goal1.removeConnectionReference(goal2.id);
         $(conn.line)[0].remove();
         lifeBar.connections.splice(i,1);
      }
@@ -84,12 +84,12 @@ LifeBar.prototype.removeConnection = function(node1,node2){
   });
   autoSave();
 };
-LifeBar.prototype.deleteNode = function(nodeToBeDeleted){
-  _.each(this.nodes,function(node,i){
-    if(node.id === nodeToBeDeleted.id){
+LifeBar.prototype.deleteGoal = function(goalToBeDeleted){
+  _.each(this.goals,function(goal,i){
+    if(goal.id === goalToBeDeleted.id){
 
-      nodeToBeDeleted.elem.remove();
-      lifeBar.nodes.splice(i,1);
+      goalToBeDeleted.elem.remove();
+      lifeBar.goals.splice(i,1);
     }
   });
   $(".popup").remove();
@@ -101,25 +101,25 @@ LifeBar.prototype.events = function(){
   paper.canvas.setAttribute('preserveAspectRatio', 'none');
   cover.click(function(e){
     if($(".popup").length){
-      remove()
+      helpers.remove()
     } else {
-      var nodeOptions = {id: that.nodeCounter, x: e.offsetX, y: e.offsetY};
-      lifeBar.createNode(nodeOptions);
-      that.nodeCounter++;
+      var goalOptions = {id: that.goalCounter, x: e.offsetX, y: e.offsetY};
+      lifeBar.createGoal(goalOptions);
+      that.goalCounter++;
     }
     autoSave();
   });
 };
 
-LifeBar.prototype.findNodeById = function(id) {
-  for(var i = 0; i < this.nodes.length; i++) {
-    if(this.nodes[i].id === id) return this.nodes[i];
+LifeBar.prototype.findGoalById = function(id) {
+  for(var i = 0; i < this.goals.length; i++) {
+    if(this.goals[i].id === id) return this.goals[i];
   }
 };
 
 // ----- NODE Object -----
 
-function Node(options) {
+function Goal(options) {
   this.id = options.id;
   this.x = options.x / time.unit;
   this.y = options.y;
@@ -140,7 +140,7 @@ function Node(options) {
   this.render(time.unit);
 }
 
-Node.prototype.render = function(multi){
+Goal.prototype.render = function(multi){
   this.elem = paper.circle(this.x *  multi, this.y, this.r);
   var fill = this.completed ? "#048204" : "#0000FF";
   this.elem.attr({fill: fill,stroke:'none'});
@@ -148,44 +148,44 @@ Node.prototype.render = function(multi){
   this.events();
 };
 
-Node.prototype.events = function(){
+Goal.prototype.events = function(){
   this.elem.drag(move,start,this.end);
   this.elem.mouseup(function(event){
-    helpers.nodeInfo(this,event);
+    helpers.goalInfo(this,event);
   });
 };
 
-Node.prototype.end = function(){
+Goal.prototype.end = function(){
   this.ref.x = this.attrs.cx/time.unit;
   this.ref.y = this.attrs.cy;
   autoSave();
 };
 
-Node.prototype.complete = function(){
+Goal.prototype.complete = function(){
   this.completed = true;
   this.elem.attr({fill:"#048204"});
   autoSave();
 };
 
-Node.prototype.saveText = function(text){
+Goal.prototype.saveText = function(text){
   this.title = text;
   autoSave();
 };
 
-Node.prototype.saveReflection = function(text){
+Goal.prototype.saveReflection = function(text){
   this.reflection = text;
   autoSave();
 }
 
-Node.prototype.deleteNode = function(){
+Goal.prototype.deleteGoal = function(){
   _.each(_.clone(this.connections), function(connection){
     lifeBar.removeConnection(connection.to.ref, connection.from.ref);
   });
-  lifeBar.deleteNode(this);
+  lifeBar.deleteGoal(this);
   autoSave();
 };
 
-Node.prototype.removeConnectionReference = function(id){
+Goal.prototype.removeConnectionReference = function(id){
   var that = this;
   _.each(this.connections,function(connection,i){
     if(connection.to.ref.id === id || connection.from.ref.id === id){
