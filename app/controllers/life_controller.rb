@@ -13,7 +13,8 @@ class LifeController < ApplicationController
     render json: @life
   end
 
+  # Refactor to include this method so we can re-enanble strong pararms
   def permit_params
-    params["person"].require(:life).permit(:maxId, :nodes, :connections)
+    params[:life_data].require(:life).permit(:maxId, :goals, :connections)
   end
 end

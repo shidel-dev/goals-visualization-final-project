@@ -1,12 +1,12 @@
 save = function(lifeBar) {
   var lifeBarJSON = {};
-  saveNodes(lifeBar, lifeBarJSON);
+  saveGoals(lifeBar, lifeBarJSON);
   saveConnections(lifeBar, lifeBarJSON);
   return lifeBarJSON;
 }
 
-saveNodes = function(lifeBar, lifeBarJSON) {
-  var exportedNodes = [];
+saveGoals = function(lifeBar, lifeBarJSON) {
+  var exportedGoals = [];
   var maxId = 0;
   for(var i = 0; i < lifeBar.goals.length; i++) {
     var goalData = {};
@@ -16,13 +16,13 @@ saveNodes = function(lifeBar, lifeBarJSON) {
     goalData.title = lifeBar.goals[i].title;
     goalData.completed = lifeBar.goals[i].completed;
     goalData.reflection = lifeBar.goals[i].reflection;
-    exportedNodes.push(goalData);
+    exportedGoals.push(goalData);
     if(goalData.id > maxId) {
       maxId = goalData.id;
     };
   }
   lifeBarJSON.maxId = maxId;
-  lifeBarJSON.goals = exportedNodes;
+  lifeBarJSON.goals = exportedGoals;
 };
 
 saveConnections = function(lifeBar, lifeBarJSON) {
@@ -38,31 +38,36 @@ saveConnections = function(lifeBar, lifeBarJSON) {
 
 
 populate = function(lifeBar, data) {
-  populateNodes(lifeBar, data);
-  populateConnections(lifeBar, data);
+  if(data.goals){ populateGoals(lifeBar, data); }
+  if(data.connections) { populateConnections(lifeBar, data); }
 }
 
-populateNodes = function(lifeBar, data) {
+populateGoals = function(lifeBar, data) {
   if(data === {}) { // figure out what non-existent object from mongodb will be here
     return;
   }
   lifeBar.goalCounter = data.maxId + 1;
   for(var i = 0; i < data.goals.length; i++) {
-    lifeBar.createNode(data.goals[i]);
+    lifeBar.createGoal(data.goals[i]);
   }
 }
 
 populateConnections = function(lifeBar, data) {
   for(var i = 0; i < data.connections.length; i++) {
-    var fromNode = lifeBar.findNodeById(data.connections[i].from);
-    var toNode = lifeBar.findNodeById(data.connections[i].to);
-    lifeBar.createConnection(fromNode.elem, toNode.elem);
+    var fromgoal = lifeBar.findGoalById(data.connections[i].from);
+    var togoal = lifeBar.findGoalById(data.connections[i].to);
+    lifeBar.createConnection(fromgoal.elem, togoal.elem);
   }
 }
 
-window.autoSave = _.debounce(saveLifeData,1000)
+window.autoSave = function() {
+  if ($("#logged-in").length) {
+    console.log("autosave");
+    saveLifeData();
+  };
+};
 
-function saveLifeData (){
+saveLifeData = function(){
   data = {life_data: save(lifeBar)};
   $.ajax({
     async:false,
