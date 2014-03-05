@@ -9,12 +9,16 @@
     <p id="higher" class="time"></p>
     <img class="time" id="future" src="icons/glyphicons_212_down_arrow.png">
   </div>
-
   <div id="current_label"><p>This is today</p></div>
   <div id='life_bar'></div>
   <img class='arrow' id="arrow_left" src="arrow_left.png">
   <img class='arrow' id="arrow_right" src="arrow_right.png">
-
+   <div id='legend'>
+    <ul>
+    <li id='complete'>Complete</li>
+    <li id='uncomplete'>Uncomplete</li>
+    </ul>
+  </div>
   <div id='time_intervals'>
     <p id="month">month</p>
     <p id="year">year</p>
@@ -32,10 +36,10 @@
     <div id="content" placeholder="Enter a goal..." contenteditable="true"><%%= v.title%></div>
     <div id='foot'>
     <img class='action' id='link' src="/icons/glyphicons_422_git_branch.png"></img>
-    
-    
+
+
     <img class='action' id='delete' src="/icons/glyphicons_016_bin.png"></img>
-    
+
 
     <%% if (v.connections.length){%>
       <img class='action' id='sever' src="/icons/glyphicons_288_scissors.png"></img>
@@ -44,7 +48,7 @@
       <img class='action' id='reflection' src="/icons/glyphicons_087_log_book.png"></img>
      <%%}else{%>
       <img class='action' id='complete' src="/icons/glyphicons_206_ok_2.png"></img>
-     <%%}%> 
+     <%%}%>
     </div>
   </div>
 
@@ -59,5 +63,5 @@
     <textarea id="reflectionText" data-id="0" cols="95" rows="22"><%%= v.reflection%></textarea>
     <img class='closeReflection' src='/icons/glyphicons_198_ok.png'></img>
   </div>
-</div>  
+</div>
 </script>
