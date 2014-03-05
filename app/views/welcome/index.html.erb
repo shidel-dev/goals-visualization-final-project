@@ -3,6 +3,7 @@
   <% if current_user %>
   <%= render partial: "loadlifedata" %>
   <% end %>
+  <img id='intro' src="/icons/glyphicons_194_circle_question_mark.png"></img>
   <div class="time">
     <p id="lower" class="time"></p>
     <img class="time" id="past" src="icons/glyphicons_212_down_arrow.png">
@@ -28,7 +29,7 @@
   </div>
     <% if current_user %>
       <br><br>
-      <%= link_to "LifeBar Goal Words", goals_path, { id: 'goalsPath' } %>
+      <%= link_to "Your Goal Cloud", goals_path, { id: 'goalsPath' } %>
     <% end %>
 </div>
 
@@ -66,6 +67,29 @@
     <h2>Reflection</h2>
     <textarea id="reflectionText" data-id="0" ><%%= v.reflection%></textarea>
     <img class='closeReflection' src='/icons/glyphicons_198_ok.png'></img>
+  </div>
+</div>
+</script>
+
+<script type="text/template" class="goalTitleTemplate">
+<div id='titleBubble'><%%= v.title%></div>
+</script>
+
+<script type="text/template" class='introTemplate'>
+<div id='modal'>
+  <div class='mask closeIntro'>
+  </div>
+  <div class='introHolder'>
+    <img class='closeIntro' src='/icons/glyphicons_197_remove.png'></img>
+    <h3>Fill you LifeBar with goals, not tasks.</h3>
+    <p>Click on your LifebBar to add a goal to a point in your life.</p><br><br>
+    <p>You can then click on your goal and add content.</p><br><br>
+    <p>Goals can be linked to others to create paths with the linking tool:</p><img class='example' src="/icons/glyphicons_422_git_branch.png"></img><br><br>
+    <p>Goals can be completed by clicking the check:</p><img class='example'  src="/icons/glyphicons_206_ok_2.png"></img><br><br>
+     <p>Once completed you can use the reflection tool to assess the value of that goal:</p><img class='example'  src="/icons/glyphicons_087_log_book.png"></img><br><br>
+    <p>Goals can be removed by using:<img class='example' src="/icons/glyphicons_016_bin.png"></img><br><br>
+    <p>Connections can be removed by using:<img class='example'  src="/icons/glyphicons_288_scissors.png"></img></p>
+
   </div>
 </div>
 </script>

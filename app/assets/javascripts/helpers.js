@@ -81,6 +81,21 @@ var helpers = {
     }
   },
 
+  hoverIn: function(goal, event){
+    if (goal.title) {
+      _.templateSettings.variable = "v";
+      var template = _.template($("script.goalTitleTemplate").html());
+      $("#container").append(template(goal));
+      var bubble = $('#titleBubble');
+      bubble.css({ "left" : event.pageX - 100 + "px", 
+                  "top" : event.pageY - (bubble.cssNumber("height") + 25) + "px"})
+    };
+  },
+  
+  hoverOut: function(){
+    $('#titleBubble').remove();
+  }, 
+
   goalReflectionDisplay: function(goal) {
     _.templateSettings.variable = "v";
     var template = _.template($("script.reflectionTemplate").html());
@@ -134,6 +149,26 @@ var helpers = {
   }
 
 }
+
+// -- Intro Controller--
+
+function IntroController(){
+  this.$el = $("#intro");
+  this.events();   
+}
+
+IntroController.prototype.events = function(){
+  this.$el.click(this.render)
+};
+
+IntroController.prototype.render = function(){
+    var template = _.template($("script.introTemplate").html());
+    $("#container").append(template());
+    $(".closeIntro").click(function(){
+      $("#modal").remove()
+    })
+}
+
 // -- extend Raphael to make drawing connection easier.
 
   Raphael.fn.connection = function (obj1, obj2, line, bg) {

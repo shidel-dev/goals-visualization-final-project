@@ -6,6 +6,7 @@
 window.onload = function() {
   helpers.setup(880)
   window.lifeBar = new LifeBar();
+  new IntroController();
   if($("#logged-in").length){
     window.person = new Person($("#birthday").data("birthday"));
     loadLifeData();
@@ -155,8 +156,11 @@ Goal.prototype.render = function(multi){
 Goal.prototype.events = function(){
   this.elem.drag(move,start,this.end);
   this.elem.mouseup(function(event){
+    helpers.hoverOut();
     helpers.goalInfo(this,event);
   });
+  this.elem.hover(function(event){ helpers.hoverIn(this.model, event) },
+                  function(){ helpers.hoverOut() }); 
 };
 
 Goal.prototype.end = function(){

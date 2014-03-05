@@ -10,6 +10,13 @@ body{
   height: 800px;
 }
 
+#intro{
+  position: absolute;
+  top: 235px;
+  margin-left: 923px;
+  cursor:pointer;
+}
+
 #exit {
   float: right;
   width: 10px;
@@ -44,6 +51,18 @@ margin-left: -1px;
 #content[placeholder]:empty:before {
     content: attr(placeholder);
     color: #555;
+}
+
+/* ---- GOAL TITLE TEMPLATE --- */
+
+#titleBubble {
+  padding: 5px;
+  border: 1px solid darkgrey;
+  border-radius: 10px;
+  position: fixed;
+  background-color: #fff;
+  max-width: 200px;
+  word-wrap: break-word;
 }
 
 /* ---- LIFE BAR ---- */
@@ -126,6 +145,39 @@ div.reflectionHolder > img {
   margin-right: 10px;
   margin-top: 2px;
   cursor: pointer;
+}
+
+/*--- Intro Modal---*/
+
+.introHolder{
+  position: fixed;
+  width: 800px;
+  background-color: #fff;
+  margin-left: -400px;
+  left: 50%;
+  height: 400px;
+  top: 71px;
+}
+
+.example {
+display: inline;
+margin-left: 10px;
+}
+
+div.introHolder > img.closeIntro {
+  float: right;
+  margin-right: 10px;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+div.introHolder > h3 {
+  text-align: center;
+}
+
+div.introHolder > p {
+  display:inline;
+  margin-left: 120px;
 }
 
 /* --- TIME INTERVAL SELECTION --- */
@@ -280,6 +332,10 @@ div.reflectionHolder > img {
 
 /* ---- SIGN-IN / SIGN-OUT ---- */
 
+.form {
+  color: #F0EBDF;
+}
+
 .error {
   position: relative;
   color: yellow;
@@ -323,6 +379,66 @@ div.reflectionHolder > img {
 .to_sign_up {
   margin-top: 200px;
   text-align: center;
+  color: #F0EBDF;
+}
+
+.to_sign_up a {
+  text-decoration: none;
+  color: #343434
+}
+
+.to_sign_up a:hover {
+  color: #F0EBDF
 }
 
 
+/*------ About Us ------*/
+
+#content {
+  margin: auto 0;
+}
+
+#quote {
+  font-size: 1.5em;
+  color: #343434;
+}
+
+#first {
+  color: #110CE8;
+}
+
+#last {
+  color: #048204;
+}
+
+.about {
+  margin-left: 2%;
+  width: 90%;
+}
+
+.text {
+  color: #F0EBDF
+}
+
+.question {
+  color: #343434
+}
+
+#snip {
+  width: 50%;
+  margin-left: 50px;
+  border: 3px solid white;
+}
+
+#contact {
+  color: #343434
+}
+
+#contact a, #ourCode{
+  text-decoration: none;
+  color: #343434
+}
+
+#contact a:hover, #ourCode:hover{
+  color: #F0EBDF
+}
