@@ -428,11 +428,11 @@ div.introHolder > p {
 }
 
 .text {
-  color: #F0EBDF
+  color: #F0EBDF;
 }
 
 .question {
-  color: #343434
+  color: #343434;
 }
 
 #snip {
@@ -442,7 +442,7 @@ div.introHolder > p {
 }
 
 #contact {
-  color: #343434,
+  color: #343434;
 }
 
 #contact li {
