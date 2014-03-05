@@ -101,7 +101,7 @@ LifeBar.prototype.events = function(){
   paper.canvas.setAttribute('preserveAspectRatio', 'none');
   cover.click(function(e){
     if($(".popup").length){
-      helpers.remove()
+      helpers.removeAndSave()
     } else {
       var goalOptions = {id: that.goalCounter, x: e.offsetX, y: e.offsetY};
       lifeBar.createGoal(goalOptions);
