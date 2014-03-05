@@ -81,6 +81,21 @@ var helpers = {
     }
   },
 
+  hoverIn: function(goal, event){
+    if (goal.title) {
+      _.templateSettings.variable = "v";
+      var template = _.template($("script.goalTitleTemplate").html());
+      $("#container").append(template(goal));
+      var bubble = $('#titleBubble');
+      bubble.css({ "left" : event.pageX - 100 + "px", 
+                  "top" : event.pageY - (bubble.cssNumber("height") + 25) + "px"})
+    };
+  },
+  
+  hoverOut: function(){
+    $('#titleBubble').remove();
+  }, 
+
   goalReflectionDisplay: function(goal) {
     _.templateSettings.variable = "v";
     var template = _.template($("script.reflectionTemplate").html());
