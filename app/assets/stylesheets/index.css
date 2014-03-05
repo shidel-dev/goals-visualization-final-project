@@ -43,7 +43,7 @@ margin-left: -1px;
 
 #content[placeholder]:empty:before {
     content: attr(placeholder);
-    color: #555; 
+    color: #555;
 }
 
 /* ---- LIFE BAR ---- */
@@ -174,7 +174,7 @@ div.reflectionHolder > img {
   top: 210px;
 }
 
-.time { 
+.time {
   position: relative;
 }
 
@@ -202,6 +202,22 @@ div.reflectionHolder > img {
   top: 195px;
 }
 
+/*------- legend ------------------*/
+#legend {
+  position: absolute;
+  margin-bottom: -50px;
+  top: 435px;
+  left: 1040px;
+}
+
+#complete {
+  color: #048204;
+}
+
+#uncomplete {
+  color: #0000FF;
+}
+
 /* --------- NAV bar ------------------ */
 
 #title-nav{
@@ -225,7 +241,7 @@ div.reflectionHolder > img {
   margin-left: 10px;
   margin-top: 10px;
   display: inline;
-  float: left; 
+  float: left;
 }
 
 #nav-right {
