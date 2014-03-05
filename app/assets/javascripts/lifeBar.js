@@ -4,7 +4,7 @@
 // });
 
 window.onload = function() {
-  setup(880)
+  helpers.setup(880)
   window.bar = new Bar();
   window.person = new Person("26-2-1990");
   if($("#login")){
@@ -36,7 +36,7 @@ Person.prototype.setCurrentMarker = function(){
       window.time = new Time(day,month,year);
       time.unit = 1;
       time.period = 960;
-      return days_between(date, this.birthdateObj) / 29200;
+      return helpers.days_between(date, this.birthdateObj) / 29200;
 };
 
 Person.prototype.renderMarkerLine = function(position){
@@ -151,7 +151,7 @@ Node.prototype.render = function(multi){
 Node.prototype.events = function(){
   this.elem.drag(move,start,this.end);
   this.elem.mouseup(function(event){
-    nodeInfo(this,event);
+    helpers.nodeInfo(this,event);
   });
 };
 
@@ -223,7 +223,7 @@ function Time(day,month,year){
 Time.prototype.events = function(){
   $("#month").click(function(e){
     time.scale("month");
-    highlightText(e.target);
+    helpers.highlightText(e.target);
     $(".time").show();
     $("#current_label").hide();
     window.timeKeeper = new labelTime("months")
@@ -231,82 +231,82 @@ Time.prototype.events = function(){
 
   $("#year").click(function(e){
     time.scale("year");
-    highlightText(e.target);
+    helpers.highlightText(e.target);
     $(".time").show();
     $("#current_label").hide();
     window.timeKeeper = new labelTime("years")
   });
   $("#5year").click(function(e){
     time.scale("5year");
-    highlightText(e.target);
+    helpers.highlightText(e.target);
     $(".time").show();
     $("#current_label").hide();
     window.timeKeeper = new labelTime("5")
   });
   $("#10year").click(function(e){
     time.scale("10year");
-    highlightText(e.target);
+    helpers.highlightText(e.target);
     $(".time").show();
     $("#current_label").hide();
     window.timeKeeper = new labelTime("decades")
   });
   $("#life").click(function(e){
     time.scale("life");
-    highlightText(e.target);
+    helpers.highlightText(e.target);
     $(".time").hide();
     $("#current_label").show();
   })
   $("#arrow_left").click(function(){
     if(!$("svg").is(':animated') ) {
       timeKeeper.updateCount("left");
-      shiftTime(1);
+      helpers.shiftTime(1);
     };
   })
   $("#arrow_right").click(function(){
     if(!$("svg").is(':animated') ) {
       timeKeeper.updateCount("right");
-      shiftTime(-1);
+      helpers.shiftTime(-1);
     };
   });
   $("#arrow_left").click(function(){
-    if(!$("svg").is(':animated')){shiftTime(1);}
+    if(!$("svg").is(':animated')){helpers.shiftTime(1);}
   });
   $("#arrow_right").click(function(){
-    if(!$("svg").is(':animated') ) {shiftTime(-1);}
+    if(!$("svg").is(':animated') ) {helpers.shiftTime(-1);}
   });
 };
 
 Time.prototype.scale = function(unit){
   if(unit === "month"){
-    scaleBar(844800,960);
+    helpers.scaleBar(844800,960);
     this.unit = 960;
     this.period = 1;
     $(".arrow").show();
     this.shift = Math.round(844800 * person.pos * -1) + "px";
     $(paper.canvas).css("left",this.shift);
   }else if(unit === "year"){
-    scaleBar(70400,80);
+    helpers.scaleBar(70400,80);
     this.unit = 80;
     this.period = 12;
     $(".arrow").show();
     this.shift = Math.round(70400 * person.pos * -1) + "px";
     $(paper.canvas).css("left",this.shift);
   }else if(unit === "5year"){
-    scaleBar(14080,16);
+    helpers.scaleBar(14080,16);
     this.unit = 16;
     this.period = 60;
     $(".arrow").show();
     this.shift = Math.round(14080 * person.pos * -1) + "px";
     $(paper.canvas).css("left",this.shift);
   }else if(unit === "10year"){
-    scaleBar(7040,8);
+    helpers.scaleBar(7040,8);
     this.unit = 8;
     this.period = 120;
     $(".arrow").show();
     this.shift = Math.round(7040 * person.pos * -1) + "px";
     $(paper.canvas).css("left",this.shift);
   }else if (unit === "life"){
-    scaleBar(880,1);
+    helpers.scaleBar(880,1);
     this.unit = 1;
     this.period = 960;
     $(".arrow").hide();
