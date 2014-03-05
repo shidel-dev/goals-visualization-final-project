@@ -3,6 +3,7 @@
   <% if current_user %>
   <%= render partial: "loadlifedata" %>
   <% end %>
+  <img id='intro' src="/icons/glyphicons_194_circle_question_mark.png"></img>
   <div class="time">
     <p id="lower" class="time"></p>
     <img class="time" id="past" src="icons/glyphicons_212_down_arrow.png">
@@ -66,6 +67,16 @@
     <h2>Reflection</h2>
     <textarea id="reflectionText" data-id="0" ><%%= v.reflection%></textarea>
     <img class='closeReflection' src='/icons/glyphicons_198_ok.png'></img>
+  </div>
+</div>
+</script>
+
+<script type="text/template" class='introTemplate'>
+<div id='modal'>
+  <div class='mask closeIntro'>
+  </div>
+  <div class='introHolder'>
+    <img class='closeIntro' src='/icons/glyphicons_197_remove.png'></img>
   </div>
 </div>
 </script>
