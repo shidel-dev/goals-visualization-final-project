@@ -67,14 +67,14 @@ LifeBar.prototype.createGoal = function(goalOptions){
 LifeBar.prototype.createConnection = function(goal1, goal2){
   var connection = paper.connection(goal1, goal2, "#00756F");
   this.connections.push(connection);
-  goal1.ref.connections.push(connection);
-  goal2.ref.connections.push(connection);
+  goal1.model.connections.push(connection);
+  goal2.model.connections.push(connection);
 };
 
 LifeBar.prototype.removeConnection = function(goal1,goal2){
   _.each(lifeBar.connections, function(conn, i){
-   if(conn.from.ref.id === goal1.id || conn.to.ref.id === goal1.id){
-     if(goal2.id === conn.from.ref.id || goal2.id === conn.to.ref.id){
+   if(conn.from.model.id === goal1.id || conn.to.model.id === goal1.id){
+     if(goal2.id === conn.from.model.id || goal2.id === conn.to.model.id){
         goal2.removeConnectionReference(goal1.id);
         goal1.removeConnectionReference(goal2.id);
         $(conn.line)[0].remove();
@@ -147,7 +147,7 @@ Goal.prototype.render = function(multi){
   this.elem = paper.circle(this.x *  multi, this.y, this.r);
   var fill = this.completed ? "#048204" : "#0000FF";
   this.elem.attr({fill: fill,stroke:'none'});
-  this.elem.ref = this;
+  this.elem.model = this;
   this.events();
 };
 
@@ -159,8 +159,8 @@ Goal.prototype.events = function(){
 };
 
 Goal.prototype.end = function(){
-  this.ref.x = this.attrs.cx/time.unit;
-  this.ref.y = this.attrs.cy;
+  this.model.x = this.attrs.cx/time.unit;
+  this.model.y = this.attrs.cy;
   autoSave();
 };
 
@@ -182,7 +182,7 @@ Goal.prototype.saveReflection = function(text){
 
 Goal.prototype.deleteGoal = function(){
   _.each(_.clone(this.connections), function(connection){
-    lifeBar.removeConnection(connection.to.ref, connection.from.ref);
+    lifeBar.removeConnection(connection.to.model, connection.from.model);
   });
   lifeBar.deleteGoal(this);
   autoSave();
@@ -191,7 +191,7 @@ Goal.prototype.deleteGoal = function(){
 Goal.prototype.removeConnectionReference = function(id){
   var that = this;
   _.each(this.connections,function(connection,i){
-    if(connection.to.ref.id === id || connection.from.ref.id === id){
+    if(connection.to.model.id === id || connection.from.model.id === id){
       that.connections.splice(i,1);
     }
   });
