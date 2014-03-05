@@ -10,6 +10,13 @@ body{
   height: 800px;
 }
 
+#intro{
+  position: absolute;
+  top: 235px;
+  margin-left: 923px;
+  cursor:pointer;
+}
+
 #exit {
   float: right;
   width: 10px;
@@ -126,6 +133,39 @@ div.reflectionHolder > img {
   margin-right: 10px;
   margin-top: 2px;
   cursor: pointer;
+}
+
+/*--- Intro Modal---*/
+
+.introHolder{
+  position: fixed;
+  width: 800px;
+  background-color: #fff;
+  margin-left: -400px;
+  left: 50%;
+  height: 400px;
+  top: 71px;
+}
+
+.example {
+display: inline;
+margin-left: 10px;
+}
+
+div.introHolder > img.closeIntro {
+  float: right;
+  margin-right: 10px;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+div.introHolder > h3 {
+  text-align: center;
+}
+
+div.introHolder > p {
+  display:inline;
+  margin-left: 120px;
 }
 
 /* --- TIME INTERVAL SELECTION --- */
