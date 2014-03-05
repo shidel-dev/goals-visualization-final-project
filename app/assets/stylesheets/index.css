@@ -147,11 +147,19 @@ div.reflectionHolder > img {
   top: 71px;
 }
 
-div.introHolder > img {
+.example {
+display: inline;
+margin-left: 10px;
+}
+
+div.introHolder > img.closeIntro {
   float: right;
   margin-right: 10px;
   margin-top: 2px;
   cursor: pointer;
+}
+div.introHolder > p {
+  display:inline;
 }
 
 /* --- TIME INTERVAL SELECTION --- */
