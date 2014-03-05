@@ -11,11 +11,11 @@
       <%= f.label(:password_confirmation, "Confirm password:") %>
       <%= f.password_field(:password_confirmation, placeholder: "6 to 20 characters") %><br><br>
 
-      <%= f.label(:birthday, "Birthdate:") %>
-      <%= f.date_field :birthday %><br><br>
+      <%= date_select :user, :birthday  %><br><br>
     </p>
-      <%= f.submit("Sign up") %>
+      <%= f.submit("Sign Up") %>
   <% end %>
+
 
   <div class="signup_error">
     <% if @user.errors.any? %>
