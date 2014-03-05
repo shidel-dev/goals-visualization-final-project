@@ -5,7 +5,7 @@
 
 window.onload = function() {
   helpers.setup(880)
-  window.bar = new Bar();
+  window.lifeBar = new LifeBar();
   window.person = new Person("26-2-1990");
   if($("#login")){
     loadLifeData();
@@ -49,7 +49,7 @@ Person.prototype.renderMarkerLine = function(position){
 
 // ---- BAR Object ------
 
-function Bar(){
+function LifeBar(){
   this.nodes = [];
   this.connections = [];
   this.events();
@@ -57,46 +57,46 @@ function Bar(){
   // assign this.nodeCounter in import/populate function
 }
 
-Bar.prototype.createNode = function(nodeOptions){
+LifeBar.prototype.createNode = function(nodeOptions){
   $("circle").unbind("click");
   this.nodes.push(new Node(nodeOptions));
   $(".popup").remove();
 
 };
 
-Bar.prototype.createConnection = function(node1, node2){
+LifeBar.prototype.createConnection = function(node1, node2){
   var connection = paper.connection(node1, node2, "#00756F");
   this.connections.push(connection);
   node1.ref.connections.push(connection);
   node2.ref.connections.push(connection);
 };
 
-Bar.prototype.removeConnection = function(node1,node2){
-  _.each(bar.connections, function(conn, i){
+LifeBar.prototype.removeConnection = function(node1,node2){
+  _.each(lifeBar.connections, function(conn, i){
    if(conn.from.ref.id === node1.id || conn.to.ref.id === node1.id){
      if(node2.id === conn.from.ref.id || node2.id === conn.to.ref.id){
         node2.removeConnectionReference(node1.id);
         node1.removeConnectionReference(node2.id);
         $(conn.line)[0].remove();
-        bar.connections.splice(i,1);
+        lifeBar.connections.splice(i,1);
      }
    }
   });
   autoSave();
 };
-Bar.prototype.deleteNode = function(nodeToBeDeleted){
+LifeBar.prototype.deleteNode = function(nodeToBeDeleted){
   _.each(this.nodes,function(node,i){
     if(node.id === nodeToBeDeleted.id){
 
       nodeToBeDeleted.elem.remove();
-      bar.nodes.splice(i,1);
+      lifeBar.nodes.splice(i,1);
     }
   });
   $(".popup").remove();
 };
 
 
-Bar.prototype.events = function(){
+LifeBar.prototype.events = function(){
   var that = this;
   paper.canvas.setAttribute('preserveAspectRatio', 'none');
   cover.click(function(e){
@@ -104,14 +104,14 @@ Bar.prototype.events = function(){
       remove()
     } else {
       var nodeOptions = {id: that.nodeCounter, x: e.offsetX, y: e.offsetY};
-      bar.createNode(nodeOptions);
+      lifeBar.createNode(nodeOptions);
       that.nodeCounter++;
     }
     autoSave();
   });
 };
 
-Bar.prototype.findNodeById = function(id) {
+LifeBar.prototype.findNodeById = function(id) {
   for(var i = 0; i < this.nodes.length; i++) {
     if(this.nodes[i].id === id) return this.nodes[i];
   }
@@ -179,9 +179,9 @@ Node.prototype.saveReflection = function(text){
 
 Node.prototype.deleteNode = function(){
   _.each(_.clone(this.connections), function(connection){
-    bar.removeConnection(connection.to.ref, connection.from.ref);
+    lifeBar.removeConnection(connection.to.ref, connection.from.ref);
   });
-  bar.deleteNode(this);
+  lifeBar.deleteNode(this);
   autoSave();
 };
 
@@ -205,8 +205,8 @@ function start(){
 function move(dx, dy) {
   var att = this.type == "rect" ? {x: this.ox + dx, y: this.oy + dy} : {cx: this.ox + dx, cy: this.oy + dy};
   this.attr(att);
-  for (var i = bar.connections.length; i--;) {
-    paper.connection(bar.connections[i]);
+  for (var i = lifeBar.connections.length; i--;) {
+    paper.connection(lifeBar.connections[i]);
   }
   paper.safari();
 }
