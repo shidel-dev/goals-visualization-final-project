@@ -6,10 +6,11 @@
 window.onload = function() {
   helpers.setup(880)
   window.lifeBar = new LifeBar();
-  window.person = new Person("26-2-1990");
   if($("#logged-in").length){
+    window.person = new Person($("#birthday").data("birthday"));
     loadLifeData();
-    console.log("loading after login");
+  } else {
+    window.person = new Person("1990-2-26");
   }
 };
 
