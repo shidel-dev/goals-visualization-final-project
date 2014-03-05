@@ -29,8 +29,8 @@ saveConnections = function(lifeBar, lifeBarJSON) {
   var exportedConnections = [];
   for(var i = 0; i < lifeBar.connections.length; i++) {
     var connectionData = {};
-    connectionData.from = lifeBar.connections[i].from.ref.id;
-    connectionData.to = lifeBar.connections[i].to.ref.id;
+    connectionData.from = lifeBar.connections[i].from.model.id;
+    connectionData.to = lifeBar.connections[i].to.model.id;
     exportedConnections.push(connectionData);
   }
   lifeBarJSON.connections = exportedConnections;

@@ -112,7 +112,9 @@ margin-top: 2px;
 }
 
 #reflectionText {
- margin-left: 11px;
+margin-left: 11px;
+width: 96%;
+height: 80%;
 }
 
 div.reflectionHolder > h2 {

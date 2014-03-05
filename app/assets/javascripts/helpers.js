@@ -19,7 +19,7 @@ var helpers = {
         var lifeBarClone = _.clone(lifeBar);
         lifeBar.connections = [];
         _.each(lifeBarClone.connections, function(conn){
-          lifeBar.createConnection(conn.to.ref.elem, conn.from.ref.elem);
+          lifeBar.createConnection(conn.to.model.elem, conn.from.model.elem);
         });
         lifeBar.events();
     });
@@ -49,7 +49,7 @@ var helpers = {
     }
     _.templateSettings.variable = "v";
     var template = _.template($("script.popupTemplate").html());
-    $("#container").append(template(goal.ref));
+    $("#container").append(template(goal.model));
     var popup = $(".popup")
     popup.css({"left" : event.pageX - 220 + "px", "top" : event.pageY - (popup.cssNumber("height") + 10) + "px"})
       .drags({handle:"#head"});
@@ -61,7 +61,7 @@ var helpers = {
 
     function handleActions(e){
       if (e.target.id === "complete") {
-        goal.ref.complete();
+        goal.model.complete();
         $("#complete").remove()
         $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
         if ($(".action").length === 3){
@@ -70,9 +70,9 @@ var helpers = {
           $("#reflection").css("margin-left", "21px").click(handleActions)
         }
       } else if (e.target.id === "link") {
-        helpers.listenForNextGoal(goal.ref,"link");
+        helpers.listenForNextGoal(goal.model,"link");
       } else if (e.target.id === "sever") {
-        helpers.listenForNextGoal(goal.ref,"sever");
+        helpers.listenForNextGoal(goal.model,"sever");
       } else if (e.target.id === "delete"){
         lifeBar.findGoalById($(".popup").data("id")).deleteGoal();
       } else if (e.target.id === "reflection"){
@@ -139,8 +139,8 @@ var helpers = {
   Raphael.fn.connection = function (obj1, obj2, line, bg) {
     if (obj1.line && obj1.from && obj1.to) {
       line = obj1;
-      obj1 = line.from.ref.elem;
-      obj2 = line.to.ref.elem;
+      obj1 = line.from.model.elem;
+      obj2 = line.to.model.elem;
     }
     var bb1 = obj1.getBBox(),
         bb2 = obj2.getBBox(),
