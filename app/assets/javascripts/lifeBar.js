@@ -251,12 +251,6 @@ Time.prototype.events = function(){
       helpers.shiftTime(-1);
     };
   });
-  $("#arrow_left").click(function(){
-    if(!$("svg").is(':animated')){helpers.shiftTime(1);}
-  });
-  $("#arrow_right").click(function(){
-    if(!$("svg").is(':animated') ) {helpers.shiftTime(-1);}
-  });
 };
 
 Time.prototype.scale = function(unit){
