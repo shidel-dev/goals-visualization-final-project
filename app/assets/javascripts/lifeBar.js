@@ -7,7 +7,7 @@ window.onload = function() {
   helpers.setup(880)
   window.lifeBar = new LifeBar();
   window.person = new Person("26-2-1990");
-  if($("#login")){
+  if($("#logged-in").length){
     loadLifeData();
     console.log("loading after login");
   }

@@ -1,21 +1,16 @@
 class LifeController < ApplicationController
+  respond_to :json
 
   def save
-
-    @user = User.find(session[:user_id])
-    @life = Life.find(@user.life_id)
-    # debugger
-    @life.update(params["person"])
+    @life = Life.find(current_user.life_id)
+    @life.update(params[:life_data])
     @life.save!
+    render nothing: true
   end
 
   def load
-    puts params
-    @user = User.find(session[:user_id])
-    @life = Life.find(@user.life_id)
-    respond_to do |format|
-      format.json { render json: @life.to_json }
-    end
+    @life = Life.find(current_user.life_id)
+    render json: @life
   end
 
   def permit_params

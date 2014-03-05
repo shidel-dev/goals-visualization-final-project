@@ -5,12 +5,12 @@ Goals::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  post '/load' => 'life#load'
+  get '/load' => 'life#load'
   post '/save' => 'life#save'
 
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
-  match '/signout', to: 'sessions#destroy',     via: 'get'
+  match '/signout', to: 'sessions#destroy',     via: 'delete'
 
   get '/goals', to: 'goals#index'
 
