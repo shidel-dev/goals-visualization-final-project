@@ -13,8 +13,8 @@ var helpers = {
     $("#life_bar")
       .animate({"width": "0px", "margin-left":"+=440px"}, 500)
       .animate({"width": "880px","margin-left":"-=440px"}, 500,function(){
-        _.each(lifeBar.nodes,function(node){
-          node.render(multi);
+        _.each(lifeBar.goals,function(goal){
+          goal.render(multi);
         });
         var lifeBarClone = _.clone(lifeBar);
         lifeBar.connections = [];
@@ -42,14 +42,14 @@ var helpers = {
     });
   },
 
-  nodeInfo: function(node,event){
+  goalInfo: function(goal,event){
     if ($(".popup").length){
-      lifeBar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+      lifeBar.findGoalById(parseInt($(".popup").data("id"))).saveText($("#content").html());
       $(".popup").remove();
     }
     _.templateSettings.variable = "v";
     var template = _.template($("script.popupTemplate").html());
-    $("#container").append(template(node.ref));
+    $("#container").append(template(goal.ref));
     var popup = $(".popup")
     popup.css({"left" : event.pageX - 220 + "px", "top" : event.pageY - (popup.cssNumber("height") + 10) + "px"})
       .drags({handle:"#head"});
@@ -61,7 +61,7 @@ var helpers = {
 
     function handleActions(e){
       if (e.target.id === "complete") {
-        node.ref.complete();
+        goal.ref.complete();
         $("#complete").remove()
         $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
         if ($(".action").length === 3){
@@ -70,41 +70,41 @@ var helpers = {
           $("#reflection").css("margin-left", "21px").click(handleActions)
         }
       } else if (e.target.id === "link") {
-        helpers.listenForNextNode(node.ref,"link");
+        helpers.listenForNextGoal(goal.ref,"link");
       } else if (e.target.id === "sever") {
-        helpers.listenForNextNode(node.ref,"sever");
+        helpers.listenForNextGoal(goal.ref,"sever");
       } else if (e.target.id === "delete"){
-        lifeBar.findNodeById($(".popup").data("id")).deleteNode();
+        lifeBar.findGoalById($(".popup").data("id")).deleteGoal();
       } else if (e.target.id === "reflection"){
-        helpers.nodeReflectionDisplay(lifeBar.findNodeById($(".popup").data("id")));
+        helpers.goalReflectionDisplay(lifeBar.findGoalById($(".popup").data("id")));
       }
     }
   },
 
-  nodeReflectionDisplay: function(node) {
+  goalReflectionDisplay: function(goal) {
     _.templateSettings.variable = "v";
     var template = _.template($("script.reflectionTemplate").html());
-    $("#container").append(template(node));
+    $("#container").append(template(goal));
     $(".closeReflection").click(function(){
-      node.saveReflection($("#reflectionText").val())
+      goal.saveReflection($("#reflectionText").val())
       $('#modal').remove()
     })
   },
 
   removeAndSave: function(){
-    lifeBar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+    lifeBar.findGoalById(parseInt($(".popup").data("id"))).saveText($("#content").html());
     $(".popup").remove();
   },
 
-  listenForNextNode: function(oNode,action){
+  listenForNextGoal: function(oGoal,action){
    $("circle").click(function(e){
-      _.each( lifeBar.nodes,function(node){
-        if (e.target === node.elem[0] && e.target !== oNode.elem[0]){
+      _.each( lifeBar.goals,function(goal){
+        if (e.target === goal.elem[0] && e.target !== oGoal.elem[0]){
           if(action === "link"){
-            lifeBar.createConnection(oNode.elem,node.elem);
+            lifeBar.createConnection(oGoal.elem,goal.elem);
             autoSave();
           }else if(action === "sever"){
-            lifeBar.removeConnection(oNode,node);
+            lifeBar.removeConnection(oGoal,goal);
           }
           $("circle").unbind("click");
         }
