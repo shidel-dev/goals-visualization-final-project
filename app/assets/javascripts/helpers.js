@@ -44,7 +44,7 @@ var helpers = {
 
   goalInfo: function(goal,event){
     if ($(".popup").length){
-      lifeBar.findGoalById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+      lifeBar.findGoalById(parseInt($(".popup").data("id"))).set("title",$("#content").html());
       $(".popup").remove();
     }
     _.templateSettings.variable = "v";
@@ -65,7 +65,7 @@ var helpers = {
   handleActions:function(e){
   var goal = this
     if (e.target.id === "complete") {
-      goal.model.complete();
+      goal.model.set("completed", true);
       $("#complete").remove()
       $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
       if ($(".action").length === 3){
@@ -102,13 +102,13 @@ var helpers = {
     var template = _.template($("script.reflectionTemplate").html());
     $("#container").append(template(goal));
     $(".closeReflection").click(function(){
-      goal.saveReflection($("#reflectionText").val())
+      goal.set("reflection",$("#reflectionText").val())
       $('#modal').remove()
     })
   },
 
   removeAndSave: function(){
-    lifeBar.findGoalById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+    lifeBar.findGoalById(parseInt($(".popup").data("id"))).set("title",$("#content").html());
     $(".popup").remove();
   },
 
