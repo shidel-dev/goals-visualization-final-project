@@ -6,11 +6,12 @@
 window.onload = function() {
   helpers.setup(880)
   window.lifeBar = new LifeBar();
-  window.person = new Person("26-2-1990");
   new IntroController();
   if($("#logged-in").length){
+    window.person = new Person($("#birthday").data("birthday"));
     loadLifeData();
-    console.log("loading after login");
+  } else {
+    window.person = new Person("1990-2-26");
   }
 };
 
@@ -20,7 +21,7 @@ function Person(birthdate){
   this.birthdate = _.map(birthdate.split("-"),function(part){
     return parseInt(part);
   });
-  this.birthdateObj = new Date(this.birthdate[2],this.birthdate[1], this.birthdate[0]);
+  this.birthdateObj = new Date(this.birthdate[0],this.birthdate[1], this.birthdate[2]);
   this.pos = this.setCurrentMarker();
   this.renderMarkerLine(this.pos * 880);
 }
@@ -109,7 +110,7 @@ LifeBar.prototype.events = function(){
       }else{
         var goalOptions = {id: that.goalCounter, x: e.layerX, y: e.layerY};
       }
-      
+
       lifeBar.createGoal(goalOptions);
       that.goalCounter++;
     }
