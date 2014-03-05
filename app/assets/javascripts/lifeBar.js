@@ -48,7 +48,7 @@ Person.prototype.renderMarkerLine = function(position){
 };
 
 
-// ---- BAR Object ------
+// ---- LifeBAR Object ------
 
 function LifeBar(){
   this.goals = [];
@@ -121,7 +121,7 @@ LifeBar.prototype.findGoalById = function(id) {
  return _.find(this.goals,function(goal){return goal.id === id});
 };
 
-// ----- NODE Object -----
+// ----- Goal Object -----
 
 function Goal(options) {
   this.id = options.id;
@@ -228,41 +228,17 @@ function Time(day,month,year){
 }
 
 Time.prototype.events = function(){
-  $("#month").click(function(e){
-    time.scale("month");
-    helpers.highlightText(e.target);
-    $(".time").show();
-    $("#current_label").hide();
-    window.timeKeeper = new labelTime("months")
-  });
-
-  $("#year").click(function(e){
-    time.scale("year");
-    helpers.highlightText(e.target);
-    $(".time").show();
-    $("#current_label").hide();
-    window.timeKeeper = new labelTime("years")
-  });
-  $("#5year").click(function(e){
-    time.scale("5year");
-    helpers.highlightText(e.target);
-    $(".time").show();
-    $("#current_label").hide();
-    window.timeKeeper = new labelTime("5")
-  });
-  $("#10year").click(function(e){
-    time.scale("10year");
-    helpers.highlightText(e.target);
-    $(".time").show();
-    $("#current_label").hide();
-    window.timeKeeper = new labelTime("decades")
-  });
-  $("#life").click(function(e){
-    time.scale("life");
-    helpers.highlightText(e.target);
-    $(".time").hide();
-    $("#current_label").show();
+  var units = [["#month","months"],["#year","years"],["#5year","5"] ,["#10year","decades"],["#life","life"]]
+  _.each(units, function(unit){
+    $(unit[0]).click(function(e){
+      time.scale(unit[1]);
+      helpers.highlightText(e.target);
+      $(".time").show();
+      $("#current_label").hide();
+      if(unit[1] !== "life") window.timeKeeper = new labelTime(unit[1]);
+    });
   })
+
   $("#arrow_left").click(function(){
     if(!$("svg").is(':animated') ) {
       timeKeeper.updateCount("left");
@@ -284,28 +260,28 @@ Time.prototype.events = function(){
 };
 
 Time.prototype.scale = function(unit){
-  if(unit === "month"){
+  if(unit === "months"){
     helpers.scaleBar(844800,960);
     this.unit = 960;
     this.period = 1;
     $(".arrow").show();
     this.shift = Math.round(844800 * person.pos * -1) + "px";
     $(paper.canvas).css("left",this.shift);
-  }else if(unit === "year"){
+  }else if(unit === "years"){
     helpers.scaleBar(70400,80);
     this.unit = 80;
     this.period = 12;
     $(".arrow").show();
     this.shift = Math.round(70400 * person.pos * -1) + "px";
     $(paper.canvas).css("left",this.shift);
-  }else if(unit === "5year"){
+  }else if(unit === "5"){
     helpers.scaleBar(14080,16);
     this.unit = 16;
     this.period = 60;
     $(".arrow").show();
     this.shift = Math.round(14080 * person.pos * -1) + "px";
     $(paper.canvas).css("left",this.shift);
-  }else if(unit === "10year"){
+  }else if(unit === "decades"){
     helpers.scaleBar(7040,8);
     this.unit = 8;
     this.period = 120;
