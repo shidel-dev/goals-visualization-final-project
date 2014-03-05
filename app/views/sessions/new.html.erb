@@ -1,8 +1,7 @@
-<div class="container">
+<div id="container">
   <%= form_for(:session,
                 url: sessions_path,
                 :html => {:class => "new_session"} ) do |f| %>
-
     <h2>Sign in</h2>
     <p>
       <%= f.label(:email, "Email:") %>
