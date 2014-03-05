@@ -11,7 +11,12 @@
       <%= f.label(:password_confirmation, "Confirm password:") %>
       <%= f.password_field(:password_confirmation, placeholder: "6 to 20 characters") %><br><br>
 
-      <%= date_select :user, :birthday  %><br><br>
+      <%= f.label(:birthday, "Birthday:") %>
+      <%= date_select :user, 
+                      :birthday, 
+                      start_year: (Time.now.year - 5), 
+                      end_year: (Time.now.year - 80) %>
+    <br><br>
     </p>
       <%= f.submit("Sign Up") %>
   <% end %>
