@@ -63,7 +63,7 @@ populateConnections = function(lifeBar, data) {
 window.autoSave = _.debounce(saveLifeData,1000)
 
 function saveLifeData (){
-  data = {life_data: save(bar)};
+  data = {life_data: save(lifeBar)};
   $.ajax({
     async:false,
     type: "POST",
