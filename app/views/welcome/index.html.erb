@@ -27,7 +27,7 @@
     <p id="10year">decade</p>
     <p id="life" class='selected'>life</p>
   </div>
-    <% if current_user %>
+    <% if current_user && current_user.life["goals"] != nil %>
       <br><br>
       <%= link_to "Your Goal Cloud", goals_path, { id: 'goalsPath' } %>
     <% end %>
