@@ -143,7 +143,7 @@ div.reflectionHolder > img {
   background-color: #fff;
   margin-left: -400px;
   left: 50%;
-  height: 600px;
+  height: 400px;
   top: 71px;
 }
 
@@ -158,8 +158,14 @@ div.introHolder > img.closeIntro {
   margin-top: 2px;
   cursor: pointer;
 }
+
+div.introHolder > h3 {
+  text-align: center;
+}
+
 div.introHolder > p {
   display:inline;
+  margin-left: 120px;
 }
 
 /* --- TIME INTERVAL SELECTION --- */
