@@ -16,7 +16,7 @@ class GoalsPresenter
   def title_words
     life_goals = @user.life["goals"]
     life_goals = life_goals.select{ |g| g["title"] if !g["title"].blank? }
-    life_goals.collect {|g| g["title"].rstrip}
+    life_goals.collect {|g| g["title"].gsub(/[.!?]/, "").rstrip}
   end
 
   def title_string
