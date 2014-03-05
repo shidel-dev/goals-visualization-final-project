@@ -328,6 +328,10 @@ div.introHolder > p {
   display: inline;
 }
 
+.logo img {
+  width: 70px;
+  margin-top: -5px;
+}
 
 /* ---- SIGN-IN / SIGN-OUT ---- */
 
@@ -441,3 +445,4 @@ div.introHolder > p {
 #contact a:hover, #ourCode:hover{
   color: #F0EBDF
 }
+
