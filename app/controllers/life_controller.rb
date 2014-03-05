@@ -2,7 +2,7 @@ class LifeController < ApplicationController
 
   def save
     @life = Life.find(current_user.life_id)
-    @life.update(params["person"])
+    @life.update(params[:life_data])
     @life.save!
   end
 
