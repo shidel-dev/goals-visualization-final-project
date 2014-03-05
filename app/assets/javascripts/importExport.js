@@ -8,21 +8,21 @@ save = function(lifeBar) {
 saveNodes = function(lifeBar, lifeBarJSON) {
   var exportedNodes = [];
   var maxId = 0;
-  for(var i = 0; i < lifeBar.nodes.length; i++) {
-    var nodeData = {};
-    nodeData.id = lifeBar.nodes[i].id;
-    nodeData.x = lifeBar.nodes[i].x;
-    nodeData.y = lifeBar.nodes[i].y;
-    nodeData.title = lifeBar.nodes[i].title;
-    nodeData.completed = lifeBar.nodes[i].completed;
-    nodeData.reflection = lifeBar.nodes[i].reflection;
-    exportedNodes.push(nodeData);
-    if(nodeData.id > maxId) {
-      maxId = nodeData.id;
+  for(var i = 0; i < lifeBar.goals.length; i++) {
+    var goalData = {};
+    goalData.id = lifeBar.goals[i].id;
+    goalData.x = lifeBar.goals[i].x;
+    goalData.y = lifeBar.goals[i].y;
+    goalData.title = lifeBar.goals[i].title;
+    goalData.completed = lifeBar.goals[i].completed;
+    goalData.reflection = lifeBar.goals[i].reflection;
+    exportedNodes.push(goalData);
+    if(goalData.id > maxId) {
+      maxId = goalData.id;
     };
   }
   lifeBarJSON.maxId = maxId;
-  lifeBarJSON.nodes = exportedNodes;
+  lifeBarJSON.goals = exportedNodes;
 };
 
 saveConnections = function(lifeBar, lifeBarJSON) {
@@ -46,9 +46,9 @@ populateNodes = function(lifeBar, data) {
   if(data === {}) { // figure out what non-existent object from mongodb will be here
     return;
   }
-  lifeBar.nodeCounter = data.maxId + 1;
-  for(var i = 0; i < data.nodes.length; i++) {
-    lifeBar.createNode(data.nodes[i]);
+  lifeBar.goalCounter = data.maxId + 1;
+  for(var i = 0; i < data.goals.length; i++) {
+    lifeBar.createNode(data.goals[i]);
   }
 }
 
