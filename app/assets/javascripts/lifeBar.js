@@ -117,9 +117,7 @@ LifeBar.prototype.events = function(){
 };
 
 LifeBar.prototype.findGoalById = function(id) {
-  for(var i = 0; i < this.goals.length; i++) {
-    if(this.goals[i].id === id) return this.goals[i];
-  }
+ return _.find(this.goals,function(goal){return goal.id === id});
 };
 
 // ----- NODE Object -----
