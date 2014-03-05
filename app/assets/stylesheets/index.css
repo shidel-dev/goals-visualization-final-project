@@ -208,7 +208,7 @@ div.reflectionHolder > img {
 #legend {
   position: absolute;
   margin-bottom: -50px;
-  top: 435px;
+  top: 480px;
   margin-left: 770px;
 }
 
@@ -227,7 +227,7 @@ div.reflectionHolder > img {
   color: #F0EBDF;
   width: 100%;
   height: 40px;
-  position: absolute;
+  /*position: absolute;*/
 }
 
 #title-nav a{
@@ -263,3 +263,41 @@ div.reflectionHolder > img {
   margin: 0 20px 0 20px;
   display: inline;
 }
+
+
+/* ---- SIGN-IN / SIGN-OUT ---- */
+
+.error {
+  color: red;
+  list-style-type: none;
+  text-align: center;
+}
+
+.new_user, .new_session {
+  margin: 0 auto;
+  margin-top: 100px;
+  padding: 10px 25px 50px 25px;
+  -webkit-box-shadow: 0px 0px 8px 0px #000000;
+  -moz-box-shadow: 0px 0px 8px 0px #000000;
+  box-shadow: 0px 0px 8px 0px #000000;
+  width: 350px;
+}
+
+.new_user h2, .new_session h2{
+  text-align: center;
+  margin-bottom: 30px;
+}
+.new_user label, .new_session label {
+  float: left;
+}
+
+.new_user input, .new_session input {
+  position: relative;
+  float: right;
+}
+
+.to_sign_up {
+  text-align: center;
+}
+
+
