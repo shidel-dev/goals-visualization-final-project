@@ -76,7 +76,7 @@ function saveLifeData (){
 
 loadLifeData = function() {
   $.ajax({
-    type: "POST",
+    type: "GET",
     url: '/load',
     dataType: "json",
     success: function(data) {
