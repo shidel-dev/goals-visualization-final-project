@@ -11,8 +11,8 @@ body{
 
 #intro{
   position: absolute;
-  top: 432px;
-  margin-left: 923px;
+  top: 450px;
+  margin-left: 885px;
   cursor:pointer;
 }
 
@@ -130,9 +130,9 @@ margin-top: 2px;
 }
 
 #reflectionText {
-margin-left: 11px;
-width: 96%;
-height: 80%;
+  margin-left: 11px;
+  width: 96%;
+  height: 80%;
 }
 
 div.reflectionHolder > h2 {
@@ -191,7 +191,7 @@ div.introHolder > p {
   margin-top: 298px;
   text-align: center;
   bottom: 100px;
-  color: #F0EBDF;
+  color: #00756F;
   border-top: 1px solid #000;
   padding-top: 10px;
   width: 535px;
@@ -206,11 +206,12 @@ div.introHolder > p {
   margin-left: 25px;
   margin-right: 25px;
   font-weight: bold;
+  
 }
 
 .selected {
-  text-shadow: 0 0 50px #FFF;
-  color: #00756F;
+  text-shadow: 0 0 50px black;
+  color: #F0EBDF;
 }
 
 
@@ -376,10 +377,6 @@ div.introHolder > p {
   float: right;
   color: black;
   width: 175px;
-}
-
-.new_user input[type="date"] {
-  width: 176px;
 }
 
 .new_user select{
