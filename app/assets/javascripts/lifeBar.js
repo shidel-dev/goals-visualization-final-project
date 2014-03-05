@@ -20,7 +20,7 @@ function Person(birthdate){
   this.birthdate = _.map(birthdate.split("-"),function(part){
     return parseInt(part);
   });
-  this.birthdateObj = new Date(this.birthdate[2],this.birthdate[1], this.birthdate[0]);
+  this.birthdateObj = new Date(this.birthdate[0],this.birthdate[1], this.birthdate[2]);
   this.pos = this.setCurrentMarker();
   this.renderMarkerLine(this.pos * 880);
 }
@@ -109,7 +109,7 @@ LifeBar.prototype.events = function(){
       }else{
         var goalOptions = {id: that.goalCounter, x: e.layerX, y: e.layerY};
       }
-      
+
       lifeBar.createGoal(goalOptions);
       that.goalCounter++;
     }
