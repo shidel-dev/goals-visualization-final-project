@@ -9,12 +9,13 @@ class GoalsPresenter
   end
 
   def reflection_words
-    life_goals = @user.life["nodes"]
+    life_goals = @user.life["goals"]
     life_goals.collect { |g| g["reflection"] }.reject!(&:empty?)
   end
 
   def title_words
-    life_goals = @user.life["nodes"]
+    debugger
+    life_goals = @user.life["goals"]
     life_goals = life_goals.select{ |g| g["title"] if !g["title"].blank? }
     life_goals.collect {|g| g["title"].rstrip}
   end
