@@ -169,20 +169,9 @@ Goal.prototype.end = function(){
   autoSave();
 };
 
-Goal.prototype.complete = function(){
-  this.completed = true;
-  this.elem.attr({fill:"#048204"});
-  autoSave();
-};
-
-Goal.prototype.saveText = function(text){
-  this.title = text;
-  autoSave();
-};
-
-Goal.prototype.saveReflection = function(text){
-  this.reflection = text;
-  autoSave();
+Goal.prototype.set = function(option,value){
+  this[option] = value
+  if (option === "completed" && value === true) this.elem.attr({fill:"#048204"});
 }
 
 Goal.prototype.deleteGoal = function(){
