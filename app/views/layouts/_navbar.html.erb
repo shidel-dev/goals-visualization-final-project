@@ -1,21 +1,21 @@
 <div id="title-nav">
   <div id="nav-left">
-    <%= link_to "LifeBar", root_path %>
+    <%= link_to image_tag("/lifeBar_icon.png", :alt => ''), root_path, :class => 'logo' %>
   </div>
   <div id="nav-right">
     <ul>
       <li id="about">
         <a href="/about">About</a>
       </li>
-      
+
       <% if current_user %>
-        <li id="signin">  
+        <li id="signin">
           <%= link_to "Sign Out", signout_path, method: :delete %></li>
       <% else %>
         <li><%= link_to "Sign In", signin_path %></li>
         <li><%= link_to "Sign Up", signup_path %></li>
       <% end %>
-      
+
     </ul>
   </div>
 </div>

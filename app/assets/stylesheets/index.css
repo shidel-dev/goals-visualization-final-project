@@ -1,18 +1,17 @@
 body{
-  /*background-color: #545454 ;*/
   background-image:url('/otis_redding.png');
   font-family: 'Roboto', sans-serif;
 }
 
 #container{
-  width:960px;
-  margin:auto;
+  width: 960px;
+  margin: auto;
   height: 800px;
 }
 
 #intro{
   position: absolute;
-  top: 235px;
+  top: 432px;
   margin-left: 923px;
   cursor:pointer;
 }
@@ -329,6 +328,10 @@ div.introHolder > p {
   display: inline;
 }
 
+.logo img {
+  width: 70px;
+  margin-top: -5px;
+}
 
 /* ---- SIGN-IN / SIGN-OUT ---- */
 
@@ -450,3 +453,4 @@ div.introHolder > p {
 #contact a:hover, #ourCode:hover{
   color: #F0EBDF
 }
+
