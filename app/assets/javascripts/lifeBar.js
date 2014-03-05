@@ -155,8 +155,11 @@ Goal.prototype.render = function(multi){
 Goal.prototype.events = function(){
   this.elem.drag(move,start,this.end);
   this.elem.mouseup(function(event){
+    helpers.hoverOut();
     helpers.goalInfo(this,event);
   });
+  this.elem.hover(function(event){ helpers.hoverIn(this.model, event) },
+                  function(){ helpers.hoverOut() }); 
 };
 
 Goal.prototype.end = function(){
