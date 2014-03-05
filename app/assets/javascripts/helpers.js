@@ -57,27 +57,28 @@ var helpers = {
       $(".action").css("margin-left", "34px");
     }
     $("#exit").click(this.removeAndSave);
-    $('.action').click(handleActions);
+    $('.action').click(this.handleActions.bind(goal));
 
-    function handleActions(e){
-      if (e.target.id === "complete") {
-        goal.model.complete();
-        $("#complete").remove()
-        $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
-        if ($(".action").length === 3){
-          $("#reflection").css("margin-left", "34px").click(handleActions)
-        }else{
-          $("#reflection").css("margin-left", "21px").click(handleActions)
-        }
-      } else if (e.target.id === "link") {
-        helpers.listenForNextGoal(goal.model,"link");
-      } else if (e.target.id === "sever") {
-        helpers.listenForNextGoal(goal.model,"sever");
-      } else if (e.target.id === "delete"){
-        lifeBar.findGoalById($(".popup").data("id")).deleteGoal();
-      } else if (e.target.id === "reflection"){
-        helpers.goalReflectionDisplay(lifeBar.findGoalById($(".popup").data("id")));
+  },
+
+
+  handleActions:function(e){
+  var goal = this
+    if (e.target.id === "complete") {
+      goal.model.complete();
+      $("#complete").remove()
+      $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
+      if ($(".action").length === 3){
+        $("#reflection").css("margin-left", "34px").click(helpers.handleActions.bind(this))
+      }else{
+        $("#reflection").css("margin-left", "21px").click(helpers.handleActions.bind(this))
       }
+    } else if (e.target.id === "link" || e.target.id === "sever") {
+      helpers.listenForNextGoal(goal.model,e.target.id);
+    } else if (e.target.id === "delete"){
+      lifeBar.findGoalById($(".popup").data("id")).deleteGoal();
+    } else if (e.target.id === "reflection"){
+      helpers.goalReflectionDisplay(lifeBar.findGoalById($(".popup").data("id")));
     }
   },
 
@@ -88,7 +89,7 @@ var helpers = {
       $("#container").append(template(goal));
       var bubble = $('#titleBubble');
       bubble.css({ "left" : event.pageX - 100 + "px", 
-                  "top" : event.pageY - (bubble.cssNumber("height") + 25) + "px"})
+                    "top" : event.pageY - (bubble.cssNumber("height") + 25) + "px"})
     };
   },
   
@@ -128,17 +129,13 @@ var helpers = {
   },
 
   days_between: function(date1, date2) {
-
       // The number of milliseconds in one day
       var ONE_DAY = 1000 * 60 * 60 * 24;
-
       // Convert both dates to milliseconds
       var date1_ms = date1.getTime();
       var date2_ms = date2.getTime();
-
       // Calculate the difference in milliseconds
       var difference_ms = Math.abs(date1_ms - date2_ms);
-
       // Convert back to days and return
       return Math.round(difference_ms/ONE_DAY);
   },
