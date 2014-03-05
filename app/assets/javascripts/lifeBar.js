@@ -225,6 +225,15 @@ function Time(day,month,year){
   this.month = month;
   this.year = year;
   this.events();
+
+
+  this.CONSTANTS = { "months":{px:844800,unit:960,period:1},
+    "years":{ px:70400,unit:80,period:12}, 
+    "5":{px:14080,unit:16,period:60},
+    "decades":{px:7040,unit:8, period:120},
+    "life":{px:880,unit:1,period:960
+    }   
+  }
 }
 
 Time.prototype.events = function(){
@@ -253,40 +262,18 @@ Time.prototype.events = function(){
   });
 };
 
-Time.prototype.scale = function(unit){
-  if(unit === "months"){
-    helpers.scaleBar(844800,960);
-    this.unit = 960;
-    this.period = 1;
-    $(".arrow").show();
-    this.shift = Math.round(844800 * person.pos * -1) + "px";
-    $(paper.canvas).css("left",this.shift);
-  }else if(unit === "years"){
-    helpers.scaleBar(70400,80);
-    this.unit = 80;
-    this.period = 12;
-    $(".arrow").show();
-    this.shift = Math.round(70400 * person.pos * -1) + "px";
-    $(paper.canvas).css("left",this.shift);
-  }else if(unit === "5"){
-    helpers.scaleBar(14080,16);
-    this.unit = 16;
-    this.period = 60;
-    $(".arrow").show();
-    this.shift = Math.round(14080 * person.pos * -1) + "px";
-    $(paper.canvas).css("left",this.shift);
-  }else if(unit === "decades"){
-    helpers.scaleBar(7040,8);
-    this.unit = 8;
-    this.period = 120;
-    $(".arrow").show();
-    this.shift = Math.round(7040 * person.pos * -1) + "px";
-    $(paper.canvas).css("left",this.shift);
-  }else if (unit === "life"){
-    helpers.scaleBar(880,1);
-    this.unit = 1;
-    this.period = 960;
+Time.prototype.scale = function(unit){ 
+  var timeDetail = this.CONSTANTS[unit];
+  helpers.scaleBar(timeDetail.px,timeDetail.unit);
+  this.unit = timeDetail.unit;
+  this.period = timeDetail.period;
+  if(unit === 'life'){
     $(".arrow").hide();
-    person.renderMarkerLine(person.pos * 880);
+    person.renderMarkerLine(person.pos * 880)
+  }else{
+     $(".arrow").show();
+    this.shift = Math.round(timeDetail.px * person.pos * -1) + "px";
+    $(paper.canvas).css("left",this.shift);
   }
-};
+}
+
