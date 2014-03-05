@@ -1,62 +1,62 @@
-save = function(bar) {
-  var barJSON = {};
-  saveNodes(bar, barJSON);
-  saveConnections(bar, barJSON);
-  return barJSON;
+save = function(lifeBar) {
+  var lifeBarJSON = {};
+  saveNodes(lifeBar, lifeBarJSON);
+  saveConnections(lifeBar, lifeBarJSON);
+  return lifeBarJSON;
 }
 
-saveNodes = function(bar, barJSON) {
+saveNodes = function(lifeBar, lifeBarJSON) {
   var exportedNodes = [];
   var maxId = 0;
-  for(var i = 0; i < bar.nodes.length; i++) {
+  for(var i = 0; i < lifeBar.nodes.length; i++) {
     var nodeData = {};
-    nodeData.id = bar.nodes[i].id;
-    nodeData.x = bar.nodes[i].x;
-    nodeData.y = bar.nodes[i].y;
-    nodeData.title = bar.nodes[i].title;
-    nodeData.completed = bar.nodes[i].completed;
-    nodeData.reflection = bar.nodes[i].reflection;
+    nodeData.id = lifeBar.nodes[i].id;
+    nodeData.x = lifeBar.nodes[i].x;
+    nodeData.y = lifeBar.nodes[i].y;
+    nodeData.title = lifeBar.nodes[i].title;
+    nodeData.completed = lifeBar.nodes[i].completed;
+    nodeData.reflection = lifeBar.nodes[i].reflection;
     exportedNodes.push(nodeData);
     if(nodeData.id > maxId) {
       maxId = nodeData.id;
     };
   }
-  barJSON.maxId = maxId;
-  barJSON.nodes = exportedNodes;
+  lifeBarJSON.maxId = maxId;
+  lifeBarJSON.nodes = exportedNodes;
 };
 
-saveConnections = function(bar, barJSON) {
+saveConnections = function(lifeBar, lifeBarJSON) {
   var exportedConnections = [];
-  for(var i = 0; i < bar.connections.length; i++) {
+  for(var i = 0; i < lifeBar.connections.length; i++) {
     var connectionData = {};
-    connectionData.from = bar.connections[i].from.ref.id;
-    connectionData.to = bar.connections[i].to.ref.id;
+    connectionData.from = lifeBar.connections[i].from.ref.id;
+    connectionData.to = lifeBar.connections[i].to.ref.id;
     exportedConnections.push(connectionData);
   }
-  barJSON.connections = exportedConnections;
+  lifeBarJSON.connections = exportedConnections;
 }
 
 
-populate = function(bar, data) {
-  populateNodes(bar, data);
-  populateConnections(bar, data);
+populate = function(lifeBar, data) {
+  populateNodes(lifeBar, data);
+  populateConnections(lifeBar, data);
 }
 
-populateNodes = function(bar, data) {
+populateNodes = function(lifeBar, data) {
   if(data === {}) { // figure out what non-existent object from mongodb will be here
     return;
   }
-  bar.nodeCounter = data.maxId + 1;
+  lifeBar.nodeCounter = data.maxId + 1;
   for(var i = 0; i < data.nodes.length; i++) {
-    bar.createNode(data.nodes[i]);
+    lifeBar.createNode(data.nodes[i]);
   }
 }
 
-populateConnections = function(bar, data) {
+populateConnections = function(lifeBar, data) {
   for(var i = 0; i < data.connections.length; i++) {
-    var fromNode = bar.findNodeById(data.connections[i].from);
-    var toNode = bar.findNodeById(data.connections[i].to);
-    bar.createConnection(fromNode.elem, toNode.elem);
+    var fromNode = lifeBar.findNodeById(data.connections[i].from);
+    var toNode = lifeBar.findNodeById(data.connections[i].to);
+    lifeBar.createConnection(fromNode.elem, toNode.elem);
   }
 }
 
@@ -80,7 +80,7 @@ loadLifeData = function() {
     url: '/load',
     dataType: "json",
     success: function(data) {
-      populate(window.bar, data);
+      populate(window.lifeBar, data);
     }
   })
 }
