@@ -1,6 +1,6 @@
 <div id="container">
   <%= form_for(@user) do |f| %>
-    <h2>Sign up</h2>
+    <h2>Sign Up</h2>
     <p>
       <%= f.label(:email, "Email:") %>
       <%= f.text_field(:email, placeholder: 'me@lifegoals.edu') %><br><br>
@@ -11,11 +11,16 @@
       <%= f.label(:password_confirmation, "Confirm password:") %>
       <%= f.password_field(:password_confirmation, placeholder: "6 to 20 characters") %><br><br>
 
-      <%= f.label(:birthday, "Birthdate:") %>
-      <%= f.date_field :birthday %><br><br>
+      <%= f.label(:birthday, "Birthday:") %>
+      <%= date_select :user, 
+                      :birthday, 
+                      start_year: (Time.now.year - 5), 
+                      end_year: (Time.now.year - 80) %>
+    <br><br>
     </p>
-      <%= f.submit("Sign up") %>
+      <%= f.submit("Sign Up") %>
   <% end %>
+
 
   <div class="signup_error">
     <% if @user.errors.any? %>

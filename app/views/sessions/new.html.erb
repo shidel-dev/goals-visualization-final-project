@@ -2,7 +2,7 @@
   <%= form_for(:session,
                 url: sessions_path,
                 :html => {:class => "new_session"} ) do |f| %>
-    <h2 class="form">Sign in</h2>
+    <h2 class="form">Sign In</h2>
     <p class="form">
       <%= f.label(:email, "Email:") %>
       <%= f.text_field(:email) %><br><br>
@@ -10,7 +10,7 @@
       <%= f.label(:password, "Password:") %>
       <%= f.password_field(:password) %><br><br>
     </p>
-    <%= f.submit("Sign in") %>
+    <%= f.submit("Sign In") %>
   <% end %>
 
     <p class="to_sign_up">New user? <%= link_to "Sign up now!", new_user_path %></p>
