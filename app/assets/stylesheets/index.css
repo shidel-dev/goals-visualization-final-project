@@ -320,8 +320,10 @@ div.introHolder > p {
 }
 
 #title-nav ul{
-  margin-top: 0px;
+  margin-top: -5px;
   list-style: none;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.1em;
 }
 
 #title-nav li {
