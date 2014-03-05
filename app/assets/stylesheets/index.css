@@ -320,6 +320,10 @@ div.introHolder > p {
 
 /* ---- SIGN-IN / SIGN-OUT ---- */
 
+.form {
+  color: #F0EBDF;
+}
+
 .error {
   position: relative;
   color: yellow;
@@ -363,7 +367,18 @@ div.introHolder > p {
 .to_sign_up {
   margin-top: 200px;
   text-align: center;
+  color: #F0EBDF;
 }
+
+.to_sign_up a {
+  text-decoration: none;
+  color: #343434
+}
+
+.to_sign_up a:hover {
+  color: #F0EBDF
+}
+
 
 /*------ About Us ------*/
 
@@ -381,7 +396,7 @@ div.introHolder > p {
 }
 
 #last {
-  color: #08FF8D;
+  color: #048204;
 }
 
 .about {
@@ -407,21 +422,11 @@ div.introHolder > p {
   color: #343434
 }
 
-#contact a{
+#contact a, #ourCode{
   text-decoration: none;
   color: #343434
 }
 
-#contact a:hover{
+#contact a:hover, #ourCode:hover{
   color: #F0EBDF
 }
-
-#ourCode {
-  text-decoration: none;
-  color: #F0EBDF
-}
-
-#ourCode:hover {
-  color: #343434
-}
-
