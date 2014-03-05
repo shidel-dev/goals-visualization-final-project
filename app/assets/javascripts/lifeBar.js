@@ -103,7 +103,12 @@ LifeBar.prototype.events = function(){
     if($(".popup").length){
       helpers.removeAndSave()
     } else {
-      var goalOptions = {id: that.goalCounter, x: e.offsetX, y: e.offsetY};
+      if (e.offsetX){
+        var goalOptions = {id: that.goalCounter, x: e.offsetX, y: e.offsetY};
+      }else{
+        var goalOptions = {id: that.goalCounter, x: e.layerX, y: e.layerY};
+      }
+      
       lifeBar.createGoal(goalOptions);
       that.goalCounter++;
     }
