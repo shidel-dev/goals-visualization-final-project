@@ -7,7 +7,7 @@ window.onload = function() {
   setup(880)
   window.bar = new Bar();
   window.person = new Person("26-2-1990");
-  if($("#login")){
+  if($("#logged-in").length){
     loadLifeData();
     console.log("loading after login");
   }
