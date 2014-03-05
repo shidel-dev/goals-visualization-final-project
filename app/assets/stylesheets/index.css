@@ -332,10 +332,6 @@ div.introHolder > p {
 
 /* ---- SIGN-IN / SIGN-OUT ---- */
 
-.form {
-  color: #F0EBDF;
-}
-
 .error {
   position: relative;
   color: yellow;
@@ -361,6 +357,7 @@ div.introHolder > p {
   -moz-box-shadow: 0px 0px 8px 0px #000000;
   box-shadow: 0px 0px 8px 0px #000000;
   width: 350px;
+  color: #F0EBDF;
 }
 
 .new_user h2, .new_session h2{
@@ -375,6 +372,11 @@ div.introHolder > p {
   position: relative;
   float: right;
   color: black;
+  width: 175px;
+}
+
+.new_user input[type="date"] {
+  width: 176px;
 }
 
 .to_sign_up {
