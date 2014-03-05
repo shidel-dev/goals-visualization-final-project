@@ -9,7 +9,7 @@ class LifeController < ApplicationController
   def load
     @life = Life.find(current_user.life_id)
     respond_to do |format|
-      format.json { render json: @life.to_json }
+      format.json { render json: @life }
     end
   end
 
