@@ -14,7 +14,7 @@
     <%= f.submit("Sign in") %>
   <% end %>
 
-    <p>New user? <%= link_to "Sign up now!", new_user_path %></p>
+    <p class="to_sign_up">New user? <%= link_to "Sign up now!", new_user_path %></p>
 
   <% if flash[:signin_error] %>
       <div class="error"><%= flash[:signin_error] %></div>
