@@ -12,7 +12,7 @@ Goals::Application.routes.draw do
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'get'
 
-  get '/goals', to: 'users#find_goals'
+  get '/goals', to: 'goals#index'
 
   resources :sessions, only: [:new, :create]
   resources :users

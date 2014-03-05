@@ -6,23 +6,15 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  before_create :create_life_id
+  before_create :create_life
 
-  def create_life_id
+  def create_life
     @life = Life.create
     self.life_id = @life.id.to_s
   end
 
-  def reflection_words
-    @life_goals = Life.where(id: self.life_id).to_a
-    @life_goals = @life_goals[0]["nodes"]
-    arr = @life_goals.collect { |x| x["reflection"] if !x["reflection"].blank? }.compact
-  end
-
-  def goal_words
-    @life_goals = Life.where(id: self.life_id).to_a
-    @life_goals = @life_goals[0]["nodes"]
-    arr = @life_goals.collect { |x| x["title"] }.reject {|x| x == "\n    "}.compact
+  def life
+    Life.find(self.life_id)
   end
 
 end
