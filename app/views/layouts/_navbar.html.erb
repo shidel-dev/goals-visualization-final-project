@@ -9,7 +9,7 @@
       </li>
       <li id="signin">
         <% if current_user %>
-        <%= link_to "Sign Out", signout_path %>
+        <%= link_to "Sign Out", signout_path, method: :delete %>
         <% else %>
         <%= link_to "Sign In", signin_path %>
         <% end %>
