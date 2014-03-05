@@ -4,7 +4,6 @@ body{
   font-family: 'Roboto', sans-serif;
 }
 
-
 #container{
   width:960px;
   margin:auto;
@@ -19,13 +18,13 @@ body{
   cursor:pointer;
 }
 
+/* ----- POP UP TEMPLATE ---- */
 .popup{
   width: 200px;
   border: 1px solid lightgrey;
   border-radius: 10px;
   position: fixed;
   background-color: #fff;
-
 }
 
 #head {
@@ -39,15 +38,15 @@ margin-left: -1px;
 }
 
 #content{
-  margin-top: 12px;
+  min-height: 50px;
 }
 
-.content{
-  margin-top:15px;
-  min-height:20px;
+#content[placeholder]:empty:before {
+    content: attr(placeholder);
+    color: #555; 
 }
 
-
+/* ---- LIFE BAR ---- */
 #life_bar {
   position: relative;
   top: 30%;
@@ -92,10 +91,7 @@ margin-top: 2px;
 }
 
 
-
-
-
-/*--reflection modal -----*/
+/*---- REFLECTION MODAL -----*/
 .mask {
   position: fixed;
   width: 100%;
@@ -106,7 +102,6 @@ margin-top: 2px;
 }
 
 .reflectionHolder{
-
   position: fixed;
   width: 800px;
   background-color: #fff;
@@ -114,7 +109,6 @@ margin-top: 2px;
   left: 50%;
   height: 600px;
   top: 71px;
-
 }
 
 #reflectionText {
@@ -166,6 +160,7 @@ div.reflectionHolder > img {
   color: #FFF;
 }
 
+
 /* ----- TIME LABELS ----- */
 #past {
   position: absolute;
@@ -207,7 +202,7 @@ div.reflectionHolder > img {
   top: 195px;
 }
 
-/* --------- nav bar ------------------ */
+/* --------- NAV bar ------------------ */
 
 #title-nav{
   background-color: #343434;
@@ -250,10 +245,3 @@ div.reflectionHolder > img {
   margin: 0 20px 0 20px;
   display: inline;
 }
-
-
-
-
-
-
-
