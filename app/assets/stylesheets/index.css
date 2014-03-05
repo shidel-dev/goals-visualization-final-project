@@ -212,11 +212,11 @@ div.reflectionHolder > img {
   margin-left: 770px;
 }
 
-#complete {
+#completeLabel {
   color: #048204;
 }
 
-#uncomplete {
+#uncompleteLabel {
   color: #0000FF;
 }
 
