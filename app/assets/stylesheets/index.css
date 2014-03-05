@@ -411,6 +411,7 @@ div.introHolder > p {
 #quote {
   font-size: 1.5em;
   color: #343434;
+  margin-left: 3%;
 }
 
 #first {
@@ -422,7 +423,7 @@ div.introHolder > p {
 }
 
 .about {
-  margin-left: 2%;
+  margin-left: 5%;
   width: 90%;
 }
 
@@ -441,7 +442,11 @@ div.introHolder > p {
 }
 
 #contact {
-  color: #343434
+  color: #343434,
+}
+
+#contact li {
+  margin-left: 5%;
 }
 
 #contact a, #ourCode{
