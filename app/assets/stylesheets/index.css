@@ -206,7 +206,7 @@ div.introHolder > p {
   margin-left: 25px;
   margin-right: 25px;
   font-weight: bold;
-  
+
 }
 
 .selected {
@@ -320,7 +320,7 @@ div.introHolder > p {
 }
 
 #title-nav ul{
-  margin-top: -5px;
+  margin-top: -2px;
   list-style: none;
   font-family: 'Titillium Web', sans-serif;
   font-size: 1.1em;
