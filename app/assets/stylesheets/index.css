@@ -325,4 +325,63 @@ div.reflectionHolder > img {
   text-align: center;
 }
 
+/*------ About Us ------*/
+
+#content {
+  margin: auto 0;
+}
+
+#quote {
+  font-size: 1.5em;
+  color: #343434;
+}
+
+#first {
+  color: #110CE8;
+}
+
+#last {
+  color: #08FF8D;
+}
+
+.about {
+  margin-left: 2%;
+  width: 90%;
+}
+
+.text {
+  color: #F0EBDF
+}
+
+.question {
+  color: #343434
+}
+
+#snip {
+  width: 50%;
+  margin-left: 50px;
+  border: 3px solid white;
+}
+
+#contact {
+  color: #343434
+}
+
+#contact a{
+  text-decoration: none;
+  color: #343434
+}
+
+#contact a:hover{
+  color: #F0EBDF
+}
+
+#ourCode {
+  text-decoration: none;
+  color: #F0EBDF
+}
+
+#ourCode:hover {
+  color: #343434
+}
 
