@@ -220,6 +220,19 @@ div.reflectionHolder > img {
   color: #0000FF;
 }
 
+/* ----- Goals Link ----*/
+
+#goalsPath {
+  color: #F0EBDF;
+  text-decoration: none;
+  position: absolute;
+  margin-left: 780px;
+}
+
+#goalsPath:hover {
+  color: #343434;
+}
+
 /* --------- NAV bar ------------------ */
 
 #title-nav{
