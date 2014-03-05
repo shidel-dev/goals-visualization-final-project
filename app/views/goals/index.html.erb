@@ -2,14 +2,20 @@
 <style>
   #words {
     position: absolute;
-    margin-left: 270px;
+    margin-left: 240px;
     top: 80px;
   }
   #themes {
-    font-size: 1.6em;
+    font-size: 1.5em;
     position: absolute;
-    margin-left: 150px;
+    margin-left: 120px;
     color: #F0EBDF;
+  }
+  #description {
+    margin-top: -70px;
+    margin-left: 260px;
+    color: #343434;
+    float: right;
   }
   #empty {
     color: #343434;
@@ -27,7 +33,7 @@
 
 <p id="titles"><%= @title_string %></p>
 
-<div id="themes"><br><h1>LifeBar Themes </h1 style="text-align: left"></div>
+<div id="themes"><br><br><h1>Goal Cloud:</h1><h4 id="description">a sampling of words from your LifeBar goals. What do you see?</h4></div>
 
 <div id="words"></div>
 
