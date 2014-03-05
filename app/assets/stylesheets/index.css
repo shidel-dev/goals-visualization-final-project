@@ -1,18 +1,17 @@
 body{
-  /*background-color: #545454 ;*/
   background-image:url('/otis_redding.png');
   font-family: 'Roboto', sans-serif;
 }
 
 #container{
-  width:960px;
-  margin:auto;
+  width: 960px;
+  margin: auto;
   height: 800px;
 }
 
 #intro{
   position: absolute;
-  top: 235px;
+  top: 432px;
   margin-left: 923px;
   cursor:pointer;
 }
