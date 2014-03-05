@@ -374,6 +374,7 @@ div.introHolder > p {
 .new_user input, .new_session input {
   position: relative;
   float: right;
+  color: black;
 }
 
 .to_sign_up {
