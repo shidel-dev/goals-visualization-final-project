@@ -208,7 +208,7 @@ div.reflectionHolder > img {
 #legend {
   position: absolute;
   margin-bottom: -50px;
-  top: 435px;
+  top: 480px;
   margin-left: 770px;
 }
 
@@ -227,7 +227,7 @@ div.reflectionHolder > img {
   color: #F0EBDF;
   width: 100%;
   height: 40px;
-  position: absolute;
+  /*position: absolute;*/
 }
 
 #title-nav a{
@@ -268,7 +268,7 @@ div.reflectionHolder > img {
 /* ---- SIGN-IN / SIGN-OUT ---- */
 
 .error {
-  color: yellow;
+  color: red;
   list-style-type: none;
   text-align: center;
 }

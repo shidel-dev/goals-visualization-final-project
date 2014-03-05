@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
 
   def new
-    landing_page
   end
 
   def create
