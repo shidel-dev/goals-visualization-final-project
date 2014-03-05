@@ -13,15 +13,15 @@ var helpers = {
     $("#life_bar")
       .animate({"width": "0px", "margin-left":"+=440px"}, 500)
       .animate({"width": "880px","margin-left":"-=440px"}, 500,function(){
-        _.each(bar.nodes,function(node){
+        _.each(lifeBar.nodes,function(node){
           node.render(multi);
         });
-        var barClone = _.clone(bar);
-        bar.connections = [];
-        _.each(barClone.connections, function(conn){
-          bar.createConnection(conn.to.ref.elem, conn.from.ref.elem);
+        var lifeBarClone = _.clone(lifeBar);
+        lifeBar.connections = [];
+        _.each(lifeBarClone.connections, function(conn){
+          lifeBar.createConnection(conn.to.ref.elem, conn.from.ref.elem);
         });
-        bar.events();
+        lifeBar.events();
     });
   },
 
@@ -44,7 +44,7 @@ var helpers = {
 
   nodeInfo: function(node,event){
     if ($(".popup").length){
-      bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+      lifeBar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
       $(".popup").remove();
     }
     _.templateSettings.variable = "v";
@@ -74,9 +74,9 @@ var helpers = {
       } else if (e.target.id === "sever") {
         helpers.listenForNextNode(node.ref,"sever");
       } else if (e.target.id === "delete"){
-        bar.findNodeById($(".popup").data("id")).deleteNode();
+        lifeBar.findNodeById($(".popup").data("id")).deleteNode();
       } else if (e.target.id === "reflection"){
-        helpers.nodeReflectionDisplay(bar.findNodeById($(".popup").data("id")));
+        helpers.nodeReflectionDisplay(lifeBar.findNodeById($(".popup").data("id")));
       }
     }
   },
@@ -92,19 +92,19 @@ var helpers = {
   },
 
   removeAndSave: function(){
-    bar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+    lifeBar.findNodeById(parseInt($(".popup").data("id"))).saveText($("#content").html());
     $(".popup").remove();
   },
 
   listenForNextNode: function(oNode,action){
    $("circle").click(function(e){
-      _.each( bar.nodes,function(node){
+      _.each( lifeBar.nodes,function(node){
         if (e.target === node.elem[0] && e.target !== oNode.elem[0]){
           if(action === "link"){
-            bar.createConnection(oNode.elem,node.elem);
+            lifeBar.createConnection(oNode.elem,node.elem);
             autoSave();
           }else if(action === "sever"){
-            bar.removeConnection(oNode,node);
+            lifeBar.removeConnection(oNode,node);
           }
           $("circle").unbind("click");
         }
