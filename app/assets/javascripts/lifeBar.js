@@ -135,8 +135,8 @@ function Goal(options) {
   this.r = 8;
   this.connections = [];
   this.title = options.title;
-  options.reflection ? this.reflection = options.reflection : this.reflection = "";  
-  options.completed ? this.completed = options.completed : this.completed = false;  
+  this.reflection = options.reflection || ""; 
+  this.completed = options.completed || false; 
   this.render(time.unit);
 }
 
@@ -167,6 +167,7 @@ Goal.prototype.end = function(){
 Goal.prototype.set = function(option,value){
   this[option] = value
   if (option === "completed" && value === true) this.elem.attr({fill:"#048204"});
+  autoSave();
 }
 
 Goal.prototype.deleteGoal = function(){
