@@ -131,16 +131,8 @@ function Goal(options) {
   this.r = 8;
   this.connections = [];
   this.title = options.title;
-  if(options.reflection) {
-    this.reflection = options.reflection;
-  } else {
-    this.reflection = "";
-  }
-  if(options.completed) {
-    this.completed = options.completed;
-  } else {
-    this.completed = false;
-  }
+  options.reflection ? this.reflection = options.reflection : this.reflection = "";  
+  options.completed ? this.completed = options.completed : this.completed = false;  
   this.connected = false;
   this.render(time.unit);
 }
