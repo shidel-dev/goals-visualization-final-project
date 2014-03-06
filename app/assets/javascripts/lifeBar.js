@@ -1,7 +1,4 @@
 // ----- Setup-----
-// $(window).unload(function(){
-//     saveLifeData();
-// });
 
 window.onload = function() {
   helpers.setup(880)
@@ -190,7 +187,7 @@ Goal.prototype.removeConnectionReference = function(id){
 };
 
 
-// ----- NODE Drag helpers -----
+// ----- Goal Drag helpers -----
 
 function start(){
   this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
