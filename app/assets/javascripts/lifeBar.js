@@ -74,22 +74,29 @@ LifeBar.prototype.createConnection = function(goal1, goal2){
 };
 
 LifeBar.prototype.removeConnection = function(goal1,goal2){
+
+  var that = this;
   _.each(lifeBar.connections, function(conn, i){
-   if(conn.from.model.id === goal1.id || conn.to.model.id === goal1.id){
-     if(goal2.id === conn.from.model.id || goal2.id === conn.to.model.id){
+      if (that.connected(goal1,goal2,conn)){
         goal2.removeConnectionReference(goal1.id);
         goal1.removeConnectionReference(goal2.id);
         $(conn.line)[0].remove();
         lifeBar.connections.splice(i,1);
      }
-   }
-  });
+   });
   autoSave();
 };
+
+LifeBar.prototype.connected = function(goal1,goal2,conn){
+  if(conn.from.model.id === goal1.id || conn.to.model.id === goal1.id){
+    return goal2.id === conn.from.model.id || goal2.id === conn.to.model.id
+  }
+  return false
+}
+
 LifeBar.prototype.deleteGoal = function(goalToBeDeleted){
   _.each(this.goals,function(goal,i){
     if(goal.id === goalToBeDeleted.id){
-
       goalToBeDeleted.elem.remove();
       lifeBar.goals.splice(i,1);
     }
@@ -133,7 +140,6 @@ function Goal(options) {
   this.title = options.title;
   options.reflection ? this.reflection = options.reflection : this.reflection = "";  
   options.completed ? this.completed = options.completed : this.completed = false;  
-  this.connected = false;
   this.render(time.unit);
 }
 
