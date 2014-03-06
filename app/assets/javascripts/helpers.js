@@ -148,21 +148,23 @@ var helpers = {
 
 // -- Intro Controller--
 
-function IntroController(){
-  this.$el = $("#intro");
-  this.events();   
-}
+var IntroController = {
 
-IntroController.prototype.events = function(){
-  this.$el.click(this.render)
-};
-
-IntroController.prototype.render = function(){
+  init:function(){
+    this.$el = $("#intro");
+    this.events();  
+  }, 
+  events:function(){
+    this.$el.click(this.render);
+  },
+  render:function(){
     var template = _.template($("script.introTemplate").html());
     $("#container").append(template());
     $(".closeIntro").click(function(){
-      $("#modal").remove()
+      $("#modal").remove();
     })
+  }
+
 }
 
 // -- extend Raphael to make drawing connection easier.
