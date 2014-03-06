@@ -229,7 +229,12 @@ Time.prototype.events = function(){
       helpers.highlightText(e.target);
       $(".time").show();
       $("#current_label").hide();
-      if(unit[1] !== "life") window.timeKeeper = new labelTime(unit[1]);
+      if(unit[1] !== "life"){
+        window.timeKeeper = new labelTime(unit[1]);
+      }else{
+        $(".time").hide();
+        $("#current_label").show();
+      }
     });
   })
 
