@@ -1,7 +1,4 @@
 // ----- Setup-----
-// $(window).unload(function(){
-//     saveLifeData();
-// });
 
 window.onload = function() {
   helpers.setup(880)
@@ -74,22 +71,29 @@ LifeBar.prototype.createConnection = function(goal1, goal2){
 };
 
 LifeBar.prototype.removeConnection = function(goal1,goal2){
+
+  var that = this;
   _.each(lifeBar.connections, function(conn, i){
-   if(conn.from.model.id === goal1.id || conn.to.model.id === goal1.id){
-     if(goal2.id === conn.from.model.id || goal2.id === conn.to.model.id){
+      if (that.connected(goal1,goal2,conn)){
         goal2.removeConnectionReference(goal1.id);
         goal1.removeConnectionReference(goal2.id);
         $(conn.line)[0].remove();
         lifeBar.connections.splice(i,1);
      }
-   }
-  });
+   });
   autoSave();
 };
+
+LifeBar.prototype.connected = function(goal1,goal2,conn){
+  if(conn.from.model.id === goal1.id || conn.to.model.id === goal1.id){
+    return goal2.id === conn.from.model.id || goal2.id === conn.to.model.id
+  }
+  return false
+}
+
 LifeBar.prototype.deleteGoal = function(goalToBeDeleted){
   _.each(this.goals,function(goal,i){
     if(goal.id === goalToBeDeleted.id){
-
       goalToBeDeleted.elem.remove();
       lifeBar.goals.splice(i,1);
     }
@@ -131,17 +135,8 @@ function Goal(options) {
   this.r = 8;
   this.connections = [];
   this.title = options.title;
-  if(options.reflection) {
-    this.reflection = options.reflection;
-  } else {
-    this.reflection = "";
-  }
-  if(options.completed) {
-    this.completed = options.completed;
-  } else {
-    this.completed = false;
-  }
-  this.connected = false;
+  options.reflection ? this.reflection = options.reflection : this.reflection = "";  
+  options.completed ? this.completed = options.completed : this.completed = false;  
   this.render(time.unit);
 }
 
@@ -169,20 +164,9 @@ Goal.prototype.end = function(){
   autoSave();
 };
 
-Goal.prototype.complete = function(){
-  this.completed = true;
-  this.elem.attr({fill:"#048204"});
-  autoSave();
-};
-
-Goal.prototype.saveText = function(text){
-  this.title = text;
-  autoSave();
-};
-
-Goal.prototype.saveReflection = function(text){
-  this.reflection = text;
-  autoSave();
+Goal.prototype.set = function(option,value){
+  this[option] = value
+  if (option === "completed" && value === true) this.elem.attr({fill:"#048204"});
 }
 
 Goal.prototype.deleteGoal = function(){
@@ -203,7 +187,7 @@ Goal.prototype.removeConnectionReference = function(id){
 };
 
 
-// ----- NODE Drag helpers -----
+// ----- Goal Drag helpers -----
 
 function start(){
   this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
