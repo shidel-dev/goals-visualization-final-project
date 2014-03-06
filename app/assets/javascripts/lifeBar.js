@@ -41,8 +41,8 @@ Person.prototype.setCurrentMarker = function(){
 Person.prototype.renderMarkerLine = function(position){
   var marker = paper.path("M" + position + " 0 l 0 200");
   marker.attr({stroke: 'black', 'stroke-width': 1});
-  var currentLine = $('#current_label')
-  currentLine.css("margin-left", this.pos * 870)
+  var currentLine = $('#current_label');
+  currentLine.css("margin-left", this.pos * 870);
 };
 
 
@@ -86,10 +86,10 @@ LifeBar.prototype.removeConnection = function(goal1,goal2){
 
 LifeBar.prototype.connected = function(goal1,goal2,conn){
   if(conn.from.model.id === goal1.id || conn.to.model.id === goal1.id){
-    return goal2.id === conn.from.model.id || goal2.id === conn.to.model.id
+    return goal2.id === conn.from.model.id || goal2.id === conn.to.model.id;
   }
-  return false
-}
+  return false;
+};
 
 LifeBar.prototype.deleteGoal = function(goalToBeDeleted){
   _.each(this.goals,function(goal,i){
@@ -103,16 +103,17 @@ LifeBar.prototype.deleteGoal = function(goalToBeDeleted){
 
 
 LifeBar.prototype.events = function(){
-  var that = this;
+  var that = this,
+      goalOptions;
   paper.canvas.setAttribute('preserveAspectRatio', 'none');
   cover.click(function(e){
     if($(".popup").length){
-      helpers.removeAndSave()
+      helpers.removeAndSave();
     } else {
       if (e.offsetX){
-        var goalOptions = {id: that.goalCounter, x: e.offsetX, y: e.offsetY};
+        goalOptions = {id: that.goalCounter, x: e.offsetX, y: e.offsetY};
       }else{
-        var goalOptions = {id: that.goalCounter, x: e.layerX, y: e.layerY};
+        goalOptions = {id: that.goalCounter, x: e.layerX, y: e.layerY};
       }
 
       lifeBar.createGoal(goalOptions);
@@ -123,7 +124,7 @@ LifeBar.prototype.events = function(){
 };
 
 LifeBar.prototype.findGoalById = function(id) {
- return _.find(this.goals,function(goal){return goal.id === id});
+ return _.find(this.goals,function(goal){return goal.id === id;});
 };
 
 // ----- Goal Object -----
@@ -154,8 +155,8 @@ Goal.prototype.events = function(){
     helpers.hoverOut();
     helpers.goalInfo(this,event);
   });
-  this.elem.hover(function(event){ helpers.hoverIn(this.model, event) },
-                  function(){ helpers.hoverOut() }); 
+  this.elem.hover(function(event){ helpers.hoverIn(this.model, event);},
+                  function(){ helpers.hoverOut();}); 
 };
 
 Goal.prototype.end = function(){
@@ -165,10 +166,10 @@ Goal.prototype.end = function(){
 };
 
 Goal.prototype.set = function(option,value){
-  this[option] = value
+  this[option] = value;
   if (option === "completed" && value === true) this.elem.attr({fill:"#048204"});
   autoSave();
-}
+};
 
 Goal.prototype.deleteGoal = function(){
   _.each(_.clone(this.connections), function(connection){
@@ -219,11 +220,11 @@ function Time(day,month,year){
     "decades":{px:7040,unit:8, period:120},
     "life":{px:880,unit:1,period:960
     }   
-  }
+  };
 }
 
 Time.prototype.events = function(){
-  var units = [["#month","months"],["#year","years"],["#5year","5"] ,["#10year","decades"],["#life","life"]]
+  var units = [["#month","months"],["#year","years"],["#5year","5"] ,["#10year","decades"],["#life","life"]];
   _.each(units, function(unit){
     $(unit[0]).click(function(e){
       time.scale(unit[1]);
@@ -237,19 +238,19 @@ Time.prototype.events = function(){
         $("#current_label").show();
       }
     });
-  })
+  });
 
   $("#arrow_left").click(function(){
     if(!$("svg").is(':animated') ) {
       timeKeeper.updateCount("left");
       helpers.shiftTime(1);
-    };
-  })
+    }
+  });
   $("#arrow_right").click(function(){
     if(!$("svg").is(':animated') ) {
       timeKeeper.updateCount("right");
       helpers.shiftTime(-1);
-    };
+    }
   });
 };
 
@@ -260,11 +261,10 @@ Time.prototype.scale = function(unit){
   this.period = timeDetail.period;
   if(unit === 'life'){
     $(".arrow").hide();
-    person.renderMarkerLine(person.pos * 880)
+    person.renderMarkerLine(person.pos * 880);
   }else{
      $(".arrow").show();
     this.shift = Math.round(timeDetail.px * person.pos * -1) + "px";
     $(paper.canvas).css("left",this.shift);
   }
-}
-
+};
