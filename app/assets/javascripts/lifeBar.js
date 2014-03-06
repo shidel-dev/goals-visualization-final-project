@@ -1,12 +1,9 @@
 // ----- Setup-----
-// $(window).unload(function(){
-//     saveLifeData();
-// });
 
 window.onload = function() {
-  helpers.setup(880)
+  helpers.setup(880);
   window.lifeBar = new LifeBar();
-  new IntroController();
+  IntroController.init();
   if($("#logged-in").length){
     window.person = new Person($("#birthday").data("birthday"));
     loadLifeData();
@@ -44,8 +41,8 @@ Person.prototype.setCurrentMarker = function(){
 Person.prototype.renderMarkerLine = function(position){
   var marker = paper.path("M" + position + " 0 l 0 200");
   marker.attr({stroke: 'black', 'stroke-width': 1});
-  var currentLine = $('#current_label')
-  currentLine.css("margin-left", this.pos * 870)
+  var currentLine = $('#current_label');
+  currentLine.css("margin-left", this.pos * 870);
 };
 
 
@@ -74,22 +71,29 @@ LifeBar.prototype.createConnection = function(goal1, goal2){
 };
 
 LifeBar.prototype.removeConnection = function(goal1,goal2){
+
+  var that = this;
   _.each(lifeBar.connections, function(conn, i){
-   if(conn.from.model.id === goal1.id || conn.to.model.id === goal1.id){
-     if(goal2.id === conn.from.model.id || goal2.id === conn.to.model.id){
+      if (that.connected(goal1,goal2,conn)){
         goal2.removeConnectionReference(goal1.id);
         goal1.removeConnectionReference(goal2.id);
         $(conn.line)[0].remove();
         lifeBar.connections.splice(i,1);
      }
-   }
-  });
+   });
   autoSave();
 };
+
+LifeBar.prototype.connected = function(goal1,goal2,conn){
+  if(conn.from.model.id === goal1.id || conn.to.model.id === goal1.id){
+    return goal2.id === conn.from.model.id || goal2.id === conn.to.model.id;
+  }
+  return false;
+};
+
 LifeBar.prototype.deleteGoal = function(goalToBeDeleted){
   _.each(this.goals,function(goal,i){
     if(goal.id === goalToBeDeleted.id){
-
       goalToBeDeleted.elem.remove();
       lifeBar.goals.splice(i,1);
     }
@@ -99,16 +103,17 @@ LifeBar.prototype.deleteGoal = function(goalToBeDeleted){
 
 
 LifeBar.prototype.events = function(){
-  var that = this;
+  var that = this,
+      goalOptions;
   paper.canvas.setAttribute('preserveAspectRatio', 'none');
   cover.click(function(e){
     if($(".popup").length){
-      helpers.removeAndSave()
+      helpers.removeAndSave();
     } else {
       if (e.offsetX){
-        var goalOptions = {id: that.goalCounter, x: e.offsetX, y: e.offsetY};
+        goalOptions = {id: that.goalCounter, x: e.offsetX, y: e.offsetY};
       }else{
-        var goalOptions = {id: that.goalCounter, x: e.layerX, y: e.layerY};
+        goalOptions = {id: that.goalCounter, x: e.layerX, y: e.layerY};
       }
 
       lifeBar.createGoal(goalOptions);
@@ -119,7 +124,7 @@ LifeBar.prototype.events = function(){
 };
 
 LifeBar.prototype.findGoalById = function(id) {
- return _.find(this.goals,function(goal){return goal.id === id});
+ return _.find(this.goals,function(goal){return goal.id === id;});
 };
 
 // ----- Goal Object -----
@@ -131,22 +136,13 @@ function Goal(options) {
   this.r = 8;
   this.connections = [];
   this.title = options.title;
-  if(options.reflection) {
-    this.reflection = options.reflection;
-  } else {
-    this.reflection = "";
-  }
-  if(options.completed) {
-    this.completed = options.completed;
-  } else {
-    this.completed = false;
-  }
-  this.connected = false;
+  this.reflection = options.reflection || ""; 
+  this.completed = options.completed || false; 
   this.render(time.unit);
 }
 
 Goal.prototype.render = function(multi){
-  this.elem = paper.circle(this.x *  multi, this.y, this.r);
+  this.elem = paper.circle(this.x * multi, this.y, this.r);
   var fill = this.completed ? "#048204" : "#0000FF";
   this.elem.attr({fill: fill,stroke:'none'});
   this.elem.model = this;
@@ -159,8 +155,8 @@ Goal.prototype.events = function(){
     helpers.hoverOut();
     helpers.goalInfo(this,event);
   });
-  this.elem.hover(function(event){ helpers.hoverIn(this.model, event) },
-                  function(){ helpers.hoverOut() }); 
+  this.elem.hover(function(event){ helpers.hoverIn(this.model, event);},
+                  function(){ helpers.hoverOut();}); 
 };
 
 Goal.prototype.end = function(){
@@ -169,21 +165,11 @@ Goal.prototype.end = function(){
   autoSave();
 };
 
-Goal.prototype.complete = function(){
-  this.completed = true;
-  this.elem.attr({fill:"#048204"});
+Goal.prototype.set = function(option,value){
+  this[option] = value;
+  if (option === "completed" && value === true) this.elem.attr({fill:"#048204"});
   autoSave();
 };
-
-Goal.prototype.saveText = function(text){
-  this.title = text;
-  autoSave();
-};
-
-Goal.prototype.saveReflection = function(text){
-  this.reflection = text;
-  autoSave();
-}
 
 Goal.prototype.deleteGoal = function(){
   _.each(_.clone(this.connections), function(connection){
@@ -203,7 +189,7 @@ Goal.prototype.removeConnectionReference = function(id){
 };
 
 
-// ----- NODE Drag helpers -----
+// ----- Goal Drag helpers -----
 
 function start(){
   this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
@@ -234,32 +220,37 @@ function Time(day,month,year){
     "decades":{px:7040,unit:8, period:120},
     "life":{px:880,unit:1,period:960
     }   
-  }
+  };
 }
 
 Time.prototype.events = function(){
-  var units = [["#month","months"],["#year","years"],["#5year","5"] ,["#10year","decades"],["#life","life"]]
+  var units = [["#month","months"],["#year","years"],["#5year","5"] ,["#10year","decades"],["#life","life"]];
   _.each(units, function(unit){
     $(unit[0]).click(function(e){
       time.scale(unit[1]);
       helpers.highlightText(e.target);
       $(".time").show();
       $("#current_label").hide();
-      if(unit[1] !== "life") window.timeKeeper = new labelTime(unit[1]);
+      if(unit[1] !== "life"){
+        window.timeKeeper = new labelTime(unit[1]);
+      }else{
+        $(".time").hide();
+        $("#current_label").show();
+      }
     });
-  })
+  });
 
   $("#arrow_left").click(function(){
     if(!$("svg").is(':animated') ) {
       timeKeeper.updateCount("left");
       helpers.shiftTime(1);
-    };
-  })
+    }
+  });
   $("#arrow_right").click(function(){
     if(!$("svg").is(':animated') ) {
       timeKeeper.updateCount("right");
       helpers.shiftTime(-1);
-    };
+    }
   });
 };
 
@@ -270,11 +261,10 @@ Time.prototype.scale = function(unit){
   this.period = timeDetail.period;
   if(unit === 'life'){
     $(".arrow").hide();
-    person.renderMarkerLine(person.pos * 880)
+    person.renderMarkerLine(person.pos * 880);
   }else{
      $(".arrow").show();
     this.shift = Math.round(timeDetail.px * person.pos * -1) + "px";
     $(paper.canvas).css("left",this.shift);
   }
-}
-
+};

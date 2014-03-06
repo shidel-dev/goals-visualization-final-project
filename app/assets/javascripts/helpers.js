@@ -1,7 +1,6 @@
 // ------Helpers --------
 var helpers = {
 
-
   setup: function(width) {
     window.paper = new Raphael(document.getElementById('life_bar'), width, 200);
     window.cover = paper.rect(0, 0, width, 200).attr({fill: "#f1f1f1",stroke: "#CCCCCC"});
@@ -11,8 +10,8 @@ var helpers = {
     paper.remove();
     this.setup(width);
     $("#life_bar")
-      .animate({"width": "0px", "margin-left":"+=440px"}, 500)
-      .animate({"width": "880px","margin-left":"-=440px"}, 500,function(){
+      .animate({"width": "0px", "margin-left":"+=440px"}, 500, 'easeOutExpo')
+      .animate({"width": "880px","margin-left":"-=440px"}, 500,'easeOutExpo',function(){
         _.each(lifeBar.goals,function(goal){
           goal.render(multi);
         });
@@ -44,7 +43,7 @@ var helpers = {
 
   goalInfo: function(goal,event){
     if ($(".popup").length){
-      lifeBar.findGoalById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+      lifeBar.findGoalById(parseInt($(".popup").data("id"))).set("title",$("#content").html());
       $(".popup").remove();
     }
     _.templateSettings.variable = "v";
@@ -57,27 +56,28 @@ var helpers = {
       $(".action").css("margin-left", "34px");
     }
     $("#exit").click(this.removeAndSave);
-    $('.action').click(handleActions);
+    $('.action').click(this.handleActions.bind(goal));
 
-    function handleActions(e){
-      if (e.target.id === "complete") {
-        goal.model.complete();
-        $("#complete").remove()
-        $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
-        if ($(".action").length === 3){
-          $("#reflection").css("margin-left", "34px").click(handleActions)
-        }else{
-          $("#reflection").css("margin-left", "21px").click(handleActions)
-        }
-      } else if (e.target.id === "link") {
-        helpers.listenForNextGoal(goal.model,"link");
-      } else if (e.target.id === "sever") {
-        helpers.listenForNextGoal(goal.model,"sever");
-      } else if (e.target.id === "delete"){
-        lifeBar.findGoalById($(".popup").data("id")).deleteGoal();
-      } else if (e.target.id === "reflection"){
-        helpers.goalReflectionDisplay(lifeBar.findGoalById($(".popup").data("id")));
+  },
+
+
+  handleActions:function(e){
+  var goal = this
+    if (e.target.id === "complete") {
+      goal.model.set("completed", true);
+      $("#complete").remove()
+      $("#foot").append("<img class='action' id='reflection' src='/icons/glyphicons_087_log_book.png'></img>")
+      if ($(".action").length === 3){
+        $("#reflection").css("margin-left", "34px").click(helpers.handleActions.bind(this))
+      }else{
+        $("#reflection").css("margin-left", "21px").click(helpers.handleActions.bind(this))
       }
+    } else if (e.target.id === "link" || e.target.id === "sever") {
+      helpers.listenForNextGoal(goal.model,e.target.id);
+    } else if (e.target.id === "delete"){
+      lifeBar.findGoalById($(".popup").data("id")).deleteGoal();
+    } else if (e.target.id === "reflection"){
+      helpers.goalReflectionDisplay(lifeBar.findGoalById($(".popup").data("id")));
     }
   },
 
@@ -88,7 +88,7 @@ var helpers = {
       $("#container").append(template(goal));
       var bubble = $('#titleBubble');
       bubble.css({ "left" : event.pageX - 100 + "px", 
-                  "top" : event.pageY - (bubble.cssNumber("height") + 25) + "px"})
+                    "top" : event.pageY - (bubble.cssNumber("height") + 25) + "px"})
     };
   },
   
@@ -101,13 +101,13 @@ var helpers = {
     var template = _.template($("script.reflectionTemplate").html());
     $("#container").append(template(goal));
     $(".closeReflection").click(function(){
-      goal.saveReflection($("#reflectionText").val())
+      goal.set("reflection",$("#reflectionText").val())
       $('#modal').remove()
     })
   },
 
   removeAndSave: function(){
-    lifeBar.findGoalById(parseInt($(".popup").data("id"))).saveText($("#content").html());
+    lifeBar.findGoalById(parseInt($(".popup").data("id"))).set("title",$("#content").html());
     $(".popup").remove();
   },
 
@@ -128,17 +128,13 @@ var helpers = {
   },
 
   days_between: function(date1, date2) {
-
       // The number of milliseconds in one day
       var ONE_DAY = 1000 * 60 * 60 * 24;
-
       // Convert both dates to milliseconds
       var date1_ms = date1.getTime();
       var date2_ms = date2.getTime();
-
       // Calculate the difference in milliseconds
       var difference_ms = Math.abs(date1_ms - date2_ms);
-
       // Convert back to days and return
       return Math.round(difference_ms/ONE_DAY);
   },
@@ -152,21 +148,23 @@ var helpers = {
 
 // -- Intro Controller--
 
-function IntroController(){
-  this.$el = $("#intro");
-  this.events();   
-}
+var IntroController = {
 
-IntroController.prototype.events = function(){
-  this.$el.click(this.render)
-};
-
-IntroController.prototype.render = function(){
+  init:function(){
+    this.$el = $("#intro");
+    this.events();  
+  }, 
+  events:function(){
+    this.$el.click(this.render);
+  },
+  render:function(){
     var template = _.template($("script.introTemplate").html());
     $("#container").append(template());
     $(".closeIntro").click(function(){
-      $("#modal").remove()
+      $("#modal").remove();
     })
+  }
+
 }
 
 // -- extend Raphael to make drawing connection easier.
