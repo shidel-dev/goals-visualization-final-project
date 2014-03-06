@@ -1,7 +1,6 @@
 // ------Helpers --------
 var helpers = {
 
-
   setup: function(width) {
     window.paper = new Raphael(document.getElementById('life_bar'), width, 200);
     window.cover = paper.rect(0, 0, width, 200).attr({fill: "#f1f1f1",stroke: "#CCCCCC"});
@@ -11,8 +10,8 @@ var helpers = {
     paper.remove();
     this.setup(width);
     $("#life_bar")
-      .animate({"width": "0px", "margin-left":"+=440px"}, 500)
-      .animate({"width": "880px","margin-left":"-=440px"}, 500,function(){
+      .animate({"width": "0px", "margin-left":"+=440px"}, 500, 'easeOutExpo')
+      .animate({"width": "880px","margin-left":"-=440px"}, 500,'easeOutExpo',function(){
         _.each(lifeBar.goals,function(goal){
           goal.render(multi);
         });
