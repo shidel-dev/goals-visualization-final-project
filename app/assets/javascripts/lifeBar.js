@@ -3,7 +3,7 @@
 window.onload = function() {
   helpers.setup(880);
   window.lifeBar = new LifeBar();
-  new IntroController();
+  IntroController.init();
   if($("#logged-in").length){
     window.person = new Person($("#birthday").data("birthday"));
     loadLifeData();
@@ -141,7 +141,7 @@ function Goal(options) {
 }
 
 Goal.prototype.render = function(multi){
-  this.elem = paper.circle(this.x *  multi, this.y, this.r);
+  this.elem = paper.circle(this.x * multi, this.y, this.r);
   var fill = this.completed ? "#048204" : "#0000FF";
   this.elem.attr({fill: fill,stroke:'none'});
   this.elem.model = this;
