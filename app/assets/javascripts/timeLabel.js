@@ -30,7 +30,7 @@ labelTime.prototype.renderLabel = function(){
 
 	if (this.counter < 0) {
 		$('#lower').text(num + " " + this.interval + ago);
-		$('#higher').text((num + 1) + " " + this.interval + ago);
+		$('#higher').text((num - 1) + " " + this.interval + ago);
 		if (this.counter == -1) {
 			$('#lower').text(num + " " + this.depluralize() + ago);
 			$('#higher').text("Present");
@@ -59,7 +59,7 @@ labelTime.prototype.renderFive = function(){
 
 	if (this.counter < 0) {
 		$('#lower').text(num + ago);
-		$('#higher').text((num + 5) + ago);
+		$('#higher').text((num - 5) + ago);
 		if (this.counter == -1) {
 			$('#lower').text(num + ago);
 			$('#higher').text("Present");
