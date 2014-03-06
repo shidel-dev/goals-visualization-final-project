@@ -1,7 +1,7 @@
 // ----- Setup-----
 
 window.onload = function() {
-  helpers.setup(880)
+  helpers.setup(880);
   window.lifeBar = new LifeBar();
   new IntroController();
   if($("#logged-in").length){
