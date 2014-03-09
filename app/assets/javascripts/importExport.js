@@ -90,7 +90,6 @@ window.importExport{
 }
 window.autoSave = function() {
   if ($("#logged-in").length) {
-    console.log("autosave");
     importExport.saveLifeData();
   };
 };
