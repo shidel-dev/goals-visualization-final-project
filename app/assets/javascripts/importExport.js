@@ -65,7 +65,7 @@ window.importExport{
 
 
   saveLifeData: function(){
-    data = {life_data: this.save(lifeBar)};
+    var data = {life_data: this.save(lifeBar)};
     $.ajax({
       async:false,
       type: "POST",
