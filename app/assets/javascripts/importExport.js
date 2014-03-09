@@ -1,4 +1,4 @@
-window.importExport{
+window.importExport = {
 
   save: function(lifeBar) {
     var lifeBarJSON = {};
@@ -36,7 +36,7 @@ window.importExport{
       exportedConnections.push(connectionData);
     })
     lifeBarJSON.connections = exportedConnections;
-  }
+  },
 
 
   populate: function(lifeBar, data) {
@@ -77,12 +77,13 @@ window.importExport{
   },
 
   loadLifeData: function() {
+    var that = this;
     $.ajax({
       type: "GET",
       url: '/load',
       dataType: "json",
       success: function(data) {
-        this.populate(window.lifeBar, data);
+        that.populate(window.lifeBar, data);
       }
     })
   }
