@@ -6,7 +6,7 @@ window.onload = function() {
   IntroController.init();
   if($("#logged-in").length){
     window.person = new Person($("#birthday").data("birthday"));
-    loadLifeData();
+    importExport.loadLifeData();
   } else {
     window.person = new Person("1990-2-26");
   }
